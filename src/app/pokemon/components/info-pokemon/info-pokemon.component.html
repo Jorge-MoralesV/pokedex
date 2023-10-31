@@ -1,0 +1,70 @@
+<div *ngFor="let poke of pokemon" class="modal-content">
+    <div class="modal-header">
+        <h1>{{poke.id}}</h1>
+        <h1>{{poke.name}}</h1>
+        <div class="icons-content div-icon m-1" *ngFor="let types of poke.types" [ngSwitch]="1">
+            <img width="20px" style="background-color: black;" src=".\assets\imgs\icons\bug.svg" class="bug-type-card"
+                *ngSwitchCase="types.type.name=='bug'" alt="{{types.type.name}}">
+            <img width="20px" style="background-color: black;" src=".\assets\imgs\icons\grass.svg"
+                class="grass-type-card" *ngSwitchCase="types.type.name=='grass'" alt="{{types.type.name}}">
+            <img width="20px" style="background-color: black;" src=".\assets\imgs\icons\fairy.svg"
+                class="fairy-type-card" *ngSwitchCase="types.type.name=='fairy'" alt="{{types.type.name}}">
+            <img width="20px" style="background-color: black;" src=".\assets\imgs\icons\normal.svg"
+                class="normal-type-card" *ngSwitchCase="types.type.name=='normal'" alt="{{types.type.name}}">
+            <img width="20px" style="background-color: black;" src=".\assets\imgs\icons\dragon.svg"
+                class="dragon-type-card" *ngSwitchCase="types.type.name=='dragon'" alt="{{types.type.name}}">
+            <img width="20px" style="background-color: black;" src=".\assets\imgs\icons\psychic.svg"
+                class="psychic-type-card" *ngSwitchCase="types.type.name=='psychic'" alt="{{types.type.name}}">
+            <img width="20px" style="background-color: black;" src=".\assets\imgs\icons\ghost.svg"
+                class="ghost-type-card" *ngSwitchCase="types.type.name=='ghost'" alt="{{types.type.name}}">
+            <img width="20px" style="background-color: black;" src=".\assets\imgs\icons\ground.svg"
+                class="ground-type-card" *ngSwitchCase="types.type.name=='ground'" alt="{{types.type.name}}">
+            <img width="20px" style="background-color: black;" src=".\assets\imgs\icons\steel.svg"
+                class="steel-type-card" *ngSwitchCase="types.type.name=='steel'" alt="{{types.type.name}}">
+            <img width="20px" style="background-color: black;" src=".\assets\imgs\icons\fire.svg" class="fire-type-card"
+                *ngSwitchCase="types.type.name=='fire'" alt="{{types.type.name}}">
+            <img width="20px" style="background-color: black;" src=".\assets\imgs\icons\flying.svg"
+                class="flying-type-card" *ngSwitchCase="types.type.name=='flying'" alt="{{types.type.name}}">
+            <img width="20px" style="background-color: black;" src=".\assets\imgs\icons\ice.svg" class="ice-type-card"
+                *ngSwitchCase="types.type.name=='ice'" alt="{{types.type.name}}">
+            <img width="20px" style="background-color: black;" src=".\assets\imgs\icons\electric.svg"
+                class="electric-type-card" *ngSwitchCase="types.type.name=='electric'" alt="{{types.type.name}}">
+            <img width="20px" style="background-color: black;" src=".\assets\imgs\icons\rock.svg" class="rock-type-card"
+                *ngSwitchCase="types.type.name=='rock'" alt="{{types.type.name}}">
+            <img width="20px" style="background-color: black;" src=".\assets\imgs\icons\dark.svg" class="dark-type-card"
+                *ngSwitchCase="types.type.name=='dark'" alt="{{types.type.name}}">
+            <img width="20px" style="background-color: black;" src=".\assets\imgs\icons\water.svg"
+                class="water-type-card" *ngSwitchCase="types.type.name=='water'" alt="{{types.type.name}}">
+            <img width="20px" style="background-color: black;" src=".\assets\imgs\icons\fighting.svg"
+                class="fighting-type-card" *ngSwitchCase="types.type.name=='fighting'" alt="{{types.type.name}}">
+            <img width="20px" style="background-color: black;" src=".\assets\imgs\icons\poison.svg"
+                class="poison-type-card" *ngSwitchCase="types.type.name=='poison'" alt="{{types.type.name}}">
+            <div *ngSwitchDefault></div>
+        </div>
+        <button type="button" class="btn-close btn btn-danger" data-bs-dismiss="modal" aria-label="Close" ></button>
+    </div>
+    <div class="modal-body">
+        <div class="icons-content div-icon m-1">
+            <img src={{poke.sprites.front_default}} alt={{poke.name}}>
+            <img src={{poke.sprites.back_default}} alt={{poke.name}}>
+            <img src={{poke.sprites.front_shiny}} alt={{poke.name}}>
+            <img src={{poke.sprites.back_shiny}} alt={{poke.name}}>
+            <h1>{{poke.sprites.animated}}</h1>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <!-- Juegos en los que aparece -->
+        <!-- <div *ngFor="let games of poke.game_indices">
+            <h1>{{games.version.name}}</h1>
+        </div> -->
+        <!-- <div>
+            <h5>
+                {{poke.species.url.flavor_text_entries[1].flavor_text}}
+            </h5>
+        </div> -->
+        <!-- Ataques -->
+        <!-- <div *ngFor="let mov of poke.moves">
+            <h1>{{mov.move.name}}</h1>
+        </div> -->
+    </div>
+</div>
