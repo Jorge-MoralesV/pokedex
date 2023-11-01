@@ -1,7 +1,6 @@
 import { PokemonService } from './../../services/poke.service';
 import { Component, Input, OnInit } from '@angular/core';
 import { PokemonApi } from '../../interfaces/pokemon';
-import { PokemonCardComponent } from '../pokemon-card/pokemon-card.component';
 
 @Component({
   selector: 'app-info-pokemon',
@@ -11,21 +10,18 @@ import { PokemonCardComponent } from '../pokemon-card/pokemon-card.component';
 export class InfoPokemonComponent implements OnInit {
 
   public pokemon: PokemonApi[] = [];
-  public obj: PokemonCardComponent | any;
 
-  constructor(private _pokemonService: PokemonService) {
-  }
+  constructor(private _pokemonService: PokemonService) { }
+
+  @Input() idPoke: number | any;
 
   ngOnInit(): void {
-    this.getPokeInfo()
+    this.getPokeInfo(this.idPoke)
+    console.log(this.idPoke)
   }
 
-  @Input()
-  data?: PokemonApi;
-
-  async getPokeInfo() {
-   /*  console.log(id); */
-    (await this._pokemonService.getPokemon(3)).subscribe(
+  async getPokeInfo(id: number) {
+    (await this._pokemonService.getPokemon(151)).subscribe(
       res => {
         this.pokemon.push(res);
       },

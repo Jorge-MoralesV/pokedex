@@ -26,8 +26,5 @@ export class PokemonService {
     return [];
   } */
 
-  getById() {
-
-  }
 
 }

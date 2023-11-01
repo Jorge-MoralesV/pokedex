@@ -69,17 +69,18 @@
                 </div>
             </div>
 
-            <button type="button" data-bs-toggle="modal" data-bs-target="#my-modal" class="btn btn-dark mt-1" (click)="getId(poke.id)">Más
+            <button type="button" data-bs-toggle="modal" data-bs-target="#my-modal" class="btn btn-dark mt-1"
+                (onclick)="getId(poke.id)">Más
                 info</button>
-            <!-- <button routerLink="/InfoPoke" routerLinkActive="active" class="btn btn-dark mt-1" >Más info</button> -->
 
         </div>
     </div>
 
-    <div id="my-modal" class="modal fade" data-bs-backdrop="static" tabindex="-1" role="dialog" aria-hidden="true">
+    <div id="my-modal" class="modal fade modal-lg" data-bs-backdrop="static" tabindex="-1" role="dialog"
+        aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
-                <app-info-pokemon></app-info-pokemon>
+                <app-info-pokemon [idPoke]="poke.id"></app-info-pokemon>
             </div>
         </div>
     </div>

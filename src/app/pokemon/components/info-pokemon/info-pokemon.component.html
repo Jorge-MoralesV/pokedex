@@ -1,56 +1,136 @@
-<div *ngFor="let poke of pokemon" class="modal-content">
+<div *ngFor="let poke of pokemon" class="modal-content ">
     <div class="modal-header">
-        <h1>{{poke.id}}</h1>
-        <h1>{{poke.name}}</h1>
-        <div class="icons-content div-icon m-1" *ngFor="let types of poke.types" [ngSwitch]="1">
-            <img width="20px" style="background-color: black;" src=".\assets\imgs\icons\bug.svg" class="bug-type-card"
-                *ngSwitchCase="types.type.name=='bug'" alt="{{types.type.name}}">
-            <img width="20px" style="background-color: black;" src=".\assets\imgs\icons\grass.svg"
-                class="grass-type-card" *ngSwitchCase="types.type.name=='grass'" alt="{{types.type.name}}">
-            <img width="20px" style="background-color: black;" src=".\assets\imgs\icons\fairy.svg"
-                class="fairy-type-card" *ngSwitchCase="types.type.name=='fairy'" alt="{{types.type.name}}">
-            <img width="20px" style="background-color: black;" src=".\assets\imgs\icons\normal.svg"
-                class="normal-type-card" *ngSwitchCase="types.type.name=='normal'" alt="{{types.type.name}}">
-            <img width="20px" style="background-color: black;" src=".\assets\imgs\icons\dragon.svg"
-                class="dragon-type-card" *ngSwitchCase="types.type.name=='dragon'" alt="{{types.type.name}}">
-            <img width="20px" style="background-color: black;" src=".\assets\imgs\icons\psychic.svg"
-                class="psychic-type-card" *ngSwitchCase="types.type.name=='psychic'" alt="{{types.type.name}}">
-            <img width="20px" style="background-color: black;" src=".\assets\imgs\icons\ghost.svg"
-                class="ghost-type-card" *ngSwitchCase="types.type.name=='ghost'" alt="{{types.type.name}}">
-            <img width="20px" style="background-color: black;" src=".\assets\imgs\icons\ground.svg"
-                class="ground-type-card" *ngSwitchCase="types.type.name=='ground'" alt="{{types.type.name}}">
-            <img width="20px" style="background-color: black;" src=".\assets\imgs\icons\steel.svg"
-                class="steel-type-card" *ngSwitchCase="types.type.name=='steel'" alt="{{types.type.name}}">
-            <img width="20px" style="background-color: black;" src=".\assets\imgs\icons\fire.svg" class="fire-type-card"
-                *ngSwitchCase="types.type.name=='fire'" alt="{{types.type.name}}">
-            <img width="20px" style="background-color: black;" src=".\assets\imgs\icons\flying.svg"
-                class="flying-type-card" *ngSwitchCase="types.type.name=='flying'" alt="{{types.type.name}}">
-            <img width="20px" style="background-color: black;" src=".\assets\imgs\icons\ice.svg" class="ice-type-card"
-                *ngSwitchCase="types.type.name=='ice'" alt="{{types.type.name}}">
-            <img width="20px" style="background-color: black;" src=".\assets\imgs\icons\electric.svg"
-                class="electric-type-card" *ngSwitchCase="types.type.name=='electric'" alt="{{types.type.name}}">
-            <img width="20px" style="background-color: black;" src=".\assets\imgs\icons\rock.svg" class="rock-type-card"
-                *ngSwitchCase="types.type.name=='rock'" alt="{{types.type.name}}">
-            <img width="20px" style="background-color: black;" src=".\assets\imgs\icons\dark.svg" class="dark-type-card"
-                *ngSwitchCase="types.type.name=='dark'" alt="{{types.type.name}}">
-            <img width="20px" style="background-color: black;" src=".\assets\imgs\icons\water.svg"
-                class="water-type-card" *ngSwitchCase="types.type.name=='water'" alt="{{types.type.name}}">
-            <img width="20px" style="background-color: black;" src=".\assets\imgs\icons\fighting.svg"
-                class="fighting-type-card" *ngSwitchCase="types.type.name=='fighting'" alt="{{types.type.name}}">
-            <img width="20px" style="background-color: black;" src=".\assets\imgs\icons\poison.svg"
-                class="poison-type-card" *ngSwitchCase="types.type.name=='poison'" alt="{{types.type.name}}">
-            <div *ngSwitchDefault></div>
-        </div>
-        <button type="button" class="btn-close btn btn-danger" data-bs-dismiss="modal" aria-label="Close" ></button>
+        <h1 class="m-2">N° {{idPoke}}:</h1>
+        <button type="button" class="btn-close btn btn-danger" data-bs-dismiss="modal" aria-label="Close"></button>
     </div>
     <div class="modal-body">
-        <div class="icons-content div-icon m-1">
-            <img src={{poke.sprites.front_default}} alt={{poke.name}}>
-            <img src={{poke.sprites.back_default}} alt={{poke.name}}>
-            <img src={{poke.sprites.front_shiny}} alt={{poke.name}}>
-            <img src={{poke.sprites.back_shiny}} alt={{poke.name}}>
-            <h1>{{poke.sprites.animated}}</h1>
+        <h1 class="m-2">{{poke.name | titlecase}}</h1>
+        <div class="img-poke">
+            <div [ngClass]="{
+                'bug-type-card': poke.types[0].type.name=='bug',
+                'grass-type-card': poke.types[0].type.name == 'grass',
+                'fairy-type-card': poke.types[0].type.name == 'fairy',
+                'normal-type-card': poke.types[0].type.name == 'normal',
+                'dragon-type-card': poke.types[0].type.name == 'dragon',
+                'psychic-type-card': poke.types[0].type.name=='psychic',
+                'ghost-type-card': poke.types[0].type.name == 'ghost',
+                'ground-type-card': poke.types[0].type.name == 'ground',
+                'steel-type-card': poke.types[0].type.name == 'steel',
+                'fire-type-card': poke.types[0].type.name=='fire',
+                'flying-type-card': poke.types[0].type.name == 'flying',
+                'ice-type-card': poke.types[0].type.name == 'ice',
+                'electric-type-card': poke.types[0].type.name == 'electric',
+                'rock-type-card': poke.types[0].type.name == 'rock',
+                'dark-type-card': poke.types[0].type.name == 'dark',
+                'water-type-card': poke.types[0].type.name=='water',
+                'fighting-type-card': poke.types[0].type.name == 'fighting',
+                'poison-type-card': poke.types[0].type.name == 'poison',
+            }">
+                <img src={{poke.sprites.front_default}} alt={{poke.name}} class="poke-img">
+                <img src={{poke.sprites.back_default}} alt={{poke.name}} class="poke-img">
+                <img src={{poke.sprites.front_shiny}} alt={{poke.name}} class="poke-img">
+                <img src={{poke.sprites.back_shiny}} alt={{poke.name}} class="poke-img">
+            </div>
         </div>
+        <div class="d-flex justify-content-center">
+            <h5>Forma Default</h5>
+            <div class="icons-content div-icon m-5" *ngFor="let types of poke.types" [ngSwitch]="1">
+
+                <div *ngSwitchCase="types.type.name=='bug'" class="bug-type-card">
+                    <img src=".\assets\imgs\icons\bug.svg" alt="{{types.type.name}}">
+                    <h5>{{types.type.name | titlecase}}</h5>
+                </div>
+
+                <div *ngSwitchCase="types.type.name=='grass'" class="grass-type-card">
+                    <img src=".\assets\imgs\icons\grass.svg" alt="{{types.type.name}}">
+                    <h5>{{types.type.name | titlecase}}</h5>
+                </div>
+
+                <div *ngSwitchCase="types.type.name=='fairy'" class="fairy-type-card">
+                    <img src=".\assets\imgs\icons\fairy.svg" alt="{{types.type.name}}">
+                    <h5>{{types.type.name | titlecase}}</h5>
+                </div>
+
+                <div *ngSwitchCase="types.type.name=='normal'" class="normal-type-card">
+                    <img src=".\assets\imgs\icons\normal.svg" alt="{{types.type.name}}">
+                    <h5>{{types.type.name | titlecase}}</h5>
+                </div>
+
+                <div *ngSwitchCase="types.type.name=='dragon'" class="dragon-type-card">
+                    <img src=".\assets\imgs\icons\dragon.svg" alt="{{types.type.name}}">
+                    <h5>{{types.type.name | titlecase}}</h5>
+                </div>
+
+                <div *ngSwitchCase="types.type.name=='psychic'" class="psychic-type-card">
+                    <img src=".\assets\imgs\icons\psychic.svg" alt="{{types.type.name}}">
+                    <h5>{{types.type.name | titlecase}}</h5>
+                </div>
+
+                <div *ngSwitchCase="types.type.name=='ghost'" class="ghost-type-card">
+                    <img src=".\assets\imgs\icons\ghost.svg" alt="{{types.type.name}}">
+                    <h5>{{types.type.name | titlecase}}</h5>
+                </div>
+
+                <div *ngSwitchCase="types.type.name=='ground'" class="ground-type-card">
+                    <img src=".\assets\imgs\icons\ground.svg" alt="{{types.type.name}}">
+                    <h5>{{types.type.name | titlecase}}</h5>
+                </div>
+
+                <div *ngSwitchCase="types.type.name=='steel'" class="steel-type-card">
+                    <img src=".\assets\imgs\icons\steel.svg" alt="{{types.type.name}}">
+                    <h5>{{types.type.name | titlecase}}</h5>
+                </div>
+
+                <div *ngSwitchCase="types.type.name=='fire'" class="fire-type-card">
+                    <img src=".\assets\imgs\icons\fire.svg" alt="{{types.type.name}}">
+                    <h5>{{types.type.name | titlecase}}</h5>
+                </div>
+
+                <div *ngSwitchCase="types.type.name=='flying'" class="flying-type-card">
+                    <img src=".\assets\imgs\icons\flying.svg" alt="{{types.type.name}}">
+                    <h5>{{types.type.name | titlecase}}</h5>
+                </div>
+
+                <div *ngSwitchCase="types.type.name=='ice'" class="ice-type-card">
+                    <img src=".\assets\imgs\icons\ice.svg" alt="{{types.type.name}}">
+                    <h5>{{types.type.name | titlecase}}</h5>
+                </div>
+
+                <div *ngSwitchCase="types.type.name=='electric'" class="electric-type-card">
+                    <img src=".\assets\imgs\icons\electric.svg" alt="{{types.type.name}}">
+                    <h5>{{types.type.name | titlecase}}</h5>
+                </div>
+
+                <div *ngSwitchCase="types.type.name=='rock'" class="rock-type-card">
+                    <img src=".\assets\imgs\icons\rock.svg" alt="{{types.type.name}}">
+                    <h5>{{types.type.name | titlecase}}</h5>
+                </div>
+
+                <div *ngSwitchCase="types.type.name=='dark'" class="dark-type-card">
+                    <img src=".\assets\imgs\icons\dark.svg" alt="{{types.type.name}}">
+                    <h5>{{types.type.name | titlecase}}</h5>
+                </div>
+
+                <div *ngSwitchCase="types.type.name=='water'" class="water-type-card">
+                    <img src=".\assets\imgs\icons\water.svg" alt="{{types.type.name}}">
+                    <h5>{{types.type.name | titlecase}}</h5>
+                </div>
+
+                <div *ngSwitchCase="types.type.name=='fighting'" class="fighting-type-card">
+                    <img src=".\assets\imgs\icons\fighting.svg" alt="{{types.type.name}}">
+                    <h5>{{types.type.name | titlecase}}</h5>
+                </div>
+
+                <div *ngSwitchCase="types.type.name=='poison'" class="poison-type-card">
+                    <img src=".\assets\imgs\icons\poison.svg" alt="{{types.type.name}}">
+                    <h5>{{types.type.name | titlecase}}</h5>
+                </div>
+
+                <div *ngSwitchDefault></div>
+            </div>
+            <h5>Forma Shiny</h5>
+        </div>
+
     </div>
     <div class="modal-footer">
         <!-- Juegos en los que aparece -->

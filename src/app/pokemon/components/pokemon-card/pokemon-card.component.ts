@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output } from '@angular/core';
 import { PokemonApi } from '../../interfaces/pokemon';
 import { PokemonService } from '../../services/poke.service';
 
@@ -11,31 +11,31 @@ export class PokemonCardComponent implements OnInit {
 
   public pokemon: PokemonApi[] = [];
 
-  constructor(
-    private _pokemonService: PokemonService,
-  ) { }
+  constructor(private _pokemonService: PokemonService) { }
 
   ngOnInit(): void {
     this.getAllPokemon();
   }
 
   async getAllPokemon() {
-    for (let index = 1; index <= 9; index++) {
-      (await this._pokemonService.getPokemon(index)).subscribe(
-        res => {
-          this.pokemon.push(res);
-        },
-        err => {
-          console.log('Error', err)
-        }
-      )
+    for (let index = 1; index <= 25; index++) {
+      this.getPokeInfo(index);
     }
-
   }
 
-  public getId(id: number) {
-    console.log(id);
-    return id;
+  async getPokeInfo(id: number) {
+    (await this._pokemonService.getPokemon(id)).subscribe(
+      res => {
+        console.log(id)
+        this.pokemon.push(res);
+      },
+      err => {
+        console.log('Error', err)
+      })
+  }
+
+  getId(id: number) {
+    console.log(id)
   }
 
 }
