@@ -1,13 +1,15 @@
 /*---------------------- Navbar ----------------------*/
 .navbar {
     margin: 10px;
-    border-radius: 20px;
+    border-radius: 15px;
     background: #F00 !important;
     box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
 }
 
 .logo {
+    width: 100%;
     text-align: center;
+    cursor: pointer;
 }
 
 .logo img {
@@ -19,9 +21,7 @@
     border-radius: 50px;
     border: none;
     box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25) inset;
-    display: flex;
-    float: right;
-    margin-right: 15px;
+    margin-right: 125px;
     outline: 5px;
     position: absolute;
     right: 0;
@@ -40,33 +40,16 @@ input {
     width: 100%;
 }
 
-@media screen and (max-width: 990px) {
-    .search-bar {
-        margin-left: 0%;
-        width: 100%;
-        position: static;
-        float: none;
-    }
-}
-
-@media screen and (max-width: 450px) {
-    .logo {
-        width: 45%;
-    }
+.dropdown {
+    position: absolute;
+    right: 0;
+    margin-right: 15px;
 }
 
 /*-------------------- Listas ---------------------*/
-.bg {
-    display: flex;
-    justify-content: center;
-    background: linear-gradient(180deg, #414141 8.85%, #000 100%);
-}
-
 .container {
     margin-top: 120px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    margin-bottom: 25px;
 }
 
 .row {
@@ -74,17 +57,15 @@ input {
     justify-content: center;
 }
 
+/*Carta*/
 .card {
     width: 200px;
     border: none;
-    border-radius: 20px;
+    border-radius: 15px;
     background: linear-gradient(238deg, #D9D9D9 0%, rgba(135, 135, 135, 0.445) 100%);
 }
 
-img {
-    border-radius: 30px;
-}
-
+/* Bg iconos */
 .icons-content {
     display: inline-flex;
     justify-content: space-around;
@@ -93,98 +74,75 @@ img {
     width: 30px;
 }
 
+/* Iconos img */
 .div-icon img {
     width: 100%;
     padding: 5px;
 }
 
+/* MediaQueries*/
+@media screen and (max-width: 1000px) {
+    .search-bar {
+        margin-left: 0%;
+        width: 100%;
+        position: static;
+        float: none;
+    }
 
-.bug-type-card {
-    background-color: #91C12F;
-    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25) inset;
+    .logo {
+        width: 90%;
+        text-align: center;
+        cursor: pointer;
+    }
+
+    .logo img {
+        width: 25%;
+    }
+
+    .container {
+        margin-top: 100px;
+    }
+    
 }
 
-.grass-type-card {
-    background-color: #63BC5A;
-    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25) inset;
+@media screen and (max-width: 610px) {
+    .logo {
+        width: 30%;
+    }
+
+    .logo img {
+        width: 100%;
+    }
+
+    .container {
+        margin-top: 80px;
+    }
 }
 
-.fairy-type-card {
-    background-color: #EC8FE6;
-    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25) inset;
+/* @media screen and (max-width: 550px) {
+    .logo {
+        width: 30%;
+    }
+
+    .logo img {
+        width: 100%;
+    }
+
+    .container {
+        margin-top: 80px;
+    }
 }
 
-.normal-type-card {
-    background-color: #919AA2;
-    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25) inset;
-}
+@media screen and (max-width: 450px) {
+    .logo {
+        width: 50%;
+    }
 
-.dragon-type-card {
-    background-color: #0B6DC3;
-    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25) inset;
-}
+    .logo img {
+        width: 100%;
+    }
 
-.psychic-type-card {
-    background-color: #FA7179;
-    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25) inset;
-}
-
-.ghost-type-card {
-    background-color: #5269AD;
-    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25) inset;
-}
-
-.ground-type-card {
-    background-color: #D97845;
-    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25) inset;
-}
-
-.steel-type-card {
-    background-color: #5A8EA2;
-    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25) inset;
-}
-
-.fire-type-card {
-    background-color: #FF9D55;
-    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25) inset;
-}
-
-.flying-type-card {
-    background-color: #89AAE3;
-    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25) inset;
-}
-
-.ice-type-card {
-    background-color: #73CEC0;
-    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25) inset;
-}
-
-.electric-type-card {
-    background-color: #F4D23C;
-    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25) inset;
-}
-
-.rock-type-card {
-    background-color: #C5B78C;
-    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25) inset;
-}
-
-.dark-type-card {
-    background-color: #5A5465;
-    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25) inset;
-}
-
-.water-type-card {
-    background-color: #5090D6;
-    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25) inset;
-}
-
-.fighting-type-card {
-    background-color: #CE416B;
-    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25) inset;
-}
-
-.poison-type-card {
-    background-color: #B567CE;
-    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25) inset;
-}
+    .container {
+        margin-top: 100px;
+    }
+} */

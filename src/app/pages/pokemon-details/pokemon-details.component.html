@@ -1,10 +1,11 @@
 <nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top">
     <div class="container-fluid">
-        <img routerLink="" routerLinkActive="active" class="navbar-brand logo" src=".\assets\imgs\pokedex-logo.png"
-            alt="">
+        <div class="logo"><img routerLink="" routerLinkActive="active" class="navbar-brand"
+            src=".\assets\imgs\pokedex-logo.png" alt=""></div>
     </div>
 </nav>
-<!-- <app-navbar></app-navbar> -->
+
+<!-- Detalles -->
 <div class="bg">
     <div class="container" *ngFor="let poke of pokemon">
         <div *ngFor="let pokeDesc of pokeDetails">
@@ -116,21 +117,20 @@
 
                     <table class="table table-light">
                         <thead>
-                            <h3>Objetos portados:</h3>
+                            <h3>Objetos equipados:</h3>
                         </thead>
                         <tbody *ngFor="let item of poke.held_items">
-                            <h3>{{item.item.name}}</h3>
+                            <div *ngIf="poke.held_items.length <= 0; else noitem">
+                                <h3>No se encontró ningún ítem.</h3>
+                            </div>
+                            <ng-template #noitem>
+                                <h3>{{ item.item.name }}</h3>
+                            </ng-template>
                         </tbody>
+
                     </table>
                 </div>
             </div>
-
-            <!--  <ng-template #noitem>
-                <div class="">
-                    <h3>No hay objetos</h3>
-                </div>
-            </ng-template>-->
-
 
             <!-- Formas pokemon -->
             <div class="formas">
@@ -176,12 +176,18 @@
             <ng-template #missing>
                 <div class="missing">
                     <img src=".\assets\imgs\sprites\missingno.png">
+                    <p>No hay diferencias entre generos</p>
                 </div>
             </ng-template>
 
-            <!--  <div *ngFor="let item of poke.moves">
-                <h2>{{item.move.name}}</h2>
-            </div> -->
+            <div class="avance">
+                <a target="_parent" [routerLink]="['/pokemon-details', poke.id-1]" type="button" class="btn btn-dark">
+                    Pokémon Anterior
+                </a>
+                <a target="_parent" [routerLink]="['/pokemon-details', poke.id+1]" type="button" class="btn btn-dark">
+                    Siguiente Pokémon
+                </a>
+            </div>
 
         </div>
     </div>

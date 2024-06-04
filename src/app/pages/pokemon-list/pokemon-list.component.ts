@@ -17,6 +17,7 @@ export class PokemonListComponent implements OnInit {
   searchTerm: string = '';
   public isLoading = true;
   regions: PokemonApi[] = [];
+  sprite: string | undefined;
 
   ngOnInit(): void {
     this.getPoke();
@@ -54,16 +55,5 @@ export class PokemonListComponent implements OnInit {
     );
     console.log('Pokémon filtrados:', this.filteredPokemons);
   }
-
-  /* Obtener regiones */
-  /*   getRegion() {
-      this._pokeServ.getRegions().subscribe(region => {
-        this.regions.push(region);
-        console.log(region);
-      });
-    } */
-
-
-
 
 }

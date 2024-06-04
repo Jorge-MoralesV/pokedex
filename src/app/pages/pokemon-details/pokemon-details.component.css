@@ -1,66 +1,26 @@
 .navbar {
     margin: 10px;
-    border-radius: 20px;
+    border-radius: 15px;
     background: #F00 !important;
     box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
 }
 
 .logo {
-    width: 15%;
+    width: 100%;
+    text-align: center;
     cursor: pointer;
 }
 
-.search-bar {
-    background: #FFF;
-    border-radius: 50px;
-    border: none;
-    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25) inset;
-    display: flex;
-    float: right;
-    margin-right: 15px;
-    outline: 5px;
-    position: absolute;
-    right: 0;
-    width: 25%;
+.logo img {
+    width: 15%;
 }
 
-.pokeball {
-    width: 40px;
-    margin-left: -5px;
-    margin-right: 5px;
-}
-
-input {
-    border: none;
-    outline: none !important;
-    width: 100%;
-}
-
-@media screen and (max-width: 990px) {
-    .search-bar {
-        margin-left: 0%;
-        width: 100%;
-        position: static;
-        float: none;
-    }
-}
-
-@media screen and (max-width: 450px) {
-    .logo {
-        width: 45%;
-    }
-}
-
-.bg {
-    background: linear-gradient(180deg, #414141 8.85%, #000 100%);
-    padding-top: 25px;
-    padding-bottom: 50px;
-}
-
+/* Tarjeta */
 .container {
     background: linear-gradient(180deg, #a7a7a7 8.85%, #535353 100%);
-    border-radius: 20px;
-    margin-top: 100px;
+    border-radius: 15px;
+    margin-top: 130px;
+    margin-bottom: 25px;
     padding-bottom: 50px;
 }
 
@@ -71,8 +31,6 @@ input {
     padding-left: 20px;
     padding-right: 15px;
 }
-
-.titulo-poke {}
 
 .titulo-poke .name {
     text-align: center;
@@ -98,7 +56,6 @@ input {
     margin-left: 10px;
     margin-top: 10px;
     margin-bottom: 10px;
-    /* background: #fffded; */
     background-image: url("/assets/imgs/ps_neutral.webp");
     border-radius: 10px;
 }
@@ -176,17 +133,6 @@ h3 {
     padding-left: 10px;
 }
 
-/* .general-data table {
-    background-color: #fffded;
-    border-radius: 5px;
-    width: 50%;
-} */
-
-/* .general-data table thead h3{
-    width: 100%;
-    border-bottom: #000 1px solid;
-}
- */
 .general-data table tbody h3 {
     text-align: center;
     width: 100%;
@@ -256,11 +202,6 @@ h3 {
     background: rgb(248, 239, 185);
 }
 
-/* .formas .female,
-.male {
-    display: contents;
-}
- */
 
 .formas img {
     width: 50%;
@@ -274,112 +215,166 @@ h3 {
     width: 40%;
 }
 
-/* Fondos por tipo */
-
-.bug-type-card {
-    background-color: #91C12F;
-    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25) inset;
-    border-radius: 30px;
+/*Paginacion*/
+.avance {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
 }
 
-.grass-type-card {
-    background-color: #63BC5A;
-    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25) inset;
-    border-radius: 30px;
+.avance a {
+    cursor: pointer;
+    width: 30%;
+    margin: 10px;
+    padding: 10px;
+    background: #000;
+    color: #fff;
 }
 
-.fairy-type-card {
-    background-color: #EC8FE6;
-    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25) inset;
-    border-radius: 30px;
+.avance a:hover {
+    background: #414141;
 }
 
-.normal-type-card {
-    background-color: #919AA2;
-    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25) inset;
-    border-radius: 30px;
+/* MediaQueries*/
+@media screen and (max-width: 1200px) {
+
+    /* Datos generales */
+    .general-data table,
+    h3 {
+        width: 70%;
+        font-size: large;
+    }
+
+    .general-data table thead h3 {
+        margin: 0;
+    }
+
 }
 
-.dragon-type-card {
-    background-color: #0B6DC3;
-    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25) inset;
-    border-radius: 30px;
+@media screen and (max-width: 1000px) {
+
+    /*Navbar*/
+    .search-bar {
+        margin-left: 0%;
+        width: 100%;
+        position: static;
+        float: none;
+    }
+
+    .logo {
+        width: 90%;
+        text-align: center;
+        cursor: pointer;
+    }
+
+    .logo img {
+        width: 25%;
+    }
+
+    /* Tarjeta */
+    .container {
+        margin-top: 100px;
+    }
+
+    /* Sprite y descripcion */
+    .sprite {
+        width: 20%;
+    }
+
+    .sprite img {
+        width: 100%;
+    }
+
+
+    .descripcion p {
+        font-size: 100%;
+    }
+
 }
 
-.psychic-type-card {
-    background-color: #FA7179;
-    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25) inset;
-    border-radius: 30px;
+@media screen and (max-width: 770px) {
+
+    /* Sprite y descripcion */
+    .sprite {
+        width: 70%;
+        padding: 30px;
+    }
+
+    .sprite img {
+        width: 100%;
+    }
+
+    .descripcion {
+        width: 90%;
+    }
+
+    .descripcion p {
+        font-size: large;
+    }
+
+    /* Datos generales */
+    .general-data table,
+    h3 {
+        width: 90%;
+        font-size: large;
+    }
+
+    .general-data table thead h3 {
+        margin: 0;
+    }
+
+    .general-data table tbody h3 {
+        text-align: center;
+        margin: 0;
+    }
+
+    .formas .female-icon,
+    .male-icon {
+        width: 40px;
+        height: 40px;
+        margin: 20px 20px 0px 20px;
+    }
+
+    .formas .forma-normal,
+    .forma-shiny {
+        width: 35%;
+    }
+
+    .missing p {
+        font-size: small;
+        margin: 0 10px 10px 10px;
+    }
+
+    /*Paginacion*/
+    .avance a {
+        width: 40%;
+        font-size: small;
+    }
+
 }
 
-.ghost-type-card {
-    background-color: #5269AD;
-    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25) inset;
-    border-radius: 30px;
-}
 
-.ground-type-card {
-    background-color: #D97845;
-    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25) inset;
-    border-radius: 30px;
-}
+@media screen and (max-width: 575px) {
 
-.steel-type-card {
-    background-color: #5A8EA2;
-    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25) inset;
-    border-radius: 30px;
-}
+    .logo {
+        width: 25%;
+        margin: auto;
+    }
 
-.fire-type-card {
-    background-color: #FF9D55;
-    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25) inset;
-    border-radius: 30px;
-}
+    .logo img {
+        width: 100%;
+    }
 
-.flying-type-card {
-    background-color: #89AAE3;
-    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25) inset;
-    border-radius: 30px;
-}
+    /* Tarjeta */
+    .container {
+        margin-top: 75px;
+        border-radius: 20px 20px 0 0;
+        margin-bottom: 0;
+    }
 
-.ice-type-card {
-    background-color: #73CEC0;
-    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25) inset;
-    border-radius: 30px;
-}
+    .formas .female-icon,
+    .male-icon {
+        margin: 20px 0 0 0;
+    }
 
-.electric-type-card {
-    background-color: #F4D23C;
-    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25) inset;
-    border-radius: 30px;
-}
-
-.rock-type-card {
-    background-color: #C5B78C;
-    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25) inset;
-    border-radius: 30px;
-}
-
-.dark-type-card {
-    background-color: #5A5465;
-    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25) inset;
-    border-radius: 30px;
-}
-
-.water-type-card {
-    background-color: #5090D6;
-    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25) inset;
-    border-radius: 30px;
-}
-
-.fighting-type-card {
-    background-color: #CE416B;
-    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25) inset;
-    border-radius: 30px;
-}
-
-.poison-type-card {
-    background-color: #B567CE;
-    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25) inset;
-    border-radius: 30px;
 }
