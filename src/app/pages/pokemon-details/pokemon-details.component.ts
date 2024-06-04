@@ -16,6 +16,7 @@ export class PokemonDetailsComponent implements OnInit {
   pokemon: PokemonApi[] = [];
   pokeDetails: PokemonSpecies[] = [];
   descripcion: string | undefined;
+  sprite: string | undefined;
 
   constructor(private router: Router, private aRouter: ActivatedRoute, private _pokeService: PokemonService) {
     this.id = this.aRouter.snapshot.paramMap.get('id');
@@ -52,6 +53,5 @@ export class PokemonDetailsComponent implements OnInit {
       }
     });
   }
-
 
 }
