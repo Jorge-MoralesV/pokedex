@@ -13,19 +13,20 @@
 }
 
 .logo img {
-    width: 15%;
+    width: 20%;
 }
 
+/*--------Barra de busqueda----------*/
 .search-bar {
+    display: flex;
     background: #FFF;
     border-radius: 50px;
     border: none;
     box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25) inset;
-    margin-right: 125px;
+    margin-right: 5%;
     outline: 5px;
-    position: absolute;
-    right: 0;
-    width: 25%;
+    width: 350px;
+    height: 50px;
 }
 
 .pokeball {
@@ -40,10 +41,36 @@ input {
     width: 100%;
 }
 
-.dropdown {
-    position: absolute;
-    right: 0;
-    margin-right: 15px;
+/* ---------Regiones boton------------ */
+.mi-boton {
+    background: linear-gradient(180deg, #FFFFFF 26.04%, #B4B4B4 77.08%);
+    border-bottom: 3px solid #333;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-left: 10%;
+}
+
+.mi-boton:active {
+    background: linear-gradient(180deg, #B4B4B4 26.04%, #FFFFFF 77.08%);
+    border: none;
+}
+
+.dropdown-menu {
+    background: linear-gradient(238deg, #D9D9D9 0%, rgba(135, 135, 135, 0.445) 100%);
+    padding: 0;
+    border: none;
+}
+
+.dropdown-item {
+    transition: background-color 0.5s ease;
+    color: #FFF;
+}
+
+.dropdown-item:hover {
+    color: #000;
+    background: #b8b8b8;
+    border-bottom: #333 1px solid;
 }
 
 /*-------------------- Listas ---------------------*/
@@ -102,7 +129,7 @@ input {
     .container {
         margin-top: 100px;
     }
-    
+
 }
 
 @media screen and (max-width: 610px) {

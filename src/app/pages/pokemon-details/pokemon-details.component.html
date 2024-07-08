@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top">
     <div class="container-fluid">
         <div class="logo"><img routerLink="" routerLinkActive="active" class="navbar-brand"
-            src=".\assets\imgs\pokedex-logo.png" alt=""></div>
+                src=".\assets\imgs\pokedex-logo.png" alt=""></div>
     </div>
 </nav>
 
@@ -181,7 +181,8 @@
             </ng-template>
 
             <div class="avance">
-                <a target="_parent" [routerLink]="['/pokemon-details', poke.id-1]" type="button" class="btn btn-dark">
+                <a [className]="anteriorBtn ? 'btn btn-dark' : 'd-none'" target="_parent"
+                    [routerLink]="['/pokemon-details', poke.id-1]" type="button">
                     Pokémon Anterior
                 </a>
                 <a target="_parent" [routerLink]="['/pokemon-details', poke.id+1]" type="button" class="btn btn-dark">

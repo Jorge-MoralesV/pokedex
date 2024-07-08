@@ -1,6 +1,25 @@
 <!-- Navbar estatico -->
 <nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top">
-  <div class="container-fluid">
+  <div class="d-flex align-items-center">
+
+    <!-- Lista regiones -->
+    <div class="collapse navbar-collapse dropdown" id="navbarSupportedContent">
+      <button class="btn text-black dropdown-toggle mi-boton" type="button" data-bs-toggle="dropdown"
+        aria-expanded="false">
+        Regiones
+      </button>
+      <ul class="dropdown-menu">
+        <li><button class="dropdown-item" (click)="getPokemonRegion(1, 151)">Kanto</button></li>
+        <li><button class="dropdown-item" (click)="getPokemonRegion(152, 251)">Johto</button></li>
+        <li><button class="dropdown-item" (click)="getPokemonRegion(252, 386)">Hoenn</button></li>
+        <li><button class="dropdown-item" (click)="getPokemonRegion(387, 493)">Sinnoh</button></li>
+        <li><button class="dropdown-item" (click)="getPokemonRegion(494, 649)">Teselia</button></li>
+        <li><button class="dropdown-item" (click)="getPokemonRegion(650, 721)">Kalos</button></li>
+        <li><button class="dropdown-item" (click)="getPokemonRegion(722, 809)">Alola</button></li>
+        <li><button class="dropdown-item" (click)="getPokemonRegion(810, 905)">Galar</button></li>
+        <!--  <li><button class="dropdown-item" (click)="getPokemonRegion(906, 1100)">Hisui</button></li> -->
+      </ul>
+    </div>
 
     <!-- Logo -->
     <div class="logo"><img routerLink="" routerLinkActive="active" class="navbar-brand"
@@ -11,34 +30,14 @@
       aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <!-- Busqueda -->
-      <div class="d-flex form-control search-bar">
+      <div class="form-control search-bar">
         <img class="pokeball" src=".\assets\imgs\pokeball-search.png" alt="">
         <input [(ngModel)]="searchTerm" class="me-2" type="text" placeholder="Buscar..." aria-label="Search" #txtInput>
-        <button class="btn btn-light" (click)="searchPokemon()">🔍</button>
+        <button class="btn" (click)="searchPokemon()">🔍</button>
       </div>
-
-      <!-- Lista regiones -->
-      <div class="dropdown">
-        <button class="btn btn-outline-danger text-white dropdown-toggle" type="button" data-bs-toggle="dropdown"
-          aria-expanded="false">
-          Regiones
-        </button>
-        <ul class="dropdown-menu">
-          <li><button class="dropdown-item" (click)="getPokemonRegion(1, 151)">Kanto</button></li>
-          <li><button class="dropdown-item" (click)="getPokemonRegion(152, 251)">Johto</button></li>
-          <li><button class="dropdown-item" (click)="getPokemonRegion(252, 386)">Hoenn</button></li>
-          <li><button class="dropdown-item" (click)="getPokemonRegion(387, 493)">Sinnoh</button></li>
-          <li><button class="dropdown-item" (click)="getPokemonRegion(494, 649)">Teselia</button></li>
-          <li><button class="dropdown-item" (click)="getPokemonRegion(650, 721)">Kalos</button></li>
-          <li><button class="dropdown-item" (click)="getPokemonRegion(722, 809)">Alola</button></li>
-          <li><button class="dropdown-item" (click)="getPokemonRegion(810, 905)">Galar</button></li>
-          <!--  <li><button class="dropdown-item" (click)="getPokemonRegion(906, 1100)">Hisui</button></li> -->
-        </ul>
-      </div>
-
     </div>
 
   </div>

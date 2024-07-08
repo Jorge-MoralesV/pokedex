@@ -17,6 +17,7 @@ export class PokemonDetailsComponent implements OnInit {
   pokeDetails: PokemonSpecies[] = [];
   descripcion: string | undefined;
   sprite: string | undefined;
+  anteriorBtn = true;
 
   constructor(private router: Router, private aRouter: ActivatedRoute, private _pokeService: PokemonService) {
     this.id = this.aRouter.snapshot.paramMap.get('id');
@@ -26,6 +27,7 @@ export class PokemonDetailsComponent implements OnInit {
     this.getPokemonInfo();
     this.getDetails();
     this.getDescripcion();
+    this.btnAnterior();
   }
 
   getPokemonInfo() {
@@ -52,6 +54,12 @@ export class PokemonDetailsComponent implements OnInit {
         this.descripcion = 'No se encontró una descripcion al español.';
       }
     });
+  }
+
+  btnAnterior() {
+    if (Number(this.id) === 1) {
+      this.anteriorBtn = false;
+    }
   }
 
 }
