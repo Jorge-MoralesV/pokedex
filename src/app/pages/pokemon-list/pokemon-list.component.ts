@@ -12,29 +12,18 @@ export class PokemonListComponent implements OnInit {
 
   constructor(private _pokeServ: PokemonService) { }
 
-  pokemons: PokemonApi[] = [];
-  filteredPokemons: PokemonApi[] = [];
-  searchTerm: string = '';
-  public isLoading = true;
-  regions: PokemonApi[] = [];
-  sprite: string | undefined;
+  public pokemons: PokemonApi[] = [];
+  public filteredPokemons: PokemonApi[] = [];
+
+  searchId: number | undefined;
 
   ngOnInit(): void {
     this.getPoke();
-    /*    this.getRegion(); */
   }
 
   /** Primera carga de pokemon */
   getPoke() {
     for (let index = 1; index <= 151; index++) {
-      this.getPokemonInfo(index + '');
-    }
-  }
-
-  /** Listas segun region */
-  async getPokemonRegion(a: number, b: number) {
-    for (let index = a; index <= b; index++) {
-      this.pokemons = [];
       this.getPokemonInfo(index + '');
     }
   }
@@ -48,12 +37,28 @@ export class PokemonListComponent implements OnInit {
     });
   }
 
-  /* Buscar Pokemon */
-  searchPokemon() {
-    this.filteredPokemons = this.pokemons.filter((pokemon) =>
-      pokemon.name.includes(this.searchTerm.toLowerCase())
-    );
-    console.log('Pokémon filtrados:', this.filteredPokemons);
+  /** Listas segun region */
+  async getPokemonRegion(a: number, b: number) {
+    for (let index = a; index <= b; index++) {
+      this.pokemons = [];
+      this.getPokemonInfo(index + '');
+    }
   }
+
+  /* Buscar Pokemon */
+  searchPokemon(searchName: string) {
+    const soloLetras = /^[a-zA-Z]+$/;
+    if (soloLetras.test(searchName)) {
+      this.filteredPokemons = this.pokemons.filter((pokemon: { name: string | string[]; }) =>
+        pokemon.name.includes(searchName.toLowerCase())
+      )
+    } else if (this.searchId === parseInt(searchName)) {
+      this.filteredPokemons = this.pokemons.filter((pokemon: { id: any; }) =>
+        pokemon.id === this.searchId
+      )
+    }
+  }
+
+
 
 }

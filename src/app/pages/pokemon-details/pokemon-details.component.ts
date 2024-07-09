@@ -4,6 +4,7 @@ import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { PokemonService } from 'src/app/services/poke.service';
 import { PokemonApi } from 'src/app/interfaces/pokemon';
 import { PokemonSpecies } from 'src/app/interfaces/pokemonSpecies';
+import { NavbarComponent } from 'src/app/Components/Navbar/Navbar.component';
 
 @Component({
   selector: 'app-pokemon-details',
@@ -18,34 +19,32 @@ export class PokemonDetailsComponent implements OnInit {
   descripcion: string | undefined;
   sprite: string | undefined;
   anteriorBtn = true;
+  public filteredPokemons: PokemonApi[] = [];
 
-  constructor(private router: Router, private aRouter: ActivatedRoute, private _pokeService: PokemonService) {
+  constructor(private aRouter: ActivatedRoute, private _pokeService: PokemonService) {
     this.id = this.aRouter.snapshot.paramMap.get('id');
   }
 
   ngOnInit(): void {
-    this.getPokemonInfo();
-    this.getDetails();
-    this.getDescripcion();
+    this.getPokemonInfo(this.id + '');
+    this.getDetails(this.id + '');
+    this.getDescripcion(this.id + '');
     this.btnAnterior();
   }
 
-  getPokemonInfo() {
-    const pokeId = this.id + '';
+  getPokemonInfo(pokeId: string) {
     this._pokeService.getPokemonDetails(pokeId).subscribe(data => {
       this.pokemon.push(data);
     });
   }
 
-  getDetails() {
-    const pokeId = this.id + '';
+  getDetails(pokeId: string) {
     this._pokeService.getPokemonSpecie(pokeId).subscribe(data => {
       this.pokeDetails.push(data);
     })
   }
 
-  getDescripcion() {
-    const pokeId = this.id + '';
+  getDescripcion(pokeId: string) {
     this._pokeService.getPokemonSpecie(pokeId).subscribe(data => {
       let entrada = data.flavor_text_entries.find(entry => entry.language.name === 'es');
       if (entrada) {

@@ -8,7 +8,6 @@
 
 .logo {
     width: 100%;
-    text-align: center;
     cursor: pointer;
 }
 
@@ -48,12 +47,11 @@ input {
     padding: 10px 20px;
     font-size: 16px;
     cursor: pointer;
-    margin-left: 10%;
 }
 
 .mi-boton:active {
     background: linear-gradient(180deg, #B4B4B4 26.04%, #FFFFFF 77.08%);
-    border: none;
+    border-bottom: 3px transparent;
 }
 
 .dropdown-menu {
@@ -111,7 +109,7 @@ input {
 @media screen and (max-width: 1000px) {
     .search-bar {
         margin-left: 0%;
-        width: 100%;
+        width: 100% !important;
         position: static;
         float: none;
     }
@@ -144,6 +142,7 @@ input {
     .container {
         margin-top: 80px;
     }
+
 }
 
 /* @media screen and (max-width: 550px) {
