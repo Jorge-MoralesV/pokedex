@@ -1,10 +1,8 @@
-import { Sprites, Species } from './../../interfaces/pokemon';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
 import { PokemonService } from 'src/app/services/poke.service';
 import { PokemonApi } from 'src/app/interfaces/pokemon';
 import { PokemonSpecies } from 'src/app/interfaces/pokemonSpecies';
-import { NavbarComponent } from 'src/app/Components/Navbar/Navbar.component';
 
 @Component({
   selector: 'app-pokemon-details',
@@ -26,24 +24,23 @@ export class PokemonDetailsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getPokemonInfo(this.id + '');
-    this.getDetails(this.id + '');
+    this.getPokemonInfoAndDetails(this.id + '');
     this.getDescripcion(this.id + '');
     this.btnAnterior();
   }
 
-  getPokemonInfo(pokeId: string) {
-    this._pokeService.getPokemonDetails(pokeId).subscribe(data => {
-      this.pokemon.push(data);
+  getPokemonInfoAndDetails(pokeId: string) {
+    //Obtiene la informacion del pokemon
+    this._pokeService.getPokemonDetails(pokeId).subscribe(detailData => {
+      this.pokemon.push(detailData);
+      //Obtiene informacion adicional que no se encontro en el metodo anterior
+      this._pokeService.getPokemonSpecie(pokeId).subscribe(specieData => {
+        this.pokeDetails.push(specieData);
+      });
     });
   }
 
-  getDetails(pokeId: string) {
-    this._pokeService.getPokemonSpecie(pokeId).subscribe(data => {
-      this.pokeDetails.push(data);
-    })
-  }
-
+  //Obtiene la descripcion del pokemon en español
   getDescripcion(pokeId: string) {
     this._pokeService.getPokemonSpecie(pokeId).subscribe(data => {
       let entrada = data.flavor_text_entries.find(entry => entry.language.name === 'es');
@@ -55,6 +52,7 @@ export class PokemonDetailsComponent implements OnInit {
     });
   }
 
+  //Quita el boton de anterior si el id es 1
   btnAnterior() {
     if (Number(this.id) === 1) {
       this.anteriorBtn = false;

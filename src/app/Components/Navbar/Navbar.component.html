@@ -28,15 +28,11 @@
                 Regiones
             </button>
             <ul class="dropdown-menu">
-                <li><button class="dropdown-item" (click)="getPokemonRegion(1, 151)">Kanto</button></li>
-                <li><button class="dropdown-item" (click)="getPokemonRegion(152, 251)">Johto</button></li>
-                <li><button class="dropdown-item" (click)="getPokemonRegion(252, 386)">Hoenn</button></li>
-                <li><button class="dropdown-item" (click)="getPokemonRegion(387, 493)">Sinnoh</button></li>
-                <li><button class="dropdown-item" (click)="getPokemonRegion(494, 649)">Teselia</button></li>
-                <li><button class="dropdown-item" (click)="getPokemonRegion(650, 721)">Kalos</button></li>
-                <li><button class="dropdown-item" (click)="getPokemonRegion(722, 809)">Alola</button></li>
-                <li><button class="dropdown-item" (click)="getPokemonRegion(810, 905)">Galar</button></li>
-                <!--  <li><button class="dropdown-item" (click)="getPokemonRegion(906, 1100)">Hisui</button></li> -->
+                <li *ngFor="let region of regionesInfo">
+                    <button class="dropdown-item" (click)="getPokemonRegion(region.inicio, region.fin)">
+                        {{ region.nombre }}
+                    </button>
+                </li>
             </ul>
         </div>
 

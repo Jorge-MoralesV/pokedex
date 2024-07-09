@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { PokemonApi } from '../interfaces/pokemon';
 import { PokemonSpecies } from '../interfaces/pokemonSpecies';
 import { Observable, map } from 'rxjs';
+import { Regions } from '../interfaces/regiones';
 
 @Injectable({ providedIn: 'root' })
 
@@ -13,9 +14,9 @@ export class PokemonService {
 
   constructor(private http: HttpClient) { }
 
-/*   getPokemonList(limit: number, first: number): Observable<PokemonApi> {
-    return this.http.get<PokemonApi>(`${this.apiUrl}/pokemon?limit=${limit}&offset=${first}`);
-  } */
+  /*   getPokemonList(limit: number, first: number): Observable<PokemonApi> {
+      return this.http.get<PokemonApi>(`${this.apiUrl}/pokemon?limit=${limit}&offset=${first}`);
+    } */
 
   getPokemonDetails(id: string): Observable<PokemonApi> {
     return this.http.get<PokemonApi>(`${this.apiUrl}/pokemon/${id}`);
@@ -24,5 +25,9 @@ export class PokemonService {
   getPokemonSpecie(id: string): Observable<PokemonSpecies> {
     return this.http.get<PokemonSpecies>(`${this.apiUrl}/pokemon-species/${id}`);
   }
+
+  /*   getRegions(): Observable<Regions> {
+      return this.http.get<Regions>(`${this.apiUrl}/region/`);
+    } */
 
 }

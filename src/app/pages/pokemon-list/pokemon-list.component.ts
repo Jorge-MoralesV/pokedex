@@ -1,4 +1,3 @@
-import { NgOptimizedImage } from '@angular/common';
 import { PokemonApi } from '../../interfaces/pokemon';
 import { Component, OnInit } from '@angular/core';
 import { PokemonService } from 'src/app/services/poke.service';
@@ -21,7 +20,7 @@ export class PokemonListComponent implements OnInit {
     this.getPoke();
   }
 
-  /** Primera carga de pokemon */
+  /* Primera carga de pokemon */
   getPoke() {
     for (let index = 1; index <= 151; index++) {
       this.getPokemonInfo(index + '');
@@ -48,17 +47,18 @@ export class PokemonListComponent implements OnInit {
   /* Buscar Pokemon */
   searchPokemon(searchName: string) {
     const soloLetras = /^[a-zA-Z]+$/;
+    //Evalua si searchName tiene letras
     if (soloLetras.test(searchName)) {
-      this.filteredPokemons = this.pokemons.filter((pokemon: { name: string | string[]; }) =>
+      this.filteredPokemons = this.pokemons.filter(pokemon =>
         pokemon.name.includes(searchName.toLowerCase())
       )
-    } else if (this.searchId === parseInt(searchName)) {
-      this.filteredPokemons = this.pokemons.filter((pokemon: { id: any; }) =>
+      //Si tiene puros numeros
+    } else if (searchName) {
+      this.searchId = parseInt(searchName);
+      this.filteredPokemons = this.pokemons.filter(pokemon =>
         pokemon.id === this.searchId
       )
     }
   }
-
-
 
 }
