@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Regions } from 'src/app/interfaces/regiones';
 import { PokemonListComponent } from 'src/app/pages/pokemon-list/pokemon-list.component';
-import { PokemonService } from 'src/app/services/poke.service';
+import { ServiceNameService } from 'src/app/services/funciones.service';
 
 @Component({
   selector: 'app-navbar',
@@ -9,9 +9,7 @@ import { PokemonService } from 'src/app/services/poke.service';
   styleUrls: ['./Navbar.component.css'],
 })
 
-export class NavbarComponent {
-
-  constructor(/* private _pokeServ: PokemonService, private list: PokemonListComponent */) { }
+export class NavbarComponent implements OnInit {
 
   url = 'http://localhost:4200/';
 
@@ -29,18 +27,38 @@ export class NavbarComponent {
   ];
 
   searchTerm: string = '';
+  home: boolean = true;
+
+  constructor(private service: ServiceNameService) { }
+
+  ngOnInit(): void {
+this.homeOrDetails();
+  }
+
+
+  homeOrDetails() {
+    if (location.href.includes(this.url + 'pokemon-details/')) {
+      this.home = false;
+    } else if (location.href.includes(this.url)) {
+      this.home = true;
+    }
+  }
+
 
   getPokemonRegion(arg0: number, arg1: number) {
     //Llamar metodo desde PokemonListComponent
     /* this.list.getPokemonRegion(arg0, arg1); */
+    /*  this.popoverComponent!.getRegion(arg0, arg1); */
+    this.service.start.next(arg0);
+    this.service.end.next(arg1);
   }
 
   searchPokemon() {
     if (location.href.includes(this.url + 'pokemon-details/')) {
-      console.log(location.replace(this.url + 'pokemon-details/' + this.searchTerm));
+      const newUrl = this.url + 'pokemon-details/' + this.searchTerm;
+      location.replace(newUrl);
     } else if (location.href.includes(this.url)) {
-      //Llamar metodo desde PokemonListComponent
-      /*  this.list.searchPokemon(this.searchTerm); */
+      this.service.variable$.next(this.searchTerm);
     }
   }
 

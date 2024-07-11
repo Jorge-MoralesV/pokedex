@@ -55,13 +55,14 @@ input {
 }
 
 .dropdown-menu {
-  background: linear-gradient(238deg, #D9D9D9 0%, rgba(135, 135, 135, 0.445) 100%);
-  padding: 0;
+  background: linear-gradient(237deg, #D9D9D9 39%, rgba(135, 135, 135, 2.445) 86%);
+  transform: translateX(-35px);
   border: none;
+  text-align: center;
 }
 
 .dropdown-item {
-  transition: background-color 0.5s ease;
+  transition: all 0.5s ease;
   color: #FFF;
 }
 
@@ -69,4 +70,45 @@ input {
   color: #000;
   background: #b8b8b8;
   border-bottom: #333 1px solid;
+}
+
+/* MediaQueries*/
+@media screen and (max-width: 1000px) {
+  .search-bar {
+    margin-left: 0%;
+    width: 100% !important;
+    position: static;
+    float: none;
+    margin-top: 5px;
+    margin-bottom: 5px;
+  }
+
+  .logo {
+    width: 90%;
+    cursor: pointer;
+  }
+
+  .logo img {
+    width: 25%;
+  }
+
+  .mi-boton {
+    width: 100%;
+  }
+
+  .dropdown-menu {
+    transform: translateX(0);
+  }
+
+}
+
+@media screen and (max-width: 610px) {
+  .logo {
+    width: 30%;
+  }
+
+  .logo img {
+    width: 100%;
+  }
+
 }

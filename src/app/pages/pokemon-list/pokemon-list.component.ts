@@ -1,5 +1,6 @@
 import { PokemonApi } from '../../interfaces/pokemon';
 import { Component, OnInit } from '@angular/core';
+import { ServiceNameService } from 'src/app/services/funciones.service';
 import { PokemonService } from 'src/app/services/poke.service';
 
 @Component({
@@ -9,15 +10,29 @@ import { PokemonService } from 'src/app/services/poke.service';
 })
 export class PokemonListComponent implements OnInit {
 
-  constructor(private _pokeServ: PokemonService) { }
+  searchTerm: string = '';
+
+  constructor(private _pokeServ: PokemonService, private service: ServiceNameService) { }
 
   public pokemons: PokemonApi[] = [];
   public filteredPokemons: PokemonApi[] = [];
 
+
   searchId: number | undefined;
+  start: number = 0;
+  end: number = 0;
 
   ngOnInit(): void {
+
+    this.service.variable$.subscribe((valor => {
+      this.searchTerm = valor;
+      this.searchPokemon();
+    }))
+
+    this.rango();
+
     this.getPoke();
+
   }
 
   /* Primera carga de pokemon */
@@ -36,8 +51,17 @@ export class PokemonListComponent implements OnInit {
     });
   }
 
+  rango() {
+    this.service.start.subscribe((valorStart => {
+      this.start = valorStart;
+      this.service.end.subscribe((valorEnd => {
+        this.end = valorEnd;
+      }))
+    }))
+  }
+
   /** Listas segun region */
-  async getPokemonRegion(a: number, b: number) {
+  async getRegion(a: number, b: number) {
     for (let index = a; index <= b; index++) {
       this.pokemons = [];
       this.getPokemonInfo(index + '');
@@ -45,20 +69,22 @@ export class PokemonListComponent implements OnInit {
   }
 
   /* Buscar Pokemon */
-  searchPokemon(searchName: string) {
+  searchPokemon() {
     const soloLetras = /^[a-zA-Z]+$/;
     //Evalua si searchName tiene letras
-    if (soloLetras.test(searchName)) {
+    console.log(this.service.variable$);
+    if (soloLetras.test(this.searchTerm)) {
       this.filteredPokemons = this.pokemons.filter(pokemon =>
-        pokemon.name.includes(searchName.toLowerCase())
+        pokemon.name.includes(this.searchTerm.toLowerCase())
       )
       //Si tiene puros numeros
-    } else if (searchName) {
-      this.searchId = parseInt(searchName);
+    } else if (this.searchTerm) {
+      this.searchId = parseInt(this.searchTerm);
       this.filteredPokemons = this.pokemons.filter(pokemon =>
         pokemon.id === this.searchId
       )
     }
+
   }
 
 }
