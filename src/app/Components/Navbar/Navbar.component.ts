@@ -11,7 +11,7 @@ import { ServiceNameService } from 'src/app/services/funciones.service';
 
 export class NavbarComponent implements OnInit {
 
-  url = 'http://localhost:4200/';
+  url = location.href;
 
   regiones: Regions[] = [];
 
@@ -32,31 +32,28 @@ export class NavbarComponent implements OnInit {
   constructor(private service: ServiceNameService) { }
 
   ngOnInit(): void {
-this.homeOrDetails();
+    this.homeOrDetails();
   }
 
-
   homeOrDetails() {
-    if (location.href.includes(this.url + 'pokemon-details/')) {
+    if (location.href.includes('pokemon-details/')) {
       this.home = false;
-    } else if (location.href.includes(this.url)) {
+    } else {
       this.home = true;
     }
   }
 
-
   getPokemonRegion(arg0: number, arg1: number) {
-    //Llamar metodo desde PokemonListComponent
-    /* this.list.getPokemonRegion(arg0, arg1); */
-    /*  this.popoverComponent!.getRegion(arg0, arg1); */
     this.service.start.next(arg0);
     this.service.end.next(arg1);
+    console.log('Navbar: ' + arg0 + ' - ' + arg1);
   }
 
   searchPokemon() {
-    if (location.href.includes(this.url + 'pokemon-details/')) {
-      const newUrl = this.url + 'pokemon-details/' + this.searchTerm;
-      location.replace(newUrl);
+    if (location.href.includes('pokemon-details/')) {
+      const newUrl = this.url.split('/');
+      const remplazo = newUrl[newUrl.length - 1];
+      location.replace(location.href.replace(remplazo, this.searchTerm));
     } else if (location.href.includes(this.url)) {
       this.service.variable$.next(this.searchTerm);
     }

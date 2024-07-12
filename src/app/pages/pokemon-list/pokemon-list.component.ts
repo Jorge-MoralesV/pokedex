@@ -10,17 +10,16 @@ import { PokemonService } from 'src/app/services/poke.service';
 })
 export class PokemonListComponent implements OnInit {
 
-  searchTerm: string = '';
-
-  constructor(private _pokeServ: PokemonService, private service: ServiceNameService) { }
-
   public pokemons: PokemonApi[] = [];
   public filteredPokemons: PokemonApi[] = [];
 
-
   searchId: number | undefined;
+
   start: number = 0;
   end: number = 0;
+  searchTerm: string = '';
+
+  constructor(private _pokeServ: PokemonService, private service: ServiceNameService) { }
 
   ngOnInit(): void {
 
@@ -29,7 +28,24 @@ export class PokemonListComponent implements OnInit {
       this.searchPokemon();
     }))
 
-    this.rango();
+    this.service.start.subscribe((valorStart => {
+      this.start = valorStart;
+    }))
+
+    this.service.end.subscribe((valorEnd => {
+      this.end = valorEnd;
+    }))
+
+    this.service.end.subscribe(() => {
+      //Verificar si start y end tiene valor
+      if (this.start !== undefined && this.end !== undefined) {
+        this.getRegion(this.start, this.end);
+        //Si no los tiene resetea el arreglo y muestra los default
+      } else {
+        this.pokemons = [];
+        this.getPoke();
+      }
+    })
 
     this.getPoke();
 
@@ -51,15 +67,6 @@ export class PokemonListComponent implements OnInit {
     });
   }
 
-  rango() {
-    this.service.start.subscribe((valorStart => {
-      this.start = valorStart;
-      this.service.end.subscribe((valorEnd => {
-        this.end = valorEnd;
-      }))
-    }))
-  }
-
   /** Listas segun region */
   async getRegion(a: number, b: number) {
     for (let index = a; index <= b; index++) {
@@ -72,7 +79,6 @@ export class PokemonListComponent implements OnInit {
   searchPokemon() {
     const soloLetras = /^[a-zA-Z]+$/;
     //Evalua si searchName tiene letras
-    console.log(this.service.variable$);
     if (soloLetras.test(this.searchTerm)) {
       this.filteredPokemons = this.pokemons.filter(pokemon =>
         pokemon.name.includes(this.searchTerm.toLowerCase())
