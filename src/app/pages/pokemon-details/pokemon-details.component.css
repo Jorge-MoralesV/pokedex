@@ -1,27 +1,10 @@
-.navbar {
-    margin: 10px;
-    border-radius: 15px;
-    background: #F00 !important;
-    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-}
-
-.logo {
-    width: 100%;
-    text-align: center;
-    cursor: pointer;
-}
-
-.logo img {
-    width: 15%;
-}
-
 /* Tarjeta */
 .container {
     background: linear-gradient(180deg, #a7a7a7 8.85%, #535353 100%);
     border-radius: 15px;
-    margin-top: 130px;
+    margin-top: 150px;
     margin-bottom: 25px;
-    padding-bottom: 50px;
+    padding-bottom: 25px;
 }
 
 .encabezado {
@@ -253,51 +236,14 @@ h3 {
 
 @media screen and (max-width: 1000px) {
 
-    /*Navbar*/
-    .search-bar {
-        margin-left: 0%;
-        width: 100%;
-        position: static;
-        float: none;
-    }
-
-    .logo {
-        width: 90%;
-        text-align: center;
-        cursor: pointer;
-    }
-
-    .logo img {
-        width: 25%;
-    }
-
     /* Tarjeta */
     .container {
-        margin-top: 100px;
+        margin-top: 110px;
     }
 
     /* Sprite y descripcion */
     .sprite {
-        width: 20%;
-    }
-
-    .sprite img {
-        width: 100%;
-    }
-
-
-    .descripcion p {
-        font-size: 100%;
-    }
-
-}
-
-@media screen and (max-width: 770px) {
-
-    /* Sprite y descripcion */
-    .sprite {
-        width: 70%;
-        padding: 30px;
+        width: 25%;
     }
 
     .sprite img {
@@ -305,7 +251,20 @@ h3 {
     }
 
     .descripcion {
-        width: 90%;
+        width: 60%;
+    }
+
+    .descripcion p {
+        font-size: 25px;
+    }
+
+}
+
+@media screen and (max-width: 770px) {
+
+    /* Sprite y descripcion */
+    .descripcion {
+        width: 60%;
     }
 
     .descripcion p {
@@ -319,19 +278,10 @@ h3 {
         font-size: large;
     }
 
-    .general-data table thead h3 {
-        margin: 0;
-    }
-
-    .general-data table tbody h3 {
-        text-align: center;
-        margin: 0;
-    }
-
     .formas .female-icon,
     .male-icon {
-        width: 40px;
-        height: 40px;
+        width: 30px;
+        height: 30px;
         margin: 20px 20px 0px 20px;
     }
 
@@ -345,6 +295,22 @@ h3 {
         margin: 0 10px 10px 10px;
     }
 
+    /* Tipos */
+    .tipo {
+        width: 150px;
+        height: 45px;
+        padding-left: 2px;
+    }
+
+    .tipo .icon-tipo img {
+        width: 40px;
+        padding: 6px;
+    }
+
+    .tipo .text-tipo {
+        font-size: 20px !important;
+    }
+
     /*Paginacion*/
     .avance a {
         width: 40%;
@@ -356,25 +322,29 @@ h3 {
 
 @media screen and (max-width: 575px) {
 
-    .logo {
-        width: 25%;
-        margin: auto;
-    }
-
-    .logo img {
-        width: 100%;
-    }
-
     /* Tarjeta */
     .container {
-        margin-top: 75px;
+        margin-top: 80px;
         border-radius: 20px 20px 0 0;
         margin-bottom: 0;
+    }
+
+    .sprite {
+        width: 50%;
+    }
+
+    .descripcion {
+        width: 85%;
     }
 
     .formas .female-icon,
     .male-icon {
         margin: 20px 0 0 0;
+    }
+
+    .missing p {
+        font-size: 10px;
+        margin: 0 10px 10px 10px;
     }
 
 }

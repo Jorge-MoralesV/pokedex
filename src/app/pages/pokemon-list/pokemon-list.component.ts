@@ -1,4 +1,4 @@
-import { NgOptimizedImage } from '@angular/common';
+import { FuncionsService } from './../../services/funciones.service';
 import { PokemonApi } from '../../interfaces/pokemon';
 import { Component, OnInit } from '@angular/core';
 import { PokemonService } from 'src/app/services/poke.service';
@@ -10,31 +10,56 @@ import { PokemonService } from 'src/app/services/poke.service';
 })
 export class PokemonListComponent implements OnInit {
 
-  constructor(private _pokeServ: PokemonService) { }
+  public pokemons: PokemonApi[] = [];
+  public filteredPokemons: PokemonApi[] = [];
 
-  pokemons: PokemonApi[] = [];
-  filteredPokemons: PokemonApi[] = [];
+  searchId: number | undefined;
+
+  start: number = 0;
+  end: number = 0;
   searchTerm: string = '';
-  public isLoading = true;
-  regions: PokemonApi[] = [];
-  sprite: string | undefined;
+
+  cargando: boolean = true;
+
+  constructor(private _pokeServ: PokemonService, private service: FuncionsService) { }
 
   ngOnInit(): void {
+
+    this.service.variable$.subscribe((valor => {
+      this.searchTerm = valor;
+      this.searchPokemon();
+    }))
+
+    this.service.start.subscribe((valorStart => {
+      this.start = valorStart;
+    }))
+
+    this.service.end.subscribe((valorEnd => {
+      this.end = valorEnd;
+    }))
+
+    this.service.cargando.subscribe((valorCarga => {
+      this.cargando = valorCarga;
+    }))
+
+    this.service.end.subscribe(() => {
+      //Verificar si start y end tiene valor
+      if (this.start !== undefined && this.end !== undefined) {
+        this.getRegion(this.start, this.end);
+        //Si no los tiene resetea el arreglo y muestra los default
+      } else {
+        this.pokemons = [];
+        this.getPoke();
+      }
+    })
+
     this.getPoke();
-    /*    this.getRegion(); */
+
   }
 
-  /** Primera carga de pokemon */
+  /* Primera carga de pokemon */
   getPoke() {
     for (let index = 1; index <= 151; index++) {
-      this.getPokemonInfo(index + '');
-    }
-  }
-
-  /** Listas segun region */
-  async getPokemonRegion(a: number, b: number) {
-    for (let index = a; index <= b; index++) {
-      this.pokemons = [];
       this.getPokemonInfo(index + '');
     }
   }
@@ -48,12 +73,31 @@ export class PokemonListComponent implements OnInit {
     });
   }
 
+  /** Listas segun region */
+  async getRegion(a: number, b: number) {
+    for (let index = a; index <= b; index++) {
+      this.pokemons = [];
+      this.getPokemonInfo(index + '');
+    }
+  }
+
   /* Buscar Pokemon */
   searchPokemon() {
-    this.filteredPokemons = this.pokemons.filter((pokemon) =>
-      pokemon.name.includes(this.searchTerm.toLowerCase())
-    );
-    console.log('Pokémon filtrados:', this.filteredPokemons);
+    const soloLetras = /^[a-zA-Z]+$/;
+    //Evalua si searchName tiene letras
+    if (soloLetras.test(this.searchTerm)) {
+      this.filteredPokemons = this.pokemons.filter(pokemon =>
+        pokemon.name.includes(this.searchTerm.toLowerCase())
+      )
+      //Si tiene puros numeros
+    } else if (this.searchTerm) {
+      this.searchId = parseInt(this.searchTerm);
+      this.filteredPokemons = this.pokemons.filter(pokemon =>
+        pokemon.id === this.searchId
+      )
+    }
+
   }
+
 
 }

@@ -1,0 +1,114 @@
+/*---------------------- Navbar ----------------------*/
+.navbar {
+  margin: 10px;
+  border-radius: 15px;
+  background: #F00 !important;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+
+.logo {
+  width: 100%;
+  cursor: pointer;
+}
+
+.logo img {
+  width: 20%;
+}
+
+/*--------Barra de busqueda----------*/
+.search-bar {
+  display: flex;
+  background: #FFF;
+  border-radius: 50px;
+  border: none;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25) inset;
+  margin-right: 5%;
+  outline: 5px;
+  width: 350px;
+  height: 50px;
+}
+
+.pokeball {
+  width: 40px;
+  margin-left: -5px;
+  margin-right: 5px;
+}
+
+input {
+  border: none;
+  outline: none !important;
+  width: 100%;
+}
+
+/* ---------Regiones boton------------ */
+.mi-boton {
+  background: linear-gradient(180deg, #FFFFFF 26.04%, #B4B4B4 77.08%);
+  border-bottom: 3px solid #333;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.mi-boton:active {
+  background: linear-gradient(180deg, #B4B4B4 26.04%, #FFFFFF 77.08%);
+  border-bottom: 3px transparent;
+}
+
+.dropdown-menu {
+  background: linear-gradient(237deg, #D9D9D9 39%, rgba(135, 135, 135, 2.445) 86%);
+  transform: translateX(-35px);
+  border: none;
+  text-align: center;
+}
+
+.dropdown-item {
+  transition: all 0.5s ease;
+  color: #FFF;
+}
+
+.dropdown-item:hover {
+  color: #000;
+  background: #b8b8b8;
+  border-bottom: #333 1px solid;
+}
+
+/* MediaQueries*/
+@media screen and (max-width: 1000px) {
+  .search-bar {
+    margin-left: 0%;
+    width: 100% !important;
+    position: static;
+    float: none;
+    margin-top: 5px;
+    margin-bottom: 5px;
+  }
+
+  .logo {
+    width: 90%;
+    cursor: pointer;
+  }
+
+  .logo img {
+    width: 25%;
+  }
+
+  .mi-boton {
+    width: 100%;
+  }
+
+  .dropdown-menu {
+    transform: translateX(0);
+  }
+
+}
+
+@media screen and (max-width: 610px) {
+  .logo {
+    width: 30%;
+  }
+
+  .logo img {
+    width: 100%;
+  }
+
+}

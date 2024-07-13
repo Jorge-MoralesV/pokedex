@@ -11,12 +11,16 @@ import { RouterModule } from '@angular/router';
 
 import { FormsModule } from '@angular/forms';
 import { NgOptimizedImage } from '@angular/common';
+import { NavbarComponent } from './Components/Navbar/Navbar.component';
+import { LoadingComponent } from './Components/Loading/Loading.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     PokemonListComponent,
-    PokemonDetailsComponent
+    PokemonDetailsComponent,
+    NavbarComponent,
+    LoadingComponent,
   ],
   imports: [
     BrowserModule,
@@ -24,7 +28,7 @@ import { NgOptimizedImage } from '@angular/common';
     HttpClientModule,
     RouterModule,
     FormsModule,
-    NgOptimizedImage
+    NgOptimizedImage,
   ],
   providers: [],
   bootstrap: [AppComponent]

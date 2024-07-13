@@ -1,134 +1,85 @@
-<!-- Navbar estatico -->
-<nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top">
-  <div class="container-fluid">
-
-    <!-- Logo -->
-    <div class="logo"><img routerLink="" routerLinkActive="active" class="navbar-brand"
-        src=".\assets\imgs\pokedex-logo.png" alt=""></div>
-
-
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-
-      <!-- Busqueda -->
-      <div class="d-flex form-control search-bar">
-        <img class="pokeball" src=".\assets\imgs\pokeball-search.png" alt="">
-        <input [(ngModel)]="searchTerm" class="me-2" type="text" placeholder="Buscar..." aria-label="Search" #txtInput>
-        <button class="btn btn-light" (click)="searchPokemon()">🔍</button>
-      </div>
-
-      <!-- Lista regiones -->
-      <div class="dropdown">
-        <button class="btn btn-outline-danger text-white dropdown-toggle" type="button" data-bs-toggle="dropdown"
-          aria-expanded="false">
-          Regiones
-        </button>
-        <ul class="dropdown-menu">
-          <li><button class="dropdown-item" (click)="getPokemonRegion(1, 151)">Kanto</button></li>
-          <li><button class="dropdown-item" (click)="getPokemonRegion(152, 251)">Johto</button></li>
-          <li><button class="dropdown-item" (click)="getPokemonRegion(252, 386)">Hoenn</button></li>
-          <li><button class="dropdown-item" (click)="getPokemonRegion(387, 493)">Sinnoh</button></li>
-          <li><button class="dropdown-item" (click)="getPokemonRegion(494, 649)">Teselia</button></li>
-          <li><button class="dropdown-item" (click)="getPokemonRegion(650, 721)">Kalos</button></li>
-          <li><button class="dropdown-item" (click)="getPokemonRegion(722, 809)">Alola</button></li>
-          <li><button class="dropdown-item" (click)="getPokemonRegion(810, 905)">Galar</button></li>
-          <!--  <li><button class="dropdown-item" (click)="getPokemonRegion(906, 1100)">Hisui</button></li> -->
-        </ul>
-      </div>
-
-    </div>
-
-  </div>
-</nav>
+<!-- Navbar -->
+<app-navbar></app-navbar>
 
 <!-- Lista -->
 <div class="bg">
+  <!-- Fondo -->
+</div>
+
+<div *ngIf="cargando;else templateName">
+  <app-loading></app-loading>
+</div>
+
+<ng-template #templateName>
   <div class="container">
     <div class="row">
       <div class="card text-center m-2 shadow-sm" *ngFor="let poke of filteredPokemons">
         <div class="card-body">
 
-          <!-- Id pokemon -->
-          <h4><strong>N° {{poke.id}}</strong></h4>
+          <div class="sec-1">
+            <!-- Id pokemon -->
+            <h4><strong>N° {{poke.id}}</strong></h4>
 
-          <!-- Fondo sprite pokemon -->
-          <img [ngClass]="{
-                  'bug-type-card': poke.types[0].type.name=='bug',
-                  'grass-type-card': poke.types[0].type.name == 'grass',
-                  'fairy-type-card': poke.types[0].type.name == 'fairy',
-                  'normal-type-card': poke.types[0].type.name == 'normal',
-                  'dragon-type-card': poke.types[0].type.name == 'dragon',
-                  'psychic-type-card': poke.types[0].type.name=='psychic',
-                  'ghost-type-card': poke.types[0].type.name == 'ghost',
-                  'ground-type-card': poke.types[0].type.name == 'ground',
-                  'steel-type-card': poke.types[0].type.name == 'steel',
-                  'fire-type-card': poke.types[0].type.name=='fire',
-                  'flying-type-card': poke.types[0].type.name == 'flying',
-                  'ice-type-card': poke.types[0].type.name == 'ice',
-                  'electric-type-card': poke.types[0].type.name == 'electric',
-                  'rock-type-card': poke.types[0].type.name == 'rock',
-                  'dark-type-card': poke.types[0].type.name == 'dark',
-                  'water-type-card': poke.types[0].type.name=='water',
-                  'fighting-type-card': poke.types[0].type.name == 'fighting',
-                  'poison-type-card': poke.types[0].type.name == 'poison',
+            <!-- Fondo sprite pokemon -->
+            <img [ngClass]="{
+                'bug-type-card': poke.types[0].type.name=='bug',
+                'grass-type-card': poke.types[0].type.name == 'grass',
+                'fairy-type-card': poke.types[0].type.name == 'fairy',
+                'normal-type-card': poke.types[0].type.name == 'normal',
+                'dragon-type-card': poke.types[0].type.name == 'dragon',
+                'psychic-type-card': poke.types[0].type.name=='psychic',
+                'ghost-type-card': poke.types[0].type.name == 'ghost',
+                'ground-type-card': poke.types[0].type.name == 'ground',
+                'steel-type-card': poke.types[0].type.name == 'steel',
+                'fire-type-card': poke.types[0].type.name=='fire',
+                'flying-type-card': poke.types[0].type.name == 'flying',
+                'ice-type-card': poke.types[0].type.name == 'ice',
+                'electric-type-card': poke.types[0].type.name == 'electric',
+                'rock-type-card': poke.types[0].type.name == 'rock',
+                'dark-type-card': poke.types[0].type.name == 'dark',
+                'water-type-card': poke.types[0].type.name=='water',
+                'fighting-type-card': poke.types[0].type.name == 'fighting',
+                'poison-type-card': poke.types[0].type.name == 'poison',
               }" [ngSrc]="poke.sprites.front_default!" alt={{poke.name}} width="150" height="150" priority>
-
-          <h5 class="card-title mt-2">{{poke.name | titlecase}}</h5>
-
-          <div>
-            <!-- Tipo -->
-            <div class="icons-content div-icon m-1" *ngFor="let types of poke.types" [ngSwitch]="1">
-              <img src=".\assets\imgs\icons\bug.svg" class="bug-type-card" *ngSwitchCase="types.type.name=='bug'"
-                alt="{{types.type.name}}">
-              <img src=".\assets\imgs\icons\grass.svg" class="grass-type-card" *ngSwitchCase="types.type.name=='grass'"
-                alt="{{types.type.name}}">
-              <img src=".\assets\imgs\icons\fairy.svg" class="fairy-type-card" *ngSwitchCase="types.type.name=='fairy'"
-                alt="{{types.type.name}}">
-              <img src=".\assets\imgs\icons\normal.svg" class="normal-type-card"
-                *ngSwitchCase="types.type.name=='normal'" alt="{{types.type.name}}">
-              <img src=".\assets\imgs\icons\dragon.svg" class="dragon-type-card"
-                *ngSwitchCase="types.type.name=='dragon'" alt="{{types.type.name}}">
-              <img src=".\assets\imgs\icons\psychic.svg" class="psychic-type-card"
-                *ngSwitchCase="types.type.name=='psychic'" alt="{{types.type.name}}">
-              <img src=".\assets\imgs\icons\ghost.svg" class="ghost-type-card" *ngSwitchCase="types.type.name=='ghost'"
-                alt="{{types.type.name}}">
-              <img src=".\assets\imgs\icons\ground.svg" class="ground-type-card"
-                *ngSwitchCase="types.type.name=='ground'" alt="{{types.type.name}}">
-              <img src=".\assets\imgs\icons\steel.svg" class="steel-type-card" *ngSwitchCase="types.type.name=='steel'"
-                alt="{{types.type.name}}">
-              <img src=".\assets\imgs\icons\fire.svg" class="fire-type-card" *ngSwitchCase="types.type.name=='fire'"
-                alt="{{types.type.name}}">
-              <img src=".\assets\imgs\icons\flying.svg" class="flying-type-card"
-                *ngSwitchCase="types.type.name=='flying'" alt="{{types.type.name}}">
-              <img src=".\assets\imgs\icons\ice.svg" class="ice-type-card" *ngSwitchCase="types.type.name=='ice'"
-                alt="{{types.type.name}}">
-              <img src=".\assets\imgs\icons\electric.svg" class="electric-type-card"
-                *ngSwitchCase="types.type.name=='electric'" alt="{{types.type.name}}">
-              <img src=".\assets\imgs\icons\rock.svg" class="rock-type-card" *ngSwitchCase="types.type.name=='rock'"
-                alt="{{types.type.name}}">
-              <img src=".\assets\imgs\icons\dark.svg" class="dark-type-card" *ngSwitchCase="types.type.name=='dark'"
-                alt="{{types.type.name}}">
-              <img src=".\assets\imgs\icons\water.svg" class="water-type-card" *ngSwitchCase="types.type.name=='water'"
-                alt="{{types.type.name}}">
-              <img src=".\assets\imgs\icons\fighting.svg" class="fighting-type-card"
-                *ngSwitchCase="types.type.name=='fighting'" alt="{{types.type.name}}">
-              <img src=".\assets\imgs\icons\poison.svg" class="poison-type-card"
-                *ngSwitchCase="types.type.name=='poison'" alt="{{types.type.name}}">
-              <div *ngSwitchDefault></div>
-            </div>
           </div>
 
-          <button [routerLink]="['/pokemon-details', poke.id]" type="button" class="btn btn-dark">
-            Detalles
-          </button>
+          <div class="sec-2">
+
+            <h5 class="card-title mt-2">{{poke.name | titlecase}}</h5>
+
+            <div>
+              <!-- Tipo -->
+              <div class="icons-content div-icon m-1" *ngFor="let types of poke.types" [ngSwitch]="1">
+                <img src=".\assets\imgs\icons\bug.svg" class="bug-type-card" *ngSwitchCase="types.type.name=='bug'"alt="{{types.type.name}}">
+                <img src=".\assets\imgs\icons\grass.svg" class="grass-type-card" *ngSwitchCase="types.type.name=='grass'" alt="{{types.type.name}}">
+                <img src=".\assets\imgs\icons\fairy.svg" class="fairy-type-card" *ngSwitchCase="types.type.name=='fairy'" alt="{{types.type.name}}">
+                <img src=".\assets\imgs\icons\normal.svg" class="normal-type-card" *ngSwitchCase="types.type.name=='normal'" alt="{{types.type.name}}">
+                <img src=".\assets\imgs\icons\dragon.svg" class="dragon-type-card" *ngSwitchCase="types.type.name=='dragon'" alt="{{types.type.name}}">
+                <img src=".\assets\imgs\icons\psychic.svg" class="psychic-type-card" *ngSwitchCase="types.type.name=='psychic'" alt="{{types.type.name}}">
+                <img src=".\assets\imgs\icons\ghost.svg" class="ghost-type-card" *ngSwitchCase="types.type.name=='ghost'" alt="{{types.type.name}}">
+                <img src=".\assets\imgs\icons\ground.svg" class="ground-type-card" *ngSwitchCase="types.type.name=='ground'" alt="{{types.type.name}}">
+                <img src=".\assets\imgs\icons\steel.svg" class="steel-type-card" *ngSwitchCase="types.type.name=='steel'" alt="{{types.type.name}}">
+                <img src=".\assets\imgs\icons\fire.svg" class="fire-type-card" *ngSwitchCase="types.type.name=='fire'"alt="{{types.type.name}}">
+                <img src=".\assets\imgs\icons\flying.svg" class="flying-type-card" *ngSwitchCase="types.type.name=='flying'" alt="{{types.type.name}}">
+                <img src=".\assets\imgs\icons\ice.svg" class="ice-type-card" *ngSwitchCase="types.type.name=='ice'"alt="{{types.type.name}}">
+                <img src=".\assets\imgs\icons\electric.svg" class="electric-type-card" *ngSwitchCase="types.type.name=='electric'" alt="{{types.type.name}}">
+                <img src=".\assets\imgs\icons\rock.svg" class="rock-type-card" *ngSwitchCase="types.type.name=='rock'"alt="{{types.type.name}}">
+                <img src=".\assets\imgs\icons\dark.svg" class="dark-type-card" *ngSwitchCase="types.type.name=='dark'"alt="{{types.type.name}}">
+                <img src=".\assets\imgs\icons\water.svg" class="water-type-card" *ngSwitchCase="types.type.name=='water'" alt="{{types.type.name}}">
+                <img src=".\assets\imgs\icons\fighting.svg" class="fighting-type-card" *ngSwitchCase="types.type.name=='fighting'" alt="{{types.type.name}}">
+                <img src=".\assets\imgs\icons\poison.svg" class="poison-type-card" *ngSwitchCase="types.type.name=='poison'" alt="{{types.type.name}}">
+                <div *ngSwitchDefault></div>
+              </div>
+            </div>
+
+            <button [routerLink]="['/pokemon-details', poke.id]" type="button" class="btn btn-dark">
+              Detalles
+            </button>
+
+          </div>
 
         </div>
       </div>
-
     </div>
-
   </div>
-</div>
+</ng-template>

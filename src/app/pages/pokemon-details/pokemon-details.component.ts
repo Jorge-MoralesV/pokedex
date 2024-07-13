@@ -1,6 +1,5 @@
-import { Sprites, Species } from './../../interfaces/pokemon';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
 import { PokemonService } from 'src/app/services/poke.service';
 import { PokemonApi } from 'src/app/interfaces/pokemon';
 import { PokemonSpecies } from 'src/app/interfaces/pokemonSpecies';
@@ -12,38 +11,38 @@ import { PokemonSpecies } from 'src/app/interfaces/pokemonSpecies';
 })
 
 export class PokemonDetailsComponent implements OnInit {
-  id: string | null;
+  
   pokemon: PokemonApi[] = [];
   pokeDetails: PokemonSpecies[] = [];
+  public filteredPokemons: PokemonApi[] = [];
+  id: string | null;
   descripcion: string | undefined;
   sprite: string | undefined;
+  anteriorBtn = true;
 
-  constructor(private router: Router, private aRouter: ActivatedRoute, private _pokeService: PokemonService) {
+  constructor(private aRouter: ActivatedRoute, private _pokeService: PokemonService) {
     this.id = this.aRouter.snapshot.paramMap.get('id');
   }
 
   ngOnInit(): void {
-    this.getPokemonInfo();
-    this.getDetails();
-    this.getDescripcion();
+    this.getPokemonInfoAndDetails(this.id + '');
+    this.getDescripcion(this.id + '');
+    this.pokeById0();
   }
 
-  getPokemonInfo() {
-    const pokeId = this.id + '';
-    this._pokeService.getPokemonDetails(pokeId).subscribe(data => {
-      this.pokemon.push(data);
+  getPokemonInfoAndDetails(pokeId: string) {
+    //Obtiene la informacion del pokemon
+    this._pokeService.getPokemonDetails(pokeId).subscribe(detailData => {
+      this.pokemon.push(detailData);
+      //Obtiene informacion adicional que no se encontro en el metodo anterior
+      this._pokeService.getPokemonSpecie(pokeId).subscribe(specieData => {
+        this.pokeDetails.push(specieData);
+      });
     });
   }
 
-  getDetails() {
-    const pokeId = this.id + '';
-    this._pokeService.getPokemonSpecie(pokeId).subscribe(data => {
-      this.pokeDetails.push(data);
-    })
-  }
-
-  getDescripcion() {
-    const pokeId = this.id + '';
+  //Obtiene la descripcion del pokemon en español
+  getDescripcion(pokeId: string) {
     this._pokeService.getPokemonSpecie(pokeId).subscribe(data => {
       let entrada = data.flavor_text_entries.find(entry => entry.language.name === 'es');
       if (entrada) {
@@ -52,6 +51,13 @@ export class PokemonDetailsComponent implements OnInit {
         this.descripcion = 'No se encontró una descripcion al español.';
       }
     });
+  }
+
+  //Quita el boton de anterior si el id es 1
+  pokeById0() {
+    if (Number(this.id) === 1) {
+      this.anteriorBtn = false;
+    }
   }
 
 }
