@@ -1,7 +1,6 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Regions } from 'src/app/interfaces/regiones';
-import { PokemonListComponent } from 'src/app/pages/pokemon-list/pokemon-list.component';
-import { ServiceNameService } from 'src/app/services/funciones.service';
+import { FuncionsService } from 'src/app/services/funciones.service';
 
 @Component({
   selector: 'app-navbar',
@@ -29,7 +28,7 @@ export class NavbarComponent implements OnInit {
   searchTerm: string = '';
   home: boolean = true;
 
-  constructor(private service: ServiceNameService) { }
+  constructor(private service: FuncionsService) { }
 
   ngOnInit(): void {
     this.homeOrDetails();
@@ -46,7 +45,6 @@ export class NavbarComponent implements OnInit {
   getPokemonRegion(arg0: number, arg1: number) {
     this.service.start.next(arg0);
     this.service.end.next(arg1);
-    console.log('Navbar: ' + arg0 + ' - ' + arg1);
   }
 
   searchPokemon() {

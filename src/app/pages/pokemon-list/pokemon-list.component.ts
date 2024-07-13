@@ -1,6 +1,6 @@
+import { FuncionsService } from './../../services/funciones.service';
 import { PokemonApi } from '../../interfaces/pokemon';
 import { Component, OnInit } from '@angular/core';
-import { ServiceNameService } from 'src/app/services/funciones.service';
 import { PokemonService } from 'src/app/services/poke.service';
 
 @Component({
@@ -19,7 +19,9 @@ export class PokemonListComponent implements OnInit {
   end: number = 0;
   searchTerm: string = '';
 
-  constructor(private _pokeServ: PokemonService, private service: ServiceNameService) { }
+  cargando: boolean = true;
+
+  constructor(private _pokeServ: PokemonService, private service: FuncionsService) { }
 
   ngOnInit(): void {
 
@@ -34,6 +36,10 @@ export class PokemonListComponent implements OnInit {
 
     this.service.end.subscribe((valorEnd => {
       this.end = valorEnd;
+    }))
+
+    this.service.cargando.subscribe((valorCarga => {
+      this.cargando = valorCarga;
     }))
 
     this.service.end.subscribe(() => {
@@ -92,5 +98,6 @@ export class PokemonListComponent implements OnInit {
     }
 
   }
+
 
 }

@@ -11,13 +11,14 @@ import { PokemonSpecies } from 'src/app/interfaces/pokemonSpecies';
 })
 
 export class PokemonDetailsComponent implements OnInit {
-  id: string | null;
+  
   pokemon: PokemonApi[] = [];
   pokeDetails: PokemonSpecies[] = [];
+  public filteredPokemons: PokemonApi[] = [];
+  id: string | null;
   descripcion: string | undefined;
   sprite: string | undefined;
   anteriorBtn = true;
-  public filteredPokemons: PokemonApi[] = [];
 
   constructor(private aRouter: ActivatedRoute, private _pokeService: PokemonService) {
     this.id = this.aRouter.snapshot.paramMap.get('id');
@@ -26,7 +27,7 @@ export class PokemonDetailsComponent implements OnInit {
   ngOnInit(): void {
     this.getPokemonInfoAndDetails(this.id + '');
     this.getDescripcion(this.id + '');
-    this.btnAnterior();
+    this.pokeById0();
   }
 
   getPokemonInfoAndDetails(pokeId: string) {
@@ -53,7 +54,7 @@ export class PokemonDetailsComponent implements OnInit {
   }
 
   //Quita el boton de anterior si el id es 1
-  btnAnterior() {
+  pokeById0() {
     if (Number(this.id) === 1) {
       this.anteriorBtn = false;
     }
