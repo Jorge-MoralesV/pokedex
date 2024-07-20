@@ -1,3 +1,4 @@
+import { FlavorTextEntry } from './../../interfaces/pokemonSpecies';
 import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { PokemonService } from 'src/app/services/poke.service';
@@ -11,14 +12,16 @@ import { PokemonSpecies } from 'src/app/interfaces/pokemonSpecies';
 })
 
 export class PokemonDetailsComponent implements OnInit {
-  
+
   pokemon: PokemonApi[] = [];
   pokeDetails: PokemonSpecies[] = [];
   public filteredPokemons: PokemonApi[] = [];
   id: string | null;
   descripcion: string | undefined;
+  objetos: string[] = [];
   sprite: string | undefined;
   anteriorBtn = true;
+  haveItem = true;
 
   constructor(private aRouter: ActivatedRoute, private _pokeService: PokemonService) {
     this.id = this.aRouter.snapshot.paramMap.get('id');

@@ -47,22 +47,22 @@ export class PokemonListComponent implements OnInit {
       if (this.start !== undefined && this.end !== undefined) {
         this.getRegion(this.start, this.end);
         //Si no los tiene resetea el arreglo y muestra los default
-      } else {
+      }/*  else {
         this.pokemons = [];
         this.getPoke();
-      }
+      } */
     })
 
-    this.getPoke();
+    /* this.getPoke(); */
 
   }
 
   /* Primera carga de pokemon */
-  getPoke() {
-    for (let index = 1; index <= 151; index++) {
-      this.getPokemonInfo(index + '');
-    }
-  }
+  /*   getPoke() {
+      for (let index = 1; index <= 151; index++) {
+        this.getPokemonInfo(index + '');
+      }
+    } */
 
   /** Lista los pokemon filtrados */
   getPokemonInfo(index: string) {
@@ -75,8 +75,8 @@ export class PokemonListComponent implements OnInit {
 
   /** Listas segun region */
   async getRegion(a: number, b: number) {
+    this.pokemons = [];
     for (let index = a; index <= b; index++) {
-      this.pokemons = [];
       this.getPokemonInfo(index + '');
     }
   }
@@ -95,6 +95,8 @@ export class PokemonListComponent implements OnInit {
       this.filteredPokemons = this.pokemons.filter(pokemon =>
         pokemon.id === this.searchId
       )
+    } else {
+      this.getRegion(1, 151);
     }
 
   }

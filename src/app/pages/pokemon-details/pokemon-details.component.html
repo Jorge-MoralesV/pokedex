@@ -15,7 +15,7 @@
                 <h2 class="name">Nombre: {{poke.name | titlecase}}, {{pokeDesc.genera[5].genus}}</h2>
             </div>
             <button type="button" class="btn btn-danger btn-close" routerLink="/"></button>
-            
+
         </div>
 
         <div class="contenido row mt-3">
@@ -53,8 +53,8 @@
         <div class="tipos">
             <div class="tipo" *ngFor="let types of poke.types" [ngSwitch]="1">
                 <div class="icon-tipo">
-                    <img src=".\assets\imgs\icons\bug.svg" class="bug-type-card"
-                        *ngSwitchCase="types.type.name=='bug'" alt="{{types.type.name}}">
+                    <img src=".\assets\imgs\icons\bug.svg" class="bug-type-card" *ngSwitchCase="types.type.name=='bug'"
+                        alt="{{types.type.name}}">
                     <img src=".\assets\imgs\icons\grass.svg" class="grass-type-card"
                         *ngSwitchCase="types.type.name=='grass'" alt="{{types.type.name}}">
                     <img src=".\assets\imgs\icons\fairy.svg" class="fairy-type-card"
@@ -75,8 +75,8 @@
                         *ngSwitchCase="types.type.name=='fire'" alt="{{types.type.name}}">
                     <img src=".\assets\imgs\icons\flying.svg" class="flying-type-card"
                         *ngSwitchCase="types.type.name=='flying'" alt="{{types.type.name}}">
-                    <img src=".\assets\imgs\icons\ice.svg" class="ice-type-card" 
-                        *ngSwitchCase="types.type.name=='ice'" alt="{{types.type.name}}">
+                    <img src=".\assets\imgs\icons\ice.svg" class="ice-type-card" *ngSwitchCase="types.type.name=='ice'"
+                        alt="{{types.type.name}}">
                     <img src=".\assets\imgs\icons\electric.svg" class="electric-type-card"
                         *ngSwitchCase="types.type.name=='electric'" alt="{{types.type.name}}">
                     <img src=".\assets\imgs\icons\rock.svg" class="rock-type-card"
@@ -111,7 +111,7 @@
                         <h3>Habilidades:</h3>
                     </thead>
                     <tbody *ngFor="let ability of poke.abilities">
-                        <h3>{{ability.ability.name}}</h3>
+                        <td>{{ability.ability.name}}</td>
                     </tbody>
                 </table>
 
@@ -119,15 +119,16 @@
                     <thead>
                         <h3>Objetos equipados:</h3>
                     </thead>
-                    <tbody *ngFor="let item of poke.held_items">
-                        <div *ngIf="poke.held_items.length <= 0; else noitem">
-                            <h3>No se encontró ningún ítem.</h3>
-                        </div>
-                        <ng-template #noitem>
-                            <h3>{{ item.item.name }}</h3>
-                        </ng-template>
-                    </tbody>
-
+                    <ng-container *ngIf="poke.held_items.length > 0; else noitem">
+                        <tr *ngFor="let item of poke.held_items">
+                            <td>{{ item.item.name }}</td>
+                        </tr>
+                    </ng-container>
+                    <ng-template #noitem>
+                        <tr>
+                            <td>Este Pokémon no porta ningún ítem.</td>
+                        </tr>
+                    </ng-template>
                 </table>
             </div>
         </div>
@@ -149,7 +150,9 @@
 
             <div class="genders">
                 <!-- Tooltip -->
-                <a class="info-formas" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="custom-tooltip" title="Los Pokémon que no cuenten con diferencias de genero, se mostrara un Missingno en su lugar.">?</a>
+                <a class="info-formas" data-bs-toggle="tooltip" data-bs-placement="top"
+                    data-bs-custom-class="custom-tooltip"
+                    title="Los Pokémon que no cuenten con diferencias de genero, se mostrara un Missingno en su lugar.">?</a>
                 <div class="male-icon">
                     <i class="fa-solid fa-mars"></i>
                 </div>
@@ -180,7 +183,8 @@
         </ng-template>
 
         <div class="avance">
-            <a target="_parent" [routerLink]="['/pokemon-details', poke.id-1]" type="button" [className]="anteriorBtn ? 'btn btn-dark' : 'd-none'">
+            <a target="_parent" [routerLink]="['/pokemon-details', poke.id-1]" type="button"
+                [className]="anteriorBtn ? 'btn btn-dark' : 'd-none'">
                 Pokémon Anterior
             </a>
             <a target="_parent" [routerLink]="['/pokemon-details', poke.id+1]" type="button" class="btn btn-dark">

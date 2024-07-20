@@ -48,10 +48,12 @@ export class NavbarComponent implements OnInit {
   }
 
   searchPokemon() {
+    //Si se encuntra en los detalles del pokemon
     if (location.href.includes('pokemon-details/')) {
       const newUrl = this.url.split('/');
       const remplazo = newUrl[newUrl.length - 1];
       location.replace(location.href.replace(remplazo, this.searchTerm));
+      //Si se encuentra en la lista de pokemons
     } else if (location.href.includes(this.url)) {
       this.service.variable$.next(this.searchTerm);
     }

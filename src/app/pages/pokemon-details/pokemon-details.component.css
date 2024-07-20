@@ -116,6 +116,10 @@ h3 {
     padding-left: 10px;
 }
 
+td {
+    text-align: center;
+}
+
 .general-data table tbody h3 {
     text-align: center;
     width: 100%;
