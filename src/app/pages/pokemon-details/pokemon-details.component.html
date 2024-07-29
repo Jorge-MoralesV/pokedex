@@ -24,7 +24,7 @@
                 <div *ngFor="let type of poke.types; let i = index">
                     <div *ngIf="i===0" class="sprite">
                         <img [style.background]="'linear-gradient(135deg, ' + tiposColores[poke.types[0].type.name] + ' 0%, ' + tiposColores[poke.types[1].type.name] + ' 100%)'"
-                            src={{poke.sprites.front_default}} alt={{poke.name}} class="default-card sprite-bg">
+                            src={{poke.sprites.front_default}} alt={{poke.name}} class="default-card">
                     </div>
                 </div>
             </div>
