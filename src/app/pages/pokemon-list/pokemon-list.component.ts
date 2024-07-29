@@ -2,6 +2,7 @@ import { FuncionsService } from './../../services/funciones.service';
 import { PokemonApi } from '../../interfaces/pokemon';
 import { Component, OnInit } from '@angular/core';
 import { PokemonService } from 'src/app/services/poke.service';
+import { TiposColores } from 'src/app/interfaces/colores';
 
 @Component({
   selector: 'app-pokemon-list',
@@ -9,6 +10,29 @@ import { PokemonService } from 'src/app/services/poke.service';
   styleUrls: ['./pokemon-list.component.css']
 })
 export class PokemonListComponent implements OnInit {
+
+  // En tu componente TypeScript
+  tiposColores: TiposColores = {
+    bug: '#91C12F',
+    grass: '#63BC5A',
+    fairy: '#EC8FE6',
+    normal: '#919AA2',
+    dragon: '#0B6DC3',
+    psychic: '#FA7179',
+    ghost: '#5269AD',
+    ground: '#D97845',
+    steel: '#5A8EA2',
+    fire: '#FF9D55',
+    flying: '#89AAE3',
+    ice: '#73CEC0',
+    electric: '#F4D23C',
+    rock: '#C5B78C',
+    dark: '#5A5465',
+    water: '#5090D6',
+    fighting: '#CE416B',
+    poison: '#B567CE'
+  };
+
 
   public pokemons: PokemonApi[] = [];
   public filteredPokemons: PokemonApi[] = [];

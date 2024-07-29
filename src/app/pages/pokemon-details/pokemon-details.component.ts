@@ -1,9 +1,9 @@
-import { FlavorTextEntry } from './../../interfaces/pokemonSpecies';
 import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { PokemonService } from 'src/app/services/poke.service';
 import { PokemonApi } from 'src/app/interfaces/pokemon';
 import { PokemonSpecies } from 'src/app/interfaces/pokemonSpecies';
+import { TiposColores } from 'src/app/interfaces/colores';
 
 @Component({
   selector: 'app-pokemon-details',
@@ -13,15 +13,33 @@ import { PokemonSpecies } from 'src/app/interfaces/pokemonSpecies';
 
 export class PokemonDetailsComponent implements OnInit {
 
+  tiposColores: TiposColores = {
+    bug: '#91C12F',
+    grass: '#63BC5A',
+    fairy: '#EC8FE6',
+    normal: '#919AA2',
+    dragon: '#0B6DC3',
+    psychic: '#FA7179',
+    ghost: '#5269AD',
+    ground: '#D97845',
+    steel: '#5A8EA2',
+    fire: '#FF9D55',
+    flying: '#89AAE3',
+    ice: '#73CEC0',
+    electric: '#F4D23C',
+    rock: '#C5B78C',
+    dark: '#5A5465',
+    water: '#5090D6',
+    fighting: '#CE416B',
+    poison: '#B567CE'
+  };
+
   pokemon: PokemonApi[] = [];
   pokeDetails: PokemonSpecies[] = [];
-  public filteredPokemons: PokemonApi[] = [];
+  filteredPokemons: PokemonApi[] = [];
   id: string | null;
   descripcion: string | undefined;
-  objetos: string[] = [];
-  sprite: string | undefined;
   anteriorBtn = true;
-  haveItem = true;
 
   constructor(private aRouter: ActivatedRoute, private _pokeService: PokemonService) {
     this.id = this.aRouter.snapshot.paramMap.get('id');
