@@ -155,7 +155,7 @@ td {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 50px 50px;
+    margin: 60px 25px;
     border-radius: 50%;
 }
 
@@ -237,6 +237,13 @@ td {
         margin: 0;
     }
 
+    .formas .female-icon,
+    .male-icon {
+        width: 30px;
+        height: 30px;
+        margin:  45px 25px;
+    }
+
 }
 
 @media screen and (max-width: 1000px) {
@@ -256,6 +263,13 @@ td {
 
     .descripcion p {
         font-size: 25px;
+    }
+
+    .formas .female-icon,
+    .male-icon {
+        width: 30px;
+        height: 30px;
+        margin: 20px 5px 20px 5px;
     }
 
 }
@@ -282,7 +296,7 @@ td {
     .male-icon {
         width: 30px;
         height: 30px;
-        margin: 20px 20px 0px 20px;
+        margin: 20px 20px 20px 20px;
     }
 
     .formas .forma-normal,
@@ -335,7 +349,7 @@ td {
 
     .formas .female-icon,
     .male-icon {
-        margin: 20px 0 0 0;
+        margin: 10px 0 10px 0;
     }
 
     .missing p {
