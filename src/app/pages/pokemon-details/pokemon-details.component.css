@@ -27,17 +27,22 @@
 }
 
 .sprite {
-    width: 230px;
+    width: 250px;
     border-radius: 30px;
+}
+
+.sprite-bg {
+    margin-right: 15px !important;
+    padding: 0;
 }
 
 .sprite img {
     width: 100%;
 }
 
+
 .descripcion {
     width: 70%;
-    margin-left: 10px;
     margin-top: 10px;
     margin-bottom: 10px;
     background-image: url("/assets/imgs/ps_neutral.webp");
@@ -101,6 +106,10 @@
     display: inline-flex;
     flex-wrap: wrap;
     justify-content: center;
+}
+
+.general-data table thead h3 {
+    margin: 0;
 }
 
 .info h3 {
@@ -233,15 +242,11 @@ td {
         font-size: large;
     }
 
-    .general-data table thead h3 {
-        margin: 0;
-    }
-
     .formas .female-icon,
     .male-icon {
         width: 30px;
         height: 30px;
-        margin:  45px 25px;
+        margin: 45px 25px;
     }
 
 }

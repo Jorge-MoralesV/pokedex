@@ -22,7 +22,7 @@
 
             <div *ngIf="poke.types.length > 1; else oneType" class="w-auto">
                 <div *ngFor="let type of poke.types; let i = index">
-                    <div *ngIf="i===0" class="sprite col-6">
+                    <div *ngIf="i===0" class="sprite">
                         <img [style.background]="'linear-gradient(135deg, ' + tiposColores[poke.types[0].type.name] + ' 0%, ' + tiposColores[poke.types[1].type.name] + ' 100%)'"
                             src={{poke.sprites.front_default}} alt={{poke.name}} class="default-card">
                     </div>
@@ -30,9 +30,9 @@
             </div>
 
             <ng-template #oneType>
-                <div class="sprite col-6">
+                <div class="sprite">
                     <img [style.background]=" tiposColores[poke.types[0].type.name] " src={{poke.sprites.front_default}}
-                        alt={{poke.name}} class="default-card">
+                        alt={{poke.name}} class="default-card sprite-bg">
                 </div>
             </ng-template>
 
