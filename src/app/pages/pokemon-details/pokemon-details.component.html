@@ -20,28 +20,21 @@
 
         <div class="contenido row mt-3">
 
-            <div [ngClass]="{
-                        'bug-type-card': poke.types[0].type.name=='bug',
-                        'grass-type-card': poke.types[0].type.name == 'grass',
-                        'fairy-type-card': poke.types[0].type.name == 'fairy',
-                        'normal-type-card': poke.types[0].type.name == 'normal',
-                        'dragon-type-card': poke.types[0].type.name == 'dragon',
-                        'psychic-type-card': poke.types[0].type.name=='psychic',
-                        'ghost-type-card': poke.types[0].type.name == 'ghost',
-                        'ground-type-card': poke.types[0].type.name == 'ground',
-                        'steel-type-card': poke.types[0].type.name == 'steel',
-                        'fire-type-card': poke.types[0].type.name=='fire',
-                        'flying-type-card': poke.types[0].type.name == 'flying',
-                        'ice-type-card': poke.types[0].type.name == 'ice',
-                        'electric-type-card': poke.types[0].type.name == 'electric',
-                        'rock-type-card': poke.types[0].type.name == 'rock',
-                        'dark-type-card': poke.types[0].type.name == 'dark',
-                        'water-type-card': poke.types[0].type.name=='water',
-                        'fighting-type-card': poke.types[0].type.name == 'fighting',
-                        'poison-type-card': poke.types[0].type.name == 'poison',
-                    }" class="sprite col-6" *ngFor="let poke of pokemon">
-                <img src={{poke.sprites.front_default}} alt={{poke.name}} class="poke-img">
+            <div *ngIf="poke.types.length > 1; else oneType" class="w-auto">
+                <div *ngFor="let type of poke.types; let i = index">
+                    <div *ngIf="i===0" class="sprite col-6">
+                        <img [style.background]="'linear-gradient(135deg, ' + tiposColores[poke.types[0].type.name] + ' 0%, ' + tiposColores[poke.types[1].type.name] + ' 100%)'"
+                            src={{poke.sprites.front_default}} alt={{poke.name}} class="default-card">
+                    </div>
+                </div>
             </div>
+
+            <ng-template #oneType>
+                <div class="sprite col-6">
+                    <img [style.background]=" tiposColores[poke.types[0].type.name] " src={{poke.sprites.front_default}}
+                        alt={{poke.name}} class="default-card">
+                </div>
+            </ng-template>
 
             <!-- Descripcion -->
             <div class="descripcion col-6">
@@ -102,8 +95,9 @@
                 <h2>Datos generales</h2>
             </div>
             <div class="info">
-                <h3>Altura: {{poke.height}}".</h3>
-                <h3>Peso: {{poke.weight}} kg.</h3>
+                <h3>Altura: {{poke.height/10}} m.</h3>
+                <h3>Peso: {{poke.weight/10}} kg.</h3>
+
                 <h3>Experiencia base: {{poke.base_experience}}</h3>
 
                 <table class="table table-light">
