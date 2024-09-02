@@ -38,8 +38,12 @@ export class PokemonDetailsComponent implements OnInit {
   pokeDetails: PokemonSpecies[] = [];
   filteredPokemons: PokemonApi[] = [];
   id: string | null;
-  descripcion: string | undefined;
+  descripcion: string;
   anteriorBtn = true;
+  lastBtn = true;
+  abilities: string;
+  beforeSprite: string;
+  afterSprite: string;
 
   constructor(private aRouter: ActivatedRoute, private _pokeService: PokemonService) {
     this.id = this.aRouter.snapshot.paramMap.get('id');
@@ -49,6 +53,10 @@ export class PokemonDetailsComponent implements OnInit {
     this.getPokemonInfoAndDetails(this.id + '');
     this.getDescripcion(this.id + '');
     this.pokeById0();
+    this.lastPoke();
+    /*    this.getBeforeSprite(this.id + '');
+       this.getAfterSprite(this.id + ''); */
+    this.getSprite(this.id + '');
   }
 
   getPokemonInfoAndDetails(pokeId: string) {
@@ -60,6 +68,20 @@ export class PokemonDetailsComponent implements OnInit {
         this.pokeDetails.push(specieData);
       });
     });
+  }
+
+  getSprite(pokeId: string) {
+    let id: number = parseInt(pokeId);
+    let idBefore: string = (id - 1) + '';
+    this._pokeService.getPokemonDetails(idBefore).subscribe(sprite => {
+      this.beforeSprite = sprite.sprites.front_default;
+      console.log(sprite.id);
+    })
+    let idAfter: string = (id + 1) + '';
+    this._pokeService.getPokemonDetails(idAfter).subscribe(sprite => {
+      this.afterSprite = sprite.sprites.front_default;
+      console.log(sprite.id);
+    })
   }
 
   //Obtiene la descripcion del pokemon en español
@@ -78,6 +100,12 @@ export class PokemonDetailsComponent implements OnInit {
   pokeById0() {
     if (Number(this.id) === 1) {
       this.anteriorBtn = false;
+    }
+  }
+
+  lastPoke() {
+    if (Number(this.id) === 1025) {
+      this.lastBtn = false;
     }
   }
 

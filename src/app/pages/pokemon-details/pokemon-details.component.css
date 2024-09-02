@@ -126,8 +126,20 @@ h3 {
     padding-left: 10px;
 }
 
+thead h3 {
+    position: relative;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    width: 100%;
+    z-index: 2;
+    border-radius: 10px 10px 0 0;
+}
+
 td {
+    z-index: 1;
     text-align: center;
+    background-color: #fff;
+    border-radius: 10px;
+    font-size: 20px;
 }
 
 .general-data table tbody h3 {
@@ -221,15 +233,26 @@ td {
 
 .avance a {
     cursor: pointer;
-    width: 30%;
+    width: max-content;
     margin: 10px;
     padding: 10px;
-    background: #000;
     color: #fff;
+    border-radius: 100px 100px;
+    padding-left: 20px;
+}
+
+.avance a img {
+    margin-left: 10px;
 }
 
 .avance a:hover {
     background: #414141;
+}
+
+.spriteBack {
+    background-image: url("/assets/imgs/pokeball-icon.ico");
+    border-radius: 100%;
+    background-repeat: round;
 }
 
 /* MediaQueries*/
@@ -276,6 +299,7 @@ td {
         height: 30px;
         margin: 20px 5px 20px 5px;
     }
+
 
 }
 
@@ -332,8 +356,14 @@ td {
 
     /*Paginacion*/
     .avance a {
-        width: 40%;
+        width: max-content;
         font-size: small;
+    }
+
+    .avance a img {
+        width: 50px;
+        line-height: 50px;
+        margin-left: 0;
     }
 
 }
