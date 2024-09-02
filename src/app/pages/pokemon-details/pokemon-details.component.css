@@ -363,7 +363,7 @@ td {
     .avance a img {
         width: 50px;
         line-height: 50px;
-        margin-left: 0;
+        margin-left: -10px;
     }
 
 }
