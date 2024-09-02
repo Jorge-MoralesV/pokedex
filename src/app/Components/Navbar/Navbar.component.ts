@@ -22,7 +22,8 @@ export class NavbarComponent implements OnInit {
     { nombre: 'Teselia', inicio: 494, fin: 649 },
     { nombre: 'Kalos', inicio: 650, fin: 721 },
     { nombre: 'Alola', inicio: 722, fin: 809 },
-    { nombre: 'Galar', inicio: 810, fin: 905 }
+    { nombre: 'Galar', inicio: 810, fin: 905 },
+    { nombre: 'Paldea', inicio: 906, fin: 1025 },
   ];
 
   searchTerm: string = '';

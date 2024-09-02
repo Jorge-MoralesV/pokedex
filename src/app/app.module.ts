@@ -13,6 +13,7 @@ import { FormsModule } from '@angular/forms';
 import { NgOptimizedImage } from '@angular/common';
 import { NavbarComponent } from './Components/Navbar/Navbar.component';
 import { LoadingComponent } from './Components/Loading/Loading.component';
+import { FooterComponent } from './Components/Footer/Footer.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { LoadingComponent } from './Components/Loading/Loading.component';
     PokemonDetailsComponent,
     NavbarComponent,
     LoadingComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,
