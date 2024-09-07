@@ -178,14 +178,16 @@
 
         <div class="avance">
             <a target="_parent" [routerLink]="['/pokemon-details', poke.id-1]" type="button"
-                [className]="anteriorBtn ? 'btn btn-dark' : 'd-none'">
-                Pokémon Anterior
+                [className]="fisrtBtn ? 'btn btn-dark fisrtBtn' : 'd-none'">
+                <i class="fa fa-angle-double-left" aria-hidden="true"></i>
                 <img src={{beforeSprite}} alt="anterior" srcset="" class="spriteBack">
+                <p>Pokémon Anterior</p>
             </a>
             <a target="_parent" [routerLink]="['/pokemon-details', poke.id+1]" type="button"
-                [className]="lastBtn ? 'btn btn-dark' : 'd-none'">
-                Siguiente Pokémon
+                [className]="lastBtn ? 'btn btn-dark lastBtn' : 'd-none'">
+                <p>Siguiente Pokémon</p>
                 <img src={{afterSprite}} alt="siguiente" srcset="" class="spriteBack">
+                <i class="fa fa-angle-double-right" aria-hidden="true"></i>
             </a>
         </div>
 

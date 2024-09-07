@@ -4,6 +4,7 @@ import { PokemonService } from 'src/app/services/poke.service';
 import { PokemonApi } from 'src/app/interfaces/pokemon';
 import { PokemonSpecies } from 'src/app/interfaces/pokemonSpecies';
 import { TiposColores } from 'src/app/interfaces/colores';
+import { forkJoin, map } from 'rxjs';
 
 @Component({
   selector: 'app-pokemon-details',
@@ -40,11 +41,13 @@ export class PokemonDetailsComponent implements OnInit {
   id: string | null;
   descripcion: string;
   species: string;
-  anteriorBtn = true;
+  fisrtBtn = true;
   lastBtn = true;
   abilities: string;
   beforeSprite: string;
   afterSprite: string;
+
+  idPokemon: string;
 
   constructor(private aRouter: ActivatedRoute, private _pokeService: PokemonService) {
     this.id = this.aRouter.snapshot.paramMap.get('id');
@@ -52,17 +55,18 @@ export class PokemonDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     this.getPokemonInfoAndDetails(this.id + '');
-    this.getSpecies(this.id + '');
-    this.getDescripcion(this.id + '');
     this.pokeById0();
     this.lastPoke();
-    this.getSprite(this.id + '');
   }
 
   getPokemonInfoAndDetails(pokeId: string) {
     //Obtiene la informacion del pokemon
     this._pokeService.getPokemonDetails(pokeId).subscribe(detailData => {
       this.pokemon.push(detailData);
+      this.idPokemon = detailData.id.toString();
+      this.getSprite(this.idPokemon);
+      this.getSpecies(this.idPokemon);
+      this.getDescripcion(this.idPokemon);
       //Obtiene informacion adicional que no se encontro en el metodo anterior
       this._pokeService.getPokemonSpecie(pokeId).subscribe(specieData => {
         this.pokeDetails.push(specieData);
@@ -72,35 +76,31 @@ export class PokemonDetailsComponent implements OnInit {
 
   //Obtiene la descripcion del pokemon en español
   getDescripcion(pokeId: string) {
-    this._pokeService.getPokemonSpecie(pokeId).subscribe(data => {
-      let entradaEs = data.flavor_text_entries.find(entry => entry.language.name === 'es');
-      let entradaEn = data.flavor_text_entries.find(entry => entry.language.name === 'en');
-      if (entradaEs) {
-        this.descripcion = entradaEs.flavor_text.replace(/\\n/g, ' ');
-      } else if (entradaEn) {
-        this.descripcion = entradaEn.flavor_text.replace(/\\n/g, ' ');
-      } /* {
-        this.descripcion = 'No se encontró una descripción al español.';
-      } */
-    });
+    this._pokeService.getPokemonSpecie(pokeId).pipe(
+      map(data => {
+        const entrada = data.flavor_text_entries.find(entry => entry.language.name === 'es') || data.flavor_text_entries.find(entry => entry.language.name === 'en');
+        return entrada ? entrada.flavor_text.replace(/\\n/g, ' ') : ' ';
+      })
+    ).subscribe(description => {
+      this.descripcion = description;
+    })
   }
 
   getSpecies(pokeId: string) {
-    this._pokeService.getPokemonSpecie(pokeId).subscribe(data => {
-      let speciesEs = data.genera.find(entry => entry.language.name === 'es');
-      let speciesEn = data.genera.find(entry => entry.language.name === 'en');
-      if (speciesEs) {
-        this.species = speciesEs.genus;
-      } else if (speciesEn) {
-        this.species = speciesEn.genus;
-      }
+    this._pokeService.getPokemonSpecie(pokeId).pipe(
+      map(data => {
+        const species = data.genera.find(gener => gener.language.name === 'es') || data.genera.find(gener => gener.language.name === 'en');
+        return species ? species.genus : '';
+      })
+    ).subscribe(genus => {
+      this.species = genus;
     })
   }
 
   //Quita el boton de anterior si el id es 1
   pokeById0() {
     if (Number(this.id) === 1) {
-      this.anteriorBtn = false;
+      this.fisrtBtn = false;
     }
   }
 
@@ -112,16 +112,13 @@ export class PokemonDetailsComponent implements OnInit {
 
   //Obtiene los sprites de los pokemon en los botones de avance
   getSprite(pokeId: string) {
-    let id: number = parseInt(pokeId);
-    let idBefore: string = (id - 1) + '';
+    const idBefore = (parseInt(pokeId) - 1).toString();
+    const idAfter = (parseInt(pokeId) + 1).toString();
     this._pokeService.getPokemonDetails(idBefore).subscribe(sprite => {
       this.beforeSprite = sprite.sprites.front_default;
-      console.log(sprite.id);
     })
-    let idAfter: string = (id + 1) + '';
     this._pokeService.getPokemonDetails(idAfter).subscribe(sprite => {
       this.afterSprite = sprite.sprites.front_default;
-      console.log(sprite.id);
     })
   }
 
