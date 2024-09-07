@@ -39,6 +39,7 @@ export class PokemonDetailsComponent implements OnInit {
   filteredPokemons: PokemonApi[] = [];
   id: string | null;
   descripcion: string;
+  species: string;
   anteriorBtn = true;
   lastBtn = true;
   abilities: string;
@@ -51,11 +52,10 @@ export class PokemonDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     this.getPokemonInfoAndDetails(this.id + '');
+    this.getSpecies(this.id + '');
     this.getDescripcion(this.id + '');
     this.pokeById0();
     this.lastPoke();
-    /*    this.getBeforeSprite(this.id + '');
-       this.getAfterSprite(this.id + ''); */
     this.getSprite(this.id + '');
   }
 
@@ -70,30 +70,31 @@ export class PokemonDetailsComponent implements OnInit {
     });
   }
 
-  getSprite(pokeId: string) {
-    let id: number = parseInt(pokeId);
-    let idBefore: string = (id - 1) + '';
-    this._pokeService.getPokemonDetails(idBefore).subscribe(sprite => {
-      this.beforeSprite = sprite.sprites.front_default;
-      console.log(sprite.id);
-    })
-    let idAfter: string = (id + 1) + '';
-    this._pokeService.getPokemonDetails(idAfter).subscribe(sprite => {
-      this.afterSprite = sprite.sprites.front_default;
-      console.log(sprite.id);
-    })
-  }
-
   //Obtiene la descripcion del pokemon en español
   getDescripcion(pokeId: string) {
     this._pokeService.getPokemonSpecie(pokeId).subscribe(data => {
-      let entrada = data.flavor_text_entries.find(entry => entry.language.name === 'es');
-      if (entrada) {
-        this.descripcion = entrada.flavor_text.replace(/\\n/g, ' ');
-      } else {
-        this.descripcion = 'No se encontró una descripcion al español.';
-      }
+      let entradaEs = data.flavor_text_entries.find(entry => entry.language.name === 'es');
+      let entradaEn = data.flavor_text_entries.find(entry => entry.language.name === 'en');
+      if (entradaEs) {
+        this.descripcion = entradaEs.flavor_text.replace(/\\n/g, ' ');
+      } else if (entradaEn) {
+        this.descripcion = entradaEn.flavor_text.replace(/\\n/g, ' ');
+      } /* {
+        this.descripcion = 'No se encontró una descripción al español.';
+      } */
     });
+  }
+
+  getSpecies(pokeId: string) {
+    this._pokeService.getPokemonSpecie(pokeId).subscribe(data => {
+      let speciesEs = data.genera.find(entry => entry.language.name === 'es');
+      let speciesEn = data.genera.find(entry => entry.language.name === 'en');
+      if (speciesEs) {
+        this.species = speciesEs.genus;
+      } else if (speciesEn) {
+        this.species = speciesEn.genus;
+      }
+    })
   }
 
   //Quita el boton de anterior si el id es 1
@@ -107,6 +108,21 @@ export class PokemonDetailsComponent implements OnInit {
     if (Number(this.id) === 1025) {
       this.lastBtn = false;
     }
+  }
+
+  //Obtiene los sprites de los pokemon en los botones de avance
+  getSprite(pokeId: string) {
+    let id: number = parseInt(pokeId);
+    let idBefore: string = (id - 1) + '';
+    this._pokeService.getPokemonDetails(idBefore).subscribe(sprite => {
+      this.beforeSprite = sprite.sprites.front_default;
+      console.log(sprite.id);
+    })
+    let idAfter: string = (id + 1) + '';
+    this._pokeService.getPokemonDetails(idAfter).subscribe(sprite => {
+      this.afterSprite = sprite.sprites.front_default;
+      console.log(sprite.id);
+    })
   }
 
 }

@@ -12,7 +12,7 @@
 
             <div class="titulo-poke">
                 <h2 class="id">Pokedex Id: {{poke.id}}</h2>
-                <h2 class="name">Nombre: {{poke.name | titlecase}}, {{pokeDesc.genera[5].genus}}</h2>
+                <h2 class="name">Nombre: {{poke.name | titlecase}}, {{species}}</h2>
             </div>
             <button type="button" class="btn btn-danger btn-close" routerLink="/"></button>
 
@@ -185,7 +185,7 @@
             <a target="_parent" [routerLink]="['/pokemon-details', poke.id+1]" type="button"
                 [className]="lastBtn ? 'btn btn-dark' : 'd-none'">
                 Siguiente Pokémon
-                    <img src={{afterSprite}} alt="siguiente" srcset="" class="spriteBack">
+                <img src={{afterSprite}} alt="siguiente" srcset="" class="spriteBack">
             </a>
         </div>
 
