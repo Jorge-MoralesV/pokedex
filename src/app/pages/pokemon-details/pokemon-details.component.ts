@@ -5,6 +5,7 @@ import { PokemonApi } from 'src/app/interfaces/pokemon';
 import { PokemonSpecies } from 'src/app/interfaces/pokemonSpecies';
 import { TiposColores } from 'src/app/interfaces/colores';
 import { forkJoin, map } from 'rxjs';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-pokemon-details',
@@ -13,6 +14,7 @@ import { forkJoin, map } from 'rxjs';
 })
 
 export class PokemonDetailsComponent implements OnInit {
+
 
   tiposColores: TiposColores = {
     bug: '#91C12F',
@@ -49,7 +51,7 @@ export class PokemonDetailsComponent implements OnInit {
 
   idPokemon: string;
 
-  constructor(private aRouter: ActivatedRoute, private _pokeService: PokemonService) {
+  constructor(private aRouter: ActivatedRoute, private _pokeService: PokemonService, private location: Location) {
     this.id = this.aRouter.snapshot.paramMap.get('id');
   }
 

@@ -1,19 +1,30 @@
+main {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
 .contenido {
   display: flex;
   justify-content: center;
-  height: 100vh;
-}
-
-.cargando {
-  margin: auto;
-}
-
-.img-loading {
-  width: 100%;
-  text-align: center;
+  align-items: center;
+  flex-grow: 1;
 }
 
 h2 {
   color: darkgray;
   width: 100%;
+}
+
+.spinner {
+  width: 100px;
+  height: 100px;
+  animation: spin 1s infinite;
+  margin: 0 auto;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
 }

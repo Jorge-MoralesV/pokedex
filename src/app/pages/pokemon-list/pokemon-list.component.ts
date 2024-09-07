@@ -42,7 +42,7 @@ export class PokemonListComponent implements OnInit {
   end: number = 0;
   searchTerm: string = '';
 
-  cargando: boolean = true;
+  cargando = true;
 
   constructor(private _pokeServ: PokemonService, private service: FuncionsService, private cdr: ChangeDetectorRef) { }
 
@@ -76,10 +76,10 @@ export class PokemonListComponent implements OnInit {
 
   }
 
-
-
   /** Listas segun region */
   async getRegion(a: number, b: number) {
+    console.time('loadPokemons');
+
     this.pokemons = []; // Reinicia el arreglo de pokemons
     const promises = [];
 
@@ -93,20 +93,15 @@ export class PokemonListComponent implements OnInit {
       this.pokemons = validResults.sort((a, b) => a.id - b.id);
       this.filteredPokemons = this.pokemons; // Si filteredPokemons siempre debe ser una copia de pokemons
       this.cdr.detectChanges(); // Forzar la detección de cambios si es necesario
-      console.log(this.pokemons);
+
+      console.timeEnd('loadPokemons');
+      this.cargando = false;
+      
     } catch (error) {
       console.error('Error al obtener los detalles de los Pokémon:', error);
+      this.cargando = false;
     }
   }
-
-
-  /*   async getRegion(a: number, b: number) {
-      for (let index = a; index <= b; index++) {
-        this.getPokemonInfo(index + '');
-      }
-    }
-   */
-
 
   /** Lista los pokemon filtrados */
   getPokemonInfo(index: string) {
@@ -118,16 +113,50 @@ export class PokemonListComponent implements OnInit {
     })
   }
 
-  /*   getPokemonInfo(index: string) {
-      this._pokeServ.getPokemonDetails(index).subscribe(pokemon => {
-        this.pokemons.push(pokemon);
-        this.pokemons.sort((a, b) => (a.id > b.id) ? 1 : -1);
-        this.filteredPokemons = [...this.pokemons];
-      });
-    } */
-
   /* Buscar Pokemon */
   searchPokemon() {
+    const soloLetras = /^[a-zA-Z]+$/;
+    const searchTerm = this.searchTerm.trim().toLowerCase();
+
+    if (soloLetras.test(searchTerm)) {
+      this.filteredPokemons = this.pokemons.filter(pokemon =>
+        pokemon.name.toLowerCase().includes(searchTerm)
+      );
+    } else if (searchTerm) {
+      const searchId = parseInt(searchTerm, 10);
+      if (!isNaN(searchId)) {
+        this.filteredPokemons = this.pokemons.filter(pokemon =>
+          pokemon.id === searchId
+        );
+      }
+    } else {
+      this.getRegion(1, 151);
+    }
+  }
+
+}
+
+
+
+/*   async getRegion(a: number, b: number) {
+    for (let index = a; index <= b; index++) {
+      this.getPokemonInfo(index + '');
+    }
+  }
+ */
+
+
+/*   getPokemonInfo(index: string) {
+    this._pokeServ.getPokemonDetails(index).subscribe(pokemon => {
+      this.pokemons.push(pokemon);
+      this.pokemons.sort((a, b) => (a.id > b.id) ? 1 : -1);
+      this.filteredPokemons = [...this.pokemons];
+    });
+  } */
+
+
+
+/*   searchPokemon() {
     const soloLetras = /^[a-zA-Z]+$/;
     //Evalua si searchName tiene letras
     if (soloLetras.test(this.searchTerm)) {
@@ -143,7 +172,4 @@ export class PokemonListComponent implements OnInit {
     } else {
       this.getRegion(1, 151);
     }
-  }
-
-
-}
+  } */
