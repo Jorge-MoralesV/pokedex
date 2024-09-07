@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Regions } from 'src/app/interfaces/regiones';
 import { FuncionsService } from 'src/app/services/funciones.service';
 
 @Component({
@@ -11,8 +10,6 @@ import { FuncionsService } from 'src/app/services/funciones.service';
 export class NavbarComponent implements OnInit {
 
   url = location.href;
-
-  regiones: Regions[] = [];
 
   regionesInfo = [
     { nombre: 'Kanto', inicio: 1, fin: 151 },

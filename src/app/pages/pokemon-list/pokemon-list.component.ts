@@ -1,6 +1,6 @@
 import { FuncionsService } from './../../services/funciones.service';
 import { PokemonApi } from '../../interfaces/pokemon';
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { PokemonService } from 'src/app/services/poke.service';
 import { TiposColores } from 'src/app/interfaces/colores';
 
@@ -11,7 +11,6 @@ import { TiposColores } from 'src/app/interfaces/colores';
 })
 export class PokemonListComponent implements OnInit {
 
-  // En tu componente TypeScript
   tiposColores: TiposColores = {
     bug: '#91C12F',
     grass: '#63BC5A',
@@ -45,10 +44,16 @@ export class PokemonListComponent implements OnInit {
 
   cargando: boolean = true;
 
-  constructor(private _pokeServ: PokemonService, private service: FuncionsService) { }
+  constructor(private _pokeServ: PokemonService, private service: FuncionsService, private cdr: ChangeDetectorRef) { }
 
   ngOnInit(): void {
 
+    //Gif de carga
+    this.service.cargando.subscribe((valorCarga => {
+      this.cargando = valorCarga;
+    }))
+
+    //Obtiene el valor del input de busqueda
     this.service.variable$.subscribe((valor => {
       this.searchTerm = valor;
       this.searchPokemon();
@@ -62,48 +67,64 @@ export class PokemonListComponent implements OnInit {
       this.end = valorEnd;
     }))
 
-    this.service.cargando.subscribe((valorCarga => {
-      this.cargando = valorCarga;
-    }))
-
     this.service.end.subscribe(() => {
       //Verificar si start y end tiene valor
       if (this.start !== undefined && this.end !== undefined) {
         this.getRegion(this.start, this.end);
-        //Si no los tiene resetea el arreglo y muestra los default
-      }/*  else {
-        this.pokemons = [];
-        this.getPoke();
-      } */
+      }
     })
-
-    /* this.getPoke(); */
 
   }
 
-  /* Primera carga de pokemon */
-  /*   getPoke() {
-      for (let index = 1; index <= 151; index++) {
+
+
+  /** Listas segun region */
+  async getRegion(a: number, b: number) {
+    this.pokemons = []; // Reinicia el arreglo de pokemons
+    const promises = [];
+
+    for (let index = a; index <= b; index++) {
+      promises.push(this._pokeServ.getPokemonDetails(index + '').toPromise());
+    }
+
+    try {
+      const results = await Promise.all(promises);
+      const validResults = results.filter(pokemon => pokemon !== undefined) as PokemonApi[];
+      this.pokemons = validResults.sort((a, b) => a.id - b.id);
+      this.filteredPokemons = this.pokemons; // Si filteredPokemons siempre debe ser una copia de pokemons
+      this.cdr.detectChanges(); // Forzar la detección de cambios si es necesario
+      console.log(this.pokemons);
+    } catch (error) {
+      console.error('Error al obtener los detalles de los Pokémon:', error);
+    }
+  }
+
+
+  /*   async getRegion(a: number, b: number) {
+      for (let index = a; index <= b; index++) {
         this.getPokemonInfo(index + '');
       }
-    } */
+    }
+   */
+
 
   /** Lista los pokemon filtrados */
   getPokemonInfo(index: string) {
     this._pokeServ.getPokemonDetails(index).subscribe(pokemon => {
-      this.pokemons.push(pokemon);
-      this.pokemons.sort((a, b) => (a.id > b.id) ? 1 : -1);
-      this.filteredPokemons = [...this.pokemons];
-    });
+      this.pokemons = this.pokemons.concat(pokemon).sort((a, b) => a.id - b.id);
+      this.filteredPokemons = this.pokemons;
+    }, error => {
+      console.error('Error al obtener los detalles del pokemon: ', error);
+    })
   }
 
-  /** Listas segun region */
-  async getRegion(a: number, b: number) {
-    this.pokemons = [];
-    for (let index = a; index <= b; index++) {
-      this.getPokemonInfo(index + '');
-    }
-  }
+  /*   getPokemonInfo(index: string) {
+      this._pokeServ.getPokemonDetails(index).subscribe(pokemon => {
+        this.pokemons.push(pokemon);
+        this.pokemons.sort((a, b) => (a.id > b.id) ? 1 : -1);
+        this.filteredPokemons = [...this.pokemons];
+      });
+    } */
 
   /* Buscar Pokemon */
   searchPokemon() {
@@ -122,7 +143,6 @@ export class PokemonListComponent implements OnInit {
     } else {
       this.getRegion(1, 151);
     }
-
   }
 
 
