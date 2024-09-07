@@ -8,6 +8,7 @@
 // match the expected interface, even if the JSON is valid.
 
 export interface PokemonApi {
+    results: PokemonApi[];
     abilities: Ability[];
     base_experience: number;
     forms: Species[];

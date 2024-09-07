@@ -2,8 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { PokemonApi } from '../interfaces/pokemon';
 import { PokemonSpecies } from '../interfaces/pokemonSpecies';
-import { Observable, map } from 'rxjs';
-import { Regions } from '../interfaces/regiones';
+import { Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 
@@ -13,10 +12,10 @@ export class PokemonService {
   private apiUrl: string = 'https://pokeapi.co/api/v2';
 
   constructor(private http: HttpClient) { }
-
-/*     getPokemonList(limit: number, first: number): Observable<PokemonApi> {
-      return this.http.get<PokemonApi>(`${this.apiUrl}/pokemon?limit=${limit}&offset=${first}`);
-    } */
+/* 
+  getPokemonList(limit: number, first: number): Observable<PokemonApi> {
+    return this.http.get<PokemonApi>(`${this.apiUrl}/pokemon?limit=${limit}&offset=${first}`);
+  } */
 
   getPokemonDetails(id: string): Observable<PokemonApi> {
     return this.http.get<PokemonApi>(`${this.apiUrl}/pokemon/${id}`);

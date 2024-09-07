@@ -1,7 +1,5 @@
-import { PokemonListComponent } from 'src/app/pages/pokemon-list/pokemon-list.component';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { PokemonApi } from '../interfaces/pokemon';
 
 @Injectable({ providedIn: 'root' })
 export class FuncionsService {
