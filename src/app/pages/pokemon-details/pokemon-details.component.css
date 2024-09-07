@@ -238,10 +238,17 @@ td {
     padding: 10px;
     color: #fff;
     border-radius: 100px 100px;
-    padding-left: 20px;
 }
 
-.avance a img {
+.avance a p {
+    display: contents;
+}
+
+.avance .fisrtBtn img {
+    margin-right: 10px;
+}
+
+.avance .lastBtn img {
     margin-left: 10px;
 }
 
@@ -253,6 +260,10 @@ td {
     background-image: url("/assets/imgs/pokeball-icon.ico");
     border-radius: 100%;
     background-repeat: round;
+}
+
+.avance a i {
+    display: none;
 }
 
 /* MediaQueries*/
@@ -360,14 +371,24 @@ td {
         font-size: small;
     }
 
-    .avance a img {
-        width: 50px;
-        line-height: 50px;
-        margin-left: -10px;
+    .avance a p {
+        display: none;
     }
 
-}
+    .avance .fisrtBtn img {
+        margin-left: 5px;
+        margin-right: 0;
+    }
 
+    .avance .lastBtn img {
+        margin-right: 5px;
+        margin-left: 0;
+    }
+
+    .avance a i {
+        display: contents;
+    }
+}
 
 @media screen and (max-width: 575px) {
 
