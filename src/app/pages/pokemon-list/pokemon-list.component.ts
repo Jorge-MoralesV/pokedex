@@ -96,7 +96,7 @@ export class PokemonListComponent implements OnInit {
 
       console.timeEnd('loadPokemons');
       this.cargando = false;
-      
+
     } catch (error) {
       console.error('Error al obtener los detalles de los Pokémon:', error);
       this.cargando = false;
@@ -135,41 +135,3 @@ export class PokemonListComponent implements OnInit {
   }
 
 }
-
-
-
-/*   async getRegion(a: number, b: number) {
-    for (let index = a; index <= b; index++) {
-      this.getPokemonInfo(index + '');
-    }
-  }
- */
-
-
-/*   getPokemonInfo(index: string) {
-    this._pokeServ.getPokemonDetails(index).subscribe(pokemon => {
-      this.pokemons.push(pokemon);
-      this.pokemons.sort((a, b) => (a.id > b.id) ? 1 : -1);
-      this.filteredPokemons = [...this.pokemons];
-    });
-  } */
-
-
-
-/*   searchPokemon() {
-    const soloLetras = /^[a-zA-Z]+$/;
-    //Evalua si searchName tiene letras
-    if (soloLetras.test(this.searchTerm)) {
-      this.filteredPokemons = this.pokemons.filter(pokemon =>
-        pokemon.name.includes(this.searchTerm.toLowerCase())
-      )
-      //Si tiene puros numeros
-    } else if (this.searchTerm) {
-      this.searchId = parseInt(this.searchTerm);
-      this.filteredPokemons = this.pokemons.filter(pokemon =>
-        pokemon.id === this.searchId
-      )
-    } else {
-      this.getRegion(1, 151);
-    }
-  } */
