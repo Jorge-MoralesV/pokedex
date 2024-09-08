@@ -106,3 +106,9 @@
 .poison-type-card {
     background-color: #B567CE;
 }
+
+.distribucion {
+    min-height: 100vh;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+}
