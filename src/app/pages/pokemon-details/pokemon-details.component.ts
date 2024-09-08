@@ -49,6 +49,8 @@ export class PokemonDetailsComponent implements OnInit {
   beforeSprite: string;
   afterSprite: string;
 
+  cargando = true;
+
   idPokemon: string;
 
   constructor(private aRouter: ActivatedRoute, private _pokeService: PokemonService, private location: Location) {
@@ -62,6 +64,7 @@ export class PokemonDetailsComponent implements OnInit {
   }
 
   getPokemonInfoAndDetails(pokeId: string) {
+    console.time('loadPokemons');
     //Obtiene la informacion del pokemon
     this._pokeService.getPokemonDetails(pokeId).subscribe(detailData => {
       this.pokemon.push(detailData);
@@ -73,6 +76,8 @@ export class PokemonDetailsComponent implements OnInit {
       this._pokeService.getPokemonSpecie(pokeId).subscribe(specieData => {
         this.pokeDetails.push(specieData);
       });
+      console.timeEnd('loadPokemons');
+      this.cargando = false;
     });
   }
 

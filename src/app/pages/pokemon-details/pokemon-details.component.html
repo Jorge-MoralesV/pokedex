@@ -6,196 +6,202 @@
         <div class="bg">
             <!-- Fondo -->
         </div>
-    
-        <div class="container" *ngFor="let poke of pokemon">
-            <div *ngFor="let pokeDesc of pokeDetails">
-    
-                <div class="encabezado">
-    
-                    <div class="titulo-poke">
-                        <h2 class="id">Pokedex Id: {{poke.id}}</h2>
-                        <h2 class="name">Nombre: {{poke.name | titlecase}}, {{species}}</h2>
+
+        <div *ngIf="cargando">
+            <app-loading></app-loading>
+        </div>
+
+        <div *ngIf="!cargando">
+            <div class="container" *ngFor="let poke of pokemon">
+                <div *ngFor="let pokeDesc of pokeDetails">
+
+                    <div class="encabezado">
+
+                        <div class="titulo-poke">
+                            <h2 class="id">Pokedex Id: {{poke.id}}</h2>
+                            <h2 class="name">Nombre: {{poke.name | titlecase}}, {{species}}</h2>
+                        </div>
+                        <button type="button" class="btn btn-danger btn-close" routerLink="/"></button>
+
                     </div>
-                    <button type="button" class="btn btn-danger btn-close" routerLink="/"></button>
-    
-                </div>
-    
-                <div class="contenido row mt-3">
-    
-                    <div *ngIf="poke.types.length > 1; else oneType" class="w-auto">
-                        <div *ngFor="let type of poke.types; let i = index">
-                            <div *ngIf="i===0" class="sprite">
-                                <img [style.background]="'linear-gradient(135deg, ' + tiposColores[poke.types[0].type.name] + ' 0%, ' + tiposColores[poke.types[1].type.name] + ' 100%)'"
-                                    src={{poke.sprites.front_default}} alt={{poke.name}} class="default-card">
+
+                    <div class="contenido row mt-3">
+
+                        <div *ngIf="poke.types.length > 1; else oneType" class="w-auto">
+                            <div *ngFor="let type of poke.types; let i = index">
+                                <div *ngIf="i===0" class="sprite">
+                                    <img [style.background]="'linear-gradient(135deg, ' + tiposColores[poke.types[0].type.name] + ' 0%, ' + tiposColores[poke.types[1].type.name] + ' 100%)'"
+                                        src={{poke.sprites.front_default}} alt={{poke.name}} class="default-card">
+                                </div>
+                            </div>
+                        </div>
+
+                        <ng-template #oneType>
+                            <div class="sprite">
+                                <img [style.background]=" tiposColores[poke.types[0].type.name] "
+                                    src={{poke.sprites.front_default}} alt={{poke.name}} class="default-card sprite-bg">
+                            </div>
+                        </ng-template>
+
+                        <!-- Descripcion -->
+                        <div class="descripcion col-6">
+                            <p>{{descripcion}}</p>
+                        </div>
+
+                    </div>
+
+                    <div class="tipos">
+                        <div class="tipo" *ngFor="let types of poke.types" [ngSwitch]="1">
+                            <div class="icon-tipo">
+                                <img src=".\assets\imgs\icons\bug.svg" class="bug-type-card"
+                                    *ngSwitchCase="types.type.name=='bug'" alt="{{types.type.name}}">
+                                <img src=".\assets\imgs\icons\grass.svg" class="grass-type-card"
+                                    *ngSwitchCase="types.type.name=='grass'" alt="{{types.type.name}}">
+                                <img src=".\assets\imgs\icons\fairy.svg" class="fairy-type-card"
+                                    *ngSwitchCase="types.type.name=='fairy'" alt="{{types.type.name}}">
+                                <img src=".\assets\imgs\icons\normal.svg" class="normal-type-card"
+                                    *ngSwitchCase="types.type.name=='normal'" alt="{{types.type.name}}">
+                                <img src=".\assets\imgs\icons\dragon.svg" class="dragon-type-card"
+                                    *ngSwitchCase="types.type.name=='dragon'" alt="{{types.type.name}}">
+                                <img src=".\assets\imgs\icons\psychic.svg" class="psychic-type-card"
+                                    *ngSwitchCase="types.type.name=='psychic'" alt="{{types.type.name}}">
+                                <img src=".\assets\imgs\icons\ghost.svg" class="ghost-type-card"
+                                    *ngSwitchCase="types.type.name=='ghost'" alt="{{types.type.name}}">
+                                <img src=".\assets\imgs\icons\ground.svg" class="ground-type-card"
+                                    *ngSwitchCase="types.type.name=='ground'" alt="{{types.type.name}}">
+                                <img src=".\assets\imgs\icons\steel.svg" class="steel-type-card"
+                                    *ngSwitchCase="types.type.name=='steel'" alt="{{types.type.name}}">
+                                <img src=".\assets\imgs\icons\fire.svg" class="fire-type-card"
+                                    *ngSwitchCase="types.type.name=='fire'" alt="{{types.type.name}}">
+                                <img src=".\assets\imgs\icons\flying.svg" class="flying-type-card"
+                                    *ngSwitchCase="types.type.name=='flying'" alt="{{types.type.name}}">
+                                <img src=".\assets\imgs\icons\ice.svg" class="ice-type-card"
+                                    *ngSwitchCase="types.type.name=='ice'" alt="{{types.type.name}}">
+                                <img src=".\assets\imgs\icons\electric.svg" class="electric-type-card"
+                                    *ngSwitchCase="types.type.name=='electric'" alt="{{types.type.name}}">
+                                <img src=".\assets\imgs\icons\rock.svg" class="rock-type-card"
+                                    *ngSwitchCase="types.type.name=='rock'" alt="{{types.type.name}}">
+                                <img src=".\assets\imgs\icons\dark.svg" class="dark-type-card"
+                                    *ngSwitchCase="types.type.name=='dark'" alt="{{types.type.name}}">
+                                <img src=".\assets\imgs\icons\water.svg" class="water-type-card"
+                                    *ngSwitchCase="types.type.name=='water'" alt="{{types.type.name}}">
+                                <img src=".\assets\imgs\icons\fighting.svg" class="fighting-type-card"
+                                    *ngSwitchCase="types.type.name=='fighting'" alt="{{types.type.name}}">
+                                <img src=".\assets\imgs\icons\poison.svg" class="poison-type-card"
+                                    *ngSwitchCase="types.type.name=='poison'" alt="{{types.type.name}}">
+                                <div *ngSwitchDefault></div>
+                            </div>
+                            <div class="text-tipo">
+                                <p>{{types.type.name | titlecase}}</p>
                             </div>
                         </div>
                     </div>
-    
-                    <ng-template #oneType>
-                        <div class="sprite">
-                            <img [style.background]=" tiposColores[poke.types[0].type.name] "
-                                src={{poke.sprites.front_default}} alt={{poke.name}} class="default-card sprite-bg">
+
+                    <div class="general-data">
+                        <div class="title-data">
+                            <h2>Datos generales</h2>
+                        </div>
+                        <div class="info">
+                            <h3>Altura: {{poke.height/10}} m.</h3>
+                            <h3>Peso: {{poke.weight/10}} kg.</h3>
+
+                            <h3>Experiencia base: {{poke.base_experience}}</h3>
+
+                            <table class="table table-light">
+                                <thead>
+                                    <h3>Habilidades:</h3>
+                                </thead>
+                                <tbody *ngFor="let ability of poke.abilities">
+                                    <td>{{ability.ability.name.replace('-',' ')| titlecase}}</td>
+                                </tbody>
+                            </table>
+
+                            <table class="table table-light">
+                                <thead>
+                                    <h3>Objetos equipados:</h3>
+                                </thead>
+                                <ng-container *ngIf="poke.held_items.length > 0; else noitem">
+                                    <tr *ngFor="let item of poke.held_items">
+                                        <td>{{ item.item.name.replace('-',' ') | titlecase}}</td>
+                                    </tr>
+                                </ng-container>
+                                <ng-template #noitem>
+                                    <tr>
+                                        <td>Este Pokémon no porta ningún ítem.</td>
+                                    </tr>
+                                </ng-template>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Formas pokemon -->
+                    <div class="formas">
+
+                        <!-- Normales -->
+                        <div class="forma-normal">
+                            <div class="male">
+                                <img src={{poke.sprites.front_default}} alt={{poke.name}}>
+                                <img src={{poke.sprites.back_default}} alt={{poke.name}}>
+                            </div>
+                            <div class="female" *ngIf="pokeDesc.has_gender_differences;else missing">
+                                <img src={{poke.sprites.front_female}} alt={{poke.name}}>
+                                <img src={{poke.sprites.back_female}} alt={{poke.name}}>
+                            </div>
+                        </div>
+
+                        <div class="genders">
+                            <!-- Tooltip -->
+                            <div class="male-icon">
+                                <i class="fa-solid fa-mars"></i>
+                            </div>
+                            <a class="info-formas" data-bs-toggle="tooltip" data-bs-placement="top"
+                                data-bs-custom-class="custom-tooltip"
+                                title="Los Pokémon que no cuenten con diferencias de genero, se mostrara un Missingno en su lugar.">?</a>
+                            <div class="female-icon">
+                                <i class="fa-solid fa-venus"></i>
+                            </div>
+                        </div>
+
+                        <!-- Shiny -->
+                        <div class="forma-shiny">
+                            <div class="male">
+                                <img src={{poke.sprites.front_shiny}} alt={{poke.name}}>
+                                <img src={{poke.sprites.back_shiny}} alt={{poke.name}}>
+                            </div>
+                            <div class="female" *ngIf="pokeDesc.has_gender_differences;else missing">
+                                <img src={{poke.sprites.front_shiny_female}} alt={{poke.name}}>
+                                <img src={{poke.sprites.back_shiny_female}} alt={{poke.name}}>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Missingno -->
+                    <ng-template #missing>
+                        <div class="missing">
+                            <img src=".\assets\imgs\sprites\missingno.png">
+                            <p>No hay diferencias entre generos</p>
                         </div>
                     </ng-template>
-    
-                    <!-- Descripcion -->
-                    <div class="descripcion col-6">
-                        <p>{{descripcion}}</p>
+
+                    <div class="avance">
+                        <a target="_parent" [routerLink]="['/pokemon-details', poke.id-1]" type="button"
+                            [className]="fisrtBtn ? 'btn btn-dark fisrtBtn' : 'd-none'">
+                            <i class="fa fa-angle-double-left" aria-hidden="true"></i>
+                            <img src={{beforeSprite}} alt="anterior" srcset="" class="spriteBack">
+                            <p>Pokémon Anterior</p>
+                        </a>
+                        <a target="_parent" [routerLink]="['/pokemon-details', poke.id+1]" type="button"
+                            [className]="lastBtn ? 'btn btn-dark lastBtn' : 'd-none'">
+                            <p>Siguiente Pokémon</p>
+                            <img src={{afterSprite}} alt="siguiente" srcset="" class="spriteBack">
+                            <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+                        </a>
                     </div>
-    
+
                 </div>
-    
-                <div class="tipos">
-                    <div class="tipo" *ngFor="let types of poke.types" [ngSwitch]="1">
-                        <div class="icon-tipo">
-                            <img src=".\assets\imgs\icons\bug.svg" class="bug-type-card"
-                                *ngSwitchCase="types.type.name=='bug'" alt="{{types.type.name}}">
-                            <img src=".\assets\imgs\icons\grass.svg" class="grass-type-card"
-                                *ngSwitchCase="types.type.name=='grass'" alt="{{types.type.name}}">
-                            <img src=".\assets\imgs\icons\fairy.svg" class="fairy-type-card"
-                                *ngSwitchCase="types.type.name=='fairy'" alt="{{types.type.name}}">
-                            <img src=".\assets\imgs\icons\normal.svg" class="normal-type-card"
-                                *ngSwitchCase="types.type.name=='normal'" alt="{{types.type.name}}">
-                            <img src=".\assets\imgs\icons\dragon.svg" class="dragon-type-card"
-                                *ngSwitchCase="types.type.name=='dragon'" alt="{{types.type.name}}">
-                            <img src=".\assets\imgs\icons\psychic.svg" class="psychic-type-card"
-                                *ngSwitchCase="types.type.name=='psychic'" alt="{{types.type.name}}">
-                            <img src=".\assets\imgs\icons\ghost.svg" class="ghost-type-card"
-                                *ngSwitchCase="types.type.name=='ghost'" alt="{{types.type.name}}">
-                            <img src=".\assets\imgs\icons\ground.svg" class="ground-type-card"
-                                *ngSwitchCase="types.type.name=='ground'" alt="{{types.type.name}}">
-                            <img src=".\assets\imgs\icons\steel.svg" class="steel-type-card"
-                                *ngSwitchCase="types.type.name=='steel'" alt="{{types.type.name}}">
-                            <img src=".\assets\imgs\icons\fire.svg" class="fire-type-card"
-                                *ngSwitchCase="types.type.name=='fire'" alt="{{types.type.name}}">
-                            <img src=".\assets\imgs\icons\flying.svg" class="flying-type-card"
-                                *ngSwitchCase="types.type.name=='flying'" alt="{{types.type.name}}">
-                            <img src=".\assets\imgs\icons\ice.svg" class="ice-type-card"
-                                *ngSwitchCase="types.type.name=='ice'" alt="{{types.type.name}}">
-                            <img src=".\assets\imgs\icons\electric.svg" class="electric-type-card"
-                                *ngSwitchCase="types.type.name=='electric'" alt="{{types.type.name}}">
-                            <img src=".\assets\imgs\icons\rock.svg" class="rock-type-card"
-                                *ngSwitchCase="types.type.name=='rock'" alt="{{types.type.name}}">
-                            <img src=".\assets\imgs\icons\dark.svg" class="dark-type-card"
-                                *ngSwitchCase="types.type.name=='dark'" alt="{{types.type.name}}">
-                            <img src=".\assets\imgs\icons\water.svg" class="water-type-card"
-                                *ngSwitchCase="types.type.name=='water'" alt="{{types.type.name}}">
-                            <img src=".\assets\imgs\icons\fighting.svg" class="fighting-type-card"
-                                *ngSwitchCase="types.type.name=='fighting'" alt="{{types.type.name}}">
-                            <img src=".\assets\imgs\icons\poison.svg" class="poison-type-card"
-                                *ngSwitchCase="types.type.name=='poison'" alt="{{types.type.name}}">
-                            <div *ngSwitchDefault></div>
-                        </div>
-                        <div class="text-tipo">
-                            <p>{{types.type.name | titlecase}}</p>
-                        </div>
-                    </div>
-                </div>
-    
-                <div class="general-data">
-                    <div class="title-data">
-                        <h2>Datos generales</h2>
-                    </div>
-                    <div class="info">
-                        <h3>Altura: {{poke.height/10}} m.</h3>
-                        <h3>Peso: {{poke.weight/10}} kg.</h3>
-    
-                        <h3>Experiencia base: {{poke.base_experience}}</h3>
-    
-                        <table class="table table-light">
-                            <thead>
-                                <h3>Habilidades:</h3>
-                            </thead>
-                            <tbody *ngFor="let ability of poke.abilities">
-                                <td>{{ability.ability.name.replace('-',' ')| titlecase}}</td>
-                            </tbody>
-                        </table>
-    
-                        <table class="table table-light">
-                            <thead>
-                                <h3>Objetos equipados:</h3>
-                            </thead>
-                            <ng-container *ngIf="poke.held_items.length > 0; else noitem">
-                                <tr *ngFor="let item of poke.held_items">
-                                    <td>{{ item.item.name.replace('-',' ') | titlecase}}</td>
-                                </tr>
-                            </ng-container>
-                            <ng-template #noitem>
-                                <tr>
-                                    <td>Este Pokémon no porta ningún ítem.</td>
-                                </tr>
-                            </ng-template>
-                        </table>
-                    </div>
-                </div>
-    
-                <!-- Formas pokemon -->
-                <div class="formas">
-    
-                    <!-- Normales -->
-                    <div class="forma-normal">
-                        <div class="male">
-                            <img src={{poke.sprites.front_default}} alt={{poke.name}}>
-                            <img src={{poke.sprites.back_default}} alt={{poke.name}}>
-                        </div>
-                        <div class="female" *ngIf="pokeDesc.has_gender_differences;else missing">
-                            <img src={{poke.sprites.front_female}} alt={{poke.name}}>
-                            <img src={{poke.sprites.back_female}} alt={{poke.name}}>
-                        </div>
-                    </div>
-    
-                    <div class="genders">
-                        <!-- Tooltip -->
-                        <div class="male-icon">
-                            <i class="fa-solid fa-mars"></i>
-                        </div>
-                        <a class="info-formas" data-bs-toggle="tooltip" data-bs-placement="top"
-                            data-bs-custom-class="custom-tooltip"
-                            title="Los Pokémon que no cuenten con diferencias de genero, se mostrara un Missingno en su lugar.">?</a>
-                        <div class="female-icon">
-                            <i class="fa-solid fa-venus"></i>
-                        </div>
-                    </div>
-    
-                    <!-- Shiny -->
-                    <div class="forma-shiny">
-                        <div class="male">
-                            <img src={{poke.sprites.front_shiny}} alt={{poke.name}}>
-                            <img src={{poke.sprites.back_shiny}} alt={{poke.name}}>
-                        </div>
-                        <div class="female" *ngIf="pokeDesc.has_gender_differences;else missing">
-                            <img src={{poke.sprites.front_shiny_female}} alt={{poke.name}}>
-                            <img src={{poke.sprites.back_shiny_female}} alt={{poke.name}}>
-                        </div>
-                    </div>
-                </div>
-    
-                <!-- Missingno -->
-                <ng-template #missing>
-                    <div class="missing">
-                        <img src=".\assets\imgs\sprites\missingno.png">
-                        <p>No hay diferencias entre generos</p>
-                    </div>
-                </ng-template>
-    
-                <div class="avance">
-                    <a target="_parent" [routerLink]="['/pokemon-details', poke.id-1]" type="button"
-                        [className]="fisrtBtn ? 'btn btn-dark fisrtBtn' : 'd-none'">
-                        <i class="fa fa-angle-double-left" aria-hidden="true"></i>
-                        <img src={{beforeSprite}} alt="anterior" srcset="" class="spriteBack">
-                        <p>Pokémon Anterior</p>
-                    </a>
-                    <a target="_parent" [routerLink]="['/pokemon-details', poke.id+1]" type="button"
-                        [className]="lastBtn ? 'btn btn-dark lastBtn' : 'd-none'">
-                        <p>Siguiente Pokémon</p>
-                        <img src={{afterSprite}} alt="siguiente" srcset="" class="spriteBack">
-                        <i class="fa fa-angle-double-right" aria-hidden="true"></i>
-                    </a>
-                </div>
-    
             </div>
         </div>
     </main>
-    
+
     <app-Footer></app-Footer>
 </div>
