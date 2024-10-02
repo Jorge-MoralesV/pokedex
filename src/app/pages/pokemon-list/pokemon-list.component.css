@@ -1,89 +1,89 @@
 /*-------------------- Listas ---------------------*/
 .container {
-    margin-top: 120px;
-    margin-bottom: 25px;
+  margin-top: 120px;
+  margin-bottom: 25px;
 }
 
 .row {
-    justify-content: center;
+  justify-content: center;
 }
 
 /*Carta*/
 .card {
-    width: 200px;
-    border: none;
-    border-radius: 15px;
-    background: linear-gradient(238deg, #D9D9D9 0%, rgba(135, 135, 135, 0.445) 100%);
+  width: 200px;
+  border: none;
+  border-radius: 15px;
+  background: linear-gradient(238deg, #D9D9D9 0%, rgba(135, 135, 135, 0.445) 100%);
 }
 
 .poke-img {
-    border-radius: 20px;
-    text-align: center;
-    width: 150px;
+  border-radius: 20px;
+  text-align: center;
+  width: 150px;
 }
 
 .types-container {
-    display: flex;
-    justify-content: center;
+  display: flex;
+  justify-content: center;
 }
 
 /* Bg iconos */
 .icons-content {
-    display: inline-flex;
-    justify-content: space-around;
-    align-items: center;
-    width: 30px;
+  display: inline-flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 30px;
 }
 
 /* Iconos img */
 .div-icon img {
-    width: 100%;
-    padding: 5px;
+  width: 100%;
+  padding: 5px;
 }
 
 
 /* MediaQueries*/
 @media screen and (max-width: 1000px) {
-    .container {
-        margin-top: 100px;
-    }
+  .container {
+    margin-top: 100px;
+  }
 }
 
 @media screen and (max-width: 575px) {
 
-    /* Tarjeta */
-    .container {
-        margin-top: 80px;
-    }
+  /* Tarjeta */
+  .container {
+    margin-top: 80px;
+  }
 
-    .pokemon-container {
-        width: 150px;
-    }
+  .pokemon-container {
+    width: 150px;
+  }
 
 
-    .row {
-        flex-wrap: wrap;
-    }
+  .row {
+    flex-wrap: wrap;
+  }
 
-    .card {
-        width: 90%;
-        padding: 0;
-    }
+  .card {
+    width: 90%;
+    padding: 0;
+  }
 
-    .card-body {
-        display: flex;
-        align-items: center;
-    }
+  .card-body {
+    display: flex;
+    align-items: center;
+  }
 
-    .sec-2 {
-        margin: auto;
-    }
+  .sec-2 {
+    margin: auto;
+  }
 
-    /* Iconos img */
-    .div-icon img {
-        width: 100%;
-        padding: 5px;
-    }
+  /* Iconos img */
+  .div-icon img {
+    width: 100%;
+    padding: 5px;
+  }
 
 
 }
