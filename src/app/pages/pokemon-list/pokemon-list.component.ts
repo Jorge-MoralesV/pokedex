@@ -3,6 +3,7 @@ import { PokemonApi } from '../../interfaces/pokemon';
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { PokemonService } from 'src/app/services/poke.service';
 import { TiposColores } from 'src/app/interfaces/colores';
+import { lastValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-pokemon-list',
@@ -32,9 +33,9 @@ export class PokemonListComponent implements OnInit {
     poison: '#B567CE'
   };
 
-
   public pokemons: PokemonApi[] = [];
   public filteredPokemons: PokemonApi[] = [];
+  tiposArray: string[] = [];
 
   searchId: number | undefined;
 
@@ -78,13 +79,14 @@ export class PokemonListComponent implements OnInit {
 
   /** Listas segun region */
   async getRegion(a: number, b: number) {
-    console.time('loadPokemons');
 
     this.pokemons = []; // Reinicia el arreglo de pokemons
     const promises = [];
 
     for (let index = a; index <= b; index++) {
-      promises.push(this._pokeServ.getPokemonDetails(index + '').toPromise());
+      if (index !== 0) {
+        promises.push(lastValueFrom(this._pokeServ.getPokemonDetails(index + '')));
+      }
     }
 
     try {
@@ -93,24 +95,25 @@ export class PokemonListComponent implements OnInit {
       this.pokemons = validResults.sort((a, b) => a.id - b.id);
       this.filteredPokemons = this.pokemons; // Si filteredPokemons siempre debe ser una copia de pokemons
       this.cdr.detectChanges(); // Forzar la detección de cambios si es necesario
-
-      console.timeEnd('loadPokemons');
       this.cargando = false;
-
     } catch (error) {
-      console.error('Error al obtener los detalles de los Pokémon:', error);
+      console.error('Error al obtener los detalles de los Pokémon (por Región):', error);
       this.cargando = false;
     }
   }
 
   /** Lista los pokemon filtrados */
   getPokemonInfo(index: string) {
-    this._pokeServ.getPokemonDetails(index).subscribe(pokemon => {
-      this.pokemons = this.pokemons.concat(pokemon).sort((a, b) => a.id - b.id);
-      this.filteredPokemons = this.pokemons;
-    }, error => {
-      console.error('Error al obtener los detalles del pokemon: ', error);
-    })
+    this._pokeServ.getPokemonDetails(index).subscribe({
+      next: (pokemon) => {
+        this.pokemons = this.pokemons.concat(pokemon).sort((a, b) => a.id - b.id);
+        this.filteredPokemons = this.pokemons;
+      },
+      error: (error) => {
+        console.error('Error al obtener los detalles del pokemon (Lista común): ', error);
+      }
+    }
+    )
   }
 
   /* Buscar Pokemon */

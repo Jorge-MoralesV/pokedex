@@ -1,10 +1,11 @@
+import { EvolutionChain } from './../../interfaces/pokemonSpecies';
 import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { PokemonService } from 'src/app/services/poke.service';
 import { PokemonApi } from 'src/app/interfaces/pokemon';
 import { PokemonSpecies } from 'src/app/interfaces/pokemonSpecies';
 import { TiposColores } from 'src/app/interfaces/colores';
-import { forkJoin, map } from 'rxjs';
+import { map } from 'rxjs';
 import { Location } from '@angular/common';
 
 @Component({
@@ -14,7 +15,6 @@ import { Location } from '@angular/common';
 })
 
 export class PokemonDetailsComponent implements OnInit {
-
 
   tiposColores: TiposColores = {
     bug: '#91C12F',
@@ -40,7 +40,6 @@ export class PokemonDetailsComponent implements OnInit {
   pokemon: PokemonApi[] = [];
   pokeDetails: PokemonSpecies[] = [];
   filteredPokemons: PokemonApi[] = [];
-  id: string | null;
   descripcion: string;
   species: string;
   fisrtBtn = true;
@@ -49,9 +48,13 @@ export class PokemonDetailsComponent implements OnInit {
   beforeSprite: string;
   afterSprite: string;
 
+  evolutionChain: any;
   cargando = true;
 
   idPokemon: string;
+
+  //Id de la Url
+  id: string | null;
 
   constructor(private aRouter: ActivatedRoute, private _pokeService: PokemonService, private location: Location) {
     this.id = this.aRouter.snapshot.paramMap.get('id');
@@ -59,27 +62,46 @@ export class PokemonDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     this.getPokemonInfoAndDetails(this.id + '');
-    this.pokeById0();
-    this.lastPoke();
+    this.btnFirstLastPkm();
   }
 
-  getPokemonInfoAndDetails(pokeId: string) {
-    console.time('loadPokemons');
-    //Obtiene la informacion del pokemon
+  async getPokemonInfoAndDetails(pokeId: string) {
+    // Obtiene la información del Pokémon
     this._pokeService.getPokemonDetails(pokeId).subscribe(detailData => {
       this.pokemon.push(detailData);
       this.idPokemon = detailData.id.toString();
       this.getSprite(this.idPokemon);
       this.getSpecies(this.idPokemon);
       this.getDescripcion(this.idPokemon);
-      //Obtiene informacion adicional que no se encontro en el metodo anterior
+
+      // Obtiene información adicional que no se encontró en el método anterior
       this._pokeService.getPokemonSpecie(pokeId).subscribe(specieData => {
         this.pokeDetails.push(specieData);
+
+        // Obtiene la cadena evolutiva
+/*         const evolutionChainUrl = specieData.evolution_chain.url;
+        const evolutionChainId = evolutionChainUrl.split('/')[6]; // Extrae el ID de la URL
+
+        this._pokeService.getEvolutionChain(evolutionChainId).subscribe(evolutionData => {
+          this.evolutionChain = this.parseEvolutionChain(evolutionData.chain);
+        });
+        */
+        this.cargando = false;
       });
-      console.timeEnd('loadPokemons');
-      this.cargando = false;
     });
   }
+/*
+  parseEvolutionChain(chain: any){
+    let evolutions = [];
+    let currentStage = chain;
+
+    while(currentStage){
+      evolutions.push(currentStage.spacies.name);
+      currentStage = currentStage.evolves_to[0];
+    }
+    return evolutions;
+  } */
+
 
   //Obtiene la descripcion del pokemon en español
   getDescripcion(pokeId: string) {
@@ -104,17 +126,9 @@ export class PokemonDetailsComponent implements OnInit {
     })
   }
 
-  //Quita el boton de anterior si el id es 1
-  pokeById0() {
-    if (Number(this.id) === 1) {
-      this.fisrtBtn = false;
-    }
-  }
-
-  lastPoke() {
-    if (Number(this.id) === 1025) {
-      this.lastBtn = false;
-    }
+  btnFirstLastPkm() {
+    if (Number(this.id) === 1) this.fisrtBtn = false;
+    else if (Number(this.id) === 1025) this.lastBtn = false;
   }
 
   //Obtiene los sprites de los pokemon en los botones de avance

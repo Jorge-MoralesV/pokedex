@@ -3,6 +3,7 @@
 
   <!-- Detalles -->
   <main>
+
     <div class="bg">
       <!-- Fondo -->
     </div>
@@ -27,22 +28,12 @@
 
           <div class="contenido row mt-3">
 
-            <div *ngIf="poke.types.length > 1; else oneType" class="w-auto">
-              <div *ngFor="let type of poke.types; let i = index">
-                <div *ngIf="i===0" class="sprite">
-                  <img loading="lazy"
-                    [style.background]="'linear-gradient(135deg, ' + tiposColores[poke.types[0].type.name] + ' 0%, ' + tiposColores[poke.types[1].type.name] + ' 100%)'"
-                    src={{poke.sprites.front_default}} alt={{poke.name}} class="default-card">
-                </div>
-              </div>
+            <!-- Sprite del pokemon -->
+            <div class="sprite">
+              <img loading="lazy" [src]="poke.sprites.front_default" [alt]="poke.name"
+                [style.background]="poke.types.length > 1 ? 'linear-gradient(135deg, ' + tiposColores[poke.types[0].type.name] + ' 0%, ' + tiposColores[poke.types[1].type.name] + ' 100%)' : tiposColores[poke.types[0].type.name]"
+                class="poke-img default-card" width="50" height="50">
             </div>
-
-            <ng-template #oneType>
-              <div class="sprite">
-                <img loading="lazy" [style.background]=" tiposColores[poke.types[0].type.name] "
-                  src={{poke.sprites.front_default}} alt={{poke.name}} class="default-card sprite-bg">
-              </div>
-            </ng-template>
 
             <!-- Descripcion -->
             <div class="descripcion col-6">
@@ -52,45 +43,10 @@
           </div>
 
           <div class="tipos">
-            <div class="tipo" *ngFor="let types of poke.types" [ngSwitch]="1">
+            <div class="tipo" *ngFor="let types of poke.types">
               <div class="icon-tipo">
-                <img loading="lazy" src=".\assets\imgs\tipos\bug.svg" class="bug-type-card"
-                  *ngSwitchCase="types.type.name=='bug'" alt="{{types.type.name}}">
-                <img loading="lazy" src=".\assets\imgs\tipos\grass.svg" class="grass-type-card"
-                  *ngSwitchCase="types.type.name=='grass'" alt="{{types.type.name}}">
-                <img loading="lazy" src=".\assets\imgs\tipos\fairy.svg" class="fairy-type-card"
-                  *ngSwitchCase="types.type.name=='fairy'" alt="{{types.type.name}}">
-                <img loading="lazy" src=".\assets\imgs\tipos\normal.svg" class="normal-type-card"
-                  *ngSwitchCase="types.type.name=='normal'" alt="{{types.type.name}}">
-                <img loading="lazy" src=".\assets\imgs\tipos\dragon.svg" class="dragon-type-card"
-                  *ngSwitchCase="types.type.name=='dragon'" alt="{{types.type.name}}">
-                <img loading="lazy" src=".\assets\imgs\tipos\psychic.svg" class="psychic-type-card"
-                  *ngSwitchCase="types.type.name=='psychic'" alt="{{types.type.name}}">
-                <img loading="lazy" src=".\assets\imgs\tipos\ghost.svg" class="ghost-type-card"
-                  *ngSwitchCase="types.type.name=='ghost'" alt="{{types.type.name}}">
-                <img loading="lazy" src=".\assets\imgs\tipos\ground.svg" class="ground-type-card"
-                  *ngSwitchCase="types.type.name=='ground'" alt="{{types.type.name}}">
-                <img loading="lazy" src=".\assets\imgs\tipos\steel.svg" class="steel-type-card"
-                  *ngSwitchCase="types.type.name=='steel'" alt="{{types.type.name}}">
-                <img loading="lazy" src=".\assets\imgs\tipos\fire.svg" class="fire-type-card"
-                  *ngSwitchCase="types.type.name=='fire'" alt="{{types.type.name}}">
-                <img loading="lazy" src=".\assets\imgs\tipos\flying.svg" class="flying-type-card"
-                  *ngSwitchCase="types.type.name=='flying'" alt="{{types.type.name}}">
-                <img loading="lazy" src=".\assets\imgs\tipos\ice.svg" class="ice-type-card"
-                  *ngSwitchCase="types.type.name=='ice'" alt="{{types.type.name}}">
-                <img loading="lazy" src=".\assets\imgs\tipos\electric.svg" class="electric-type-card"
-                  *ngSwitchCase="types.type.name=='electric'" alt="{{types.type.name}}">
-                <img loading="lazy" src=".\assets\imgs\tipos\rock.svg" class="rock-type-card"
-                  *ngSwitchCase="types.type.name=='rock'" alt="{{types.type.name}}">
-                <img loading="lazy" src=".\assets\imgs\tipos\dark.svg" class="dark-type-card"
-                  *ngSwitchCase="types.type.name=='dark'" alt="{{types.type.name}}">
-                <img loading="lazy" src=".\assets\imgs\tipos\water.svg" class="water-type-card"
-                  *ngSwitchCase="types.type.name=='water'" alt="{{types.type.name}}">
-                <img loading="lazy" src=".\assets\imgs\tipos\fighting.svg" class="fighting-type-card"
-                  *ngSwitchCase="types.type.name=='fighting'" alt="{{types.type.name}}">
-                <img loading="lazy" src=".\assets\imgs\tipos\poison.svg" class="poison-type-card"
-                  *ngSwitchCase="types.type.name=='poison'" alt="{{types.type.name}}">
-                <div *ngSwitchDefault></div>
+                <img loading="lazy" [src]="'/assets/imgs/tipos/'+types.type.name+'.svg'" [alt]="types.type.name"
+                  [class]="types.type.name + '-type-card'" width="50" height="50">
               </div>
               <div class="text-tipo">
                 <p>{{types.type.name | titlecase}}</p>
@@ -183,6 +139,21 @@
               <p>No hay diferencias entre generos</p>
             </div>
           </ng-template>
+
+
+<!--           <div *ngIf="evolutionChain">
+            <h4>Cadena Evolutiva</h4>
+            <ul>
+              <li *ngFor="let stage of evolutionChain">
+                {{ stage }}
+              </li>
+            </ul>
+          </div> -->
+
+<!--           <div *ngFor="let evolve of pokeDesc.evolves_from_species.name">
+            <p>{{evolve}}</p>
+          </div> -->
+
 
           <div class="avance">
             <a target="_parent" [routerLink]="['/pokemon-details', poke.id-1]" type="button"

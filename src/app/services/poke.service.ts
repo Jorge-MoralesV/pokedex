@@ -12,10 +12,10 @@ export class PokemonService {
   private apiUrl: string = 'https://pokeapi.co/api/v2';
 
   constructor(private http: HttpClient) { }
-/* 
-  getPokemonList(limit: number, first: number): Observable<PokemonApi> {
-    return this.http.get<PokemonApi>(`${this.apiUrl}/pokemon?limit=${limit}&offset=${first}`);
-  } */
+  /*
+    getPokemonList(limit: number, first: number): Observable<PokemonApi> {
+      return this.http.get<PokemonApi>(`${this.apiUrl}/pokemon?limit=${limit}&offset=${first}`);
+    } */
 
   getPokemonDetails(id: string): Observable<PokemonApi> {
     return this.http.get<PokemonApi>(`${this.apiUrl}/pokemon/${id}`);
@@ -24,6 +24,12 @@ export class PokemonService {
   getPokemonSpecie(id: string): Observable<PokemonSpecies> {
     return this.http.get<PokemonSpecies>(`${this.apiUrl}/pokemon-species/${id}`);
   }
+
+  // en pokemon.service.ts
+  getEvolutionChain(id: string): Observable<any> {
+    return this.http.get(`${this.apiUrl}/evolution-chain/${id}/`);
+  }
+
 
   /*   getRegions(): Observable<Regions> {
       return this.http.get<Regions>(`${this.apiUrl}/region/`);
