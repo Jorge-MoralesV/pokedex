@@ -26,10 +26,9 @@ export class PokemonService {
   }
 
   // en pokemon.service.ts
-  getEvolutionChain(id: string): Observable<any> {
-    return this.http.get(`${this.apiUrl}/evolution-chain/${id}/`);
+  getEvolutionChain(url: string): Observable<any> {
+    return this.http.get(url);
   }
-
 
   /*   getRegions(): Observable<Regions> {
       return this.http.get<Regions>(`${this.apiUrl}/region/`);
