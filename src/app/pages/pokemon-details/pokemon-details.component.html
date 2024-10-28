@@ -152,7 +152,7 @@
                   <img
                     [style.background]="evolucion.types.length > 1 ? 'linear-gradient(135deg, ' + tiposColores[evolucion.types[0].type.name] + ' 0%, ' + tiposColores[evolucion.types[1].type.name] + ' 100%)' : tiposColores[evolucion.types[0].type.name]"
                     class="sprite-evolucion" [src]="evolucion.sprite" [alt]="evolucion.name" width="100" height="100">
-                  <p>{{evolucion.name}}</p>
+                  <p>{{evolucion.name | titlecase}}</p>
                 </a>
               </div>
             </div>
