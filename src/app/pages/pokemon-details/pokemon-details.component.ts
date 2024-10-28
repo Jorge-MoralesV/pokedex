@@ -5,7 +5,7 @@ import { PokemonService } from 'src/app/services/poke.service';
 import { PokemonApi } from 'src/app/interfaces/pokemon';
 import { PokemonSpecies } from 'src/app/interfaces/pokemonSpecies';
 import { TiposColores } from 'src/app/interfaces/colores';
-import { map } from 'rxjs';
+import { lastValueFrom, map } from 'rxjs';
 import { Location } from '@angular/common';
 
 @Component({
@@ -40,18 +40,19 @@ export class PokemonDetailsComponent implements OnInit {
   pokemon: PokemonApi[] = [];
   pokeDetails: PokemonSpecies[] = [];
   filteredPokemons: PokemonApi[] = [];
+  evolutionChain: any[] = [];
+  evolutionNames: string[] = [];
+
+  idPokemon: string;
   descripcion: string;
   species: string;
-  fisrtBtn = true;
-  lastBtn = true;
   abilities: string;
   beforeSprite: string;
   afterSprite: string;
 
-  evolutionChain: any;
+  fisrtBtn = true;
+  lastBtn = true;
   cargando = true;
-
-  idPokemon: string;
 
   //Id de la Url
   id: string | null;
@@ -77,31 +78,53 @@ export class PokemonDetailsComponent implements OnInit {
       // Obtiene información adicional que no se encontró en el método anterior
       this._pokeService.getPokemonSpecie(pokeId).subscribe(specieData => {
         this.pokeDetails.push(specieData);
-
-        // Obtiene la cadena evolutiva
-/*         const evolutionChainUrl = specieData.evolution_chain.url;
-        const evolutionChainId = evolutionChainUrl.split('/')[6]; // Extrae el ID de la URL
-
-        this._pokeService.getEvolutionChain(evolutionChainId).subscribe(evolutionData => {
-          this.evolutionChain = this.parseEvolutionChain(evolutionData.chain);
-        });
-        */
+        //Obtengo la url del JSON de las evoluciones y la mando
+        const urlChain = specieData.evolution_chain.url;
+        this.getEvolutions(urlChain);
         this.cargando = false;
       });
     });
   }
-/*
-  parseEvolutionChain(chain: any){
-    let evolutions = [];
-    let currentStage = chain;
 
-    while(currentStage){
-      evolutions.push(currentStage.spacies.name);
-      currentStage = currentStage.evolves_to[0];
-    }
-    return evolutions;
-  } */
+  //Obtengo la url de las evoluciones
+  getEvolutions(url: string) {
+    console.log('cadena: ', url)
+    this._pokeService.getEvolutionChain(url).subscribe(evolucionData => {
+      //Se convierte la cadena y se guarda los nombres
+      this.evolutionNames = this.parseEvolutionChain(evolucionData.chain);
+      console.log(this.evolutionNames);
+      this.getSpritesChain(this.evolutionNames);
+    })
+  }
 
+  parseEvolutionChain(chain: any) {
+    let names: any[] = [];
+
+    const traverseChain = (stage: { species: { name: any; }; evolves_to: any[]; }) => {
+      names.push(stage.species.name);
+
+      // Recorrer todas las posibles evoluciones
+      stage.evolves_to.forEach(nextStage => {
+        traverseChain(nextStage);
+      });
+    };
+
+    traverseChain(chain);
+    return names;
+  }
+
+  getSpritesChain(cadena: string[]) {
+    const promises = cadena.map(name => lastValueFrom(this._pokeService.getPokemonDetails(name)));
+
+    Promise.all(promises).then(results => {
+      this.evolutionChain = results.map(pokemon => ({
+        id: pokemon.id,
+        name: pokemon.name,
+        types: pokemon.types,
+        sprite: pokemon.sprites.front_default
+      }))
+    }).catch(error => console.error('Error al obtener los sprites: ', error));
+  }
 
   //Obtiene la descripcion del pokemon en español
   getDescripcion(pokeId: string) {

@@ -42,6 +42,7 @@
 
           </div>
 
+          <!-- Tipos -->
           <div class="tipos">
             <div class="tipo" *ngFor="let types of poke.types">
               <div class="icon-tipo">
@@ -54,6 +55,7 @@
             </div>
           </div>
 
+          <!-- Tabla de datos -->
           <div class="general-data">
             <div class="title-data">
               <h2>Datos generales</h2>
@@ -140,20 +142,21 @@
             </div>
           </ng-template>
 
-
-<!--           <div *ngIf="evolutionChain">
-            <h4>Cadena Evolutiva</h4>
-            <ul>
-              <li *ngFor="let stage of evolutionChain">
-                {{ stage }}
-              </li>
-            </ul>
-          </div> -->
-
-<!--           <div *ngFor="let evolve of pokeDesc.evolves_from_species.name">
-            <p>{{evolve}}</p>
-          </div> -->
-
+          <!-- Evoluciones -->
+          <div class="evoluciones">
+            <h4>Evoluciones</h4>
+            <div class="cadena-evoluciones" *ngIf="evolutionChain.length > 0">
+              <div class="contenedor-sprite" *ngFor="let evolucion of evolutionChain">
+                <a [routerLink]="['/pokemon-details', evolucion.id]" target="_parent">
+                  <p>Id: {{evolucion.id}}</p>
+                  <img
+                    [style.background]="evolucion.types.length > 1 ? 'linear-gradient(135deg, ' + tiposColores[evolucion.types[0].type.name] + ' 0%, ' + tiposColores[evolucion.types[1].type.name] + ' 100%)' : tiposColores[evolucion.types[0].type.name]"
+                    class="sprite-evolucion" [src]="evolucion.sprite" [alt]="evolucion.name" width="100" height="100">
+                  <p>{{evolucion.name}}</p>
+                </a>
+              </div>
+            </div>
+          </div>
 
           <div class="avance">
             <a target="_parent" [routerLink]="['/pokemon-details', poke.id-1]" type="button"

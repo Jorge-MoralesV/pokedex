@@ -225,6 +225,52 @@ td {
   width: 40%;
 }
 
+/* Evoluciones */
+.evoluciones {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.cadena-evoluciones {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 70%;
+  margin: auto;
+}
+
+.contenedor-sprite {
+  margin: 5px;
+  border-radius: 10px;
+  padding: 10px;
+  width: 20%;
+  border: transparent 1px;
+  transition: all .5s ease-in-out;
+}
+
+.contenedor-sprite:hover {
+  background: linear-gradient(238deg, #D9D9D9 0%, rgba(135, 135, 135, 0.445) 100%);
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+
+.contenedor-sprite a {
+  text-decoration: none;
+  color: #000;
+}
+
+.contenedor-sprite a p {
+  margin: auto;
+  font-size: 20px;
+}
+
+.cadena-evoluciones .contenedor-sprite .sprite-evolucion {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25) inset;
+}
+
 /*Paginacion*/
 .avance {
   margin-top: 20px;
@@ -348,6 +394,10 @@ td {
   .missing p {
     font-size: small;
     margin: 0 10px 10px 10px;
+  }
+
+  .contenedor-sprite {
+    width: 45%;
   }
 
   /* Tipos */
