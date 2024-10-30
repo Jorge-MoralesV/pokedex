@@ -4,11 +4,23 @@ import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { PokemonService } from 'src/app/services/poke.service';
 import { TiposColores } from 'src/app/interfaces/colores';
 import { lastValueFrom } from 'rxjs';
+import { trigger, transition, style, animate } from '@angular/animations';
 
 @Component({
   selector: 'app-pokemon-list',
   templateUrl: './pokemon-list.component.html',
-  styleUrls: ['./pokemon-list.component.css']
+  styleUrls: ['./pokemon-list.component.css'],
+  animations: [
+    trigger('fadeInOut', [
+      transition(':enter', [
+        style({ opacity: 0 }),
+        animate('500ms ease-in', style({ opacity: 1 }))
+      ]),
+      transition(':leave', [
+        animate('500ms ease-out', style({ opacity: 0 }))
+      ])
+    ])
+  ]
 })
 export class PokemonListComponent implements OnInit {
 
@@ -43,7 +55,7 @@ export class PokemonListComponent implements OnInit {
   end: number = 0;
   searchTerm: string = '';
 
-  cargando = true;
+  cargando: boolean = true;
 
   constructor(private _pokeServ: PokemonService, private service: FuncionsService, private cdr: ChangeDetectorRef) { }
 
@@ -94,26 +106,16 @@ export class PokemonListComponent implements OnInit {
       const validResults = results.filter(pokemon => pokemon !== undefined) as PokemonApi[];
       this.pokemons = validResults.sort((a, b) => a.id - b.id);
       this.filteredPokemons = this.pokemons; // Si filteredPokemons siempre debe ser una copia de pokemons
-      this.cdr.detectChanges(); // Forzar la detección de cambios si es necesario
-      this.cargando = false;
+      /* this.cdr.detectChanges(); */ // Forzar la detección de cambios si es necesario
+      // Añadir una demora artificial
+      setTimeout(() => {
+        this.cargando = false;
+        console.log(this.cargando);
+      }, 500); // Demora de 500ms
     } catch (error) {
       console.error('Error al obtener los detalles de los Pokémon (por Región):', error);
       this.cargando = false;
     }
-  }
-
-  /** Lista los pokemon filtrados */
-  getPokemonInfo(index: string) {
-    this._pokeServ.getPokemonDetails(index).subscribe({
-      next: (pokemon) => {
-        this.pokemons = this.pokemons.concat(pokemon).sort((a, b) => a.id - b.id);
-        this.filteredPokemons = this.pokemons;
-      },
-      error: (error) => {
-        console.error('Error al obtener los detalles del pokemon (Lista común): ', error);
-      }
-    }
-    )
   }
 
   /* Buscar Pokemon */

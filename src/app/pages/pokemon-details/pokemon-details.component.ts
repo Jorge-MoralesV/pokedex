@@ -88,11 +88,9 @@ export class PokemonDetailsComponent implements OnInit {
 
   //Obtengo la url de las evoluciones
   getEvolutions(url: string) {
-    console.log('cadena: ', url)
     this._pokeService.getEvolutionChain(url).subscribe(evolucionData => {
       //Se convierte la cadena y se guarda los nombres
       this.evolutionNames = this.parseEvolutionChain(evolucionData.chain);
-      console.log(this.evolutionNames);
       this.getSpritesChain(this.evolutionNames);
     })
   }

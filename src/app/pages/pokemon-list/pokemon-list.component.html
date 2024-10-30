@@ -8,12 +8,12 @@
       <!-- Fondo -->
     </div>
 
-    <div *ngIf="cargando">
+    <ng-container *ngIf="cargando; else showPokemons" @fadeInOut>
       <app-loading></app-loading>
-    </div>
+    </ng-container>
 
     <!-- Lista -->
-    <div *ngIf="!cargando">
+    <ng-template #showPokemons @fadeInOut>
       <div class="container">
         <div class="row">
           <div class="card text-center m-2 shadow-sm" *ngFor="let poke of filteredPokemons">
@@ -48,7 +48,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </ng-template>
   </main>
 
   <app-Footer></app-Footer>

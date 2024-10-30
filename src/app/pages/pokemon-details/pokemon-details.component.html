@@ -8,11 +8,11 @@
       <!-- Fondo -->
     </div>
 
-    <div *ngIf="cargando">
+    <ng-container *ngIf="cargando; else showPokemon">
       <app-loading></app-loading>
-    </div>
+    </ng-container>
 
-    <div *ngIf="!cargando">
+    <ng-template #showPokemon>
       <div class="container" *ngFor="let poke of pokemon">
         <div *ngFor="let pokeDesc of pokeDetails">
 
@@ -175,7 +175,7 @@
 
         </div>
       </div>
-    </div>
+    </ng-template>
   </main>
 
   <app-Footer></app-Footer>

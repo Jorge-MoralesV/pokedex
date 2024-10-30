@@ -9,10 +9,12 @@ import { PokemonDetailsComponent } from './pages/pokemon-details/pokemon-details
 import { RouterModule } from '@angular/router';
 
 
+
 import { FormsModule } from '@angular/forms';
 import { NavbarComponent } from './Components/Navbar/Navbar.component';
 import { LoadingComponent } from './Components/Loading/Loading.component';
 import { FooterComponent } from './Components/Footer/Footer.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -29,6 +31,7 @@ import { FooterComponent } from './Components/Footer/Footer.component';
     HttpClientModule,
     RouterModule,
     FormsModule,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
