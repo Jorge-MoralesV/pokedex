@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
+import { filter } from 'rxjs';
 import { FuncionsService } from 'src/app/services/funciones.service';
 
 @Component({
@@ -9,7 +10,6 @@ import { FuncionsService } from 'src/app/services/funciones.service';
 })
 
 export class NavbarComponent implements OnInit {
-
 
   regionesInfo = [
     { nombre: 'Kanto', inicio: 1, fin: 151 },
@@ -23,43 +23,48 @@ export class NavbarComponent implements OnInit {
     { nombre: 'Paldea', inicio: 906, fin: 1025 },
   ];
 
-  url = location.href;
+  url: string = '';
   searchTerm: string = '';
   home: boolean = true;
 
-  constructor(private service: FuncionsService, private router: Router) { }
+  constructor(
+    private service: FuncionsService,
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
-    this.homeOrDetails();
+    this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd)
+    ).subscribe(() => {
+      this.url = this.router.url;
+    })
+
+    this.updateHomeOrDetails();
+  }
+
+  /** Verifica si esta en la lista o en los detalles */
+  updateHomeOrDetails() {
+    this.home = !this.router.url.includes('pokemon-details/');
   }
 
   navigateToRegion(region: any) {
-    /* this.router.navigate(['/region', region.inicio, region.fin]); */
     this.router.navigate([region.nombre, region.inicio, region.fin]);
   }
 
-  homeOrDetails() {
-    if (location.href.includes('pokemon-details/')) {
-      this.home = false;
-    } else {
-      this.home = true;
-    }
-  }
-
-  /*   getPokemonRegion(arg0: number, arg1: number) {
-      this.service.start.next(arg0);
-      this.service.end.next(arg1);
-    } */
-
   searchPokemon() {
     //Si se encuntra en los detalles del pokemon
-    if (location.href.includes('pokemon-details/')) {
-      const newUrl = this.url.split('/');
+    if (this.router.url.includes('pokemon-details/')) {
+      /** Separa la url en un arreglo */
+      const newUrl = this.router.url.split('/');
+      /** Guarda el ultimo valor del arreglo */
       const remplazo = newUrl[newUrl.length - 1];
-      location.replace(location.href.replace(remplazo, this.searchTerm));
+      /** Remplaza el valor de la url por el nuevo valor */
+      const updateUrl = this.router.url.replace(remplazo, this.searchTerm);
+      /** Redirige a la nueva url */
+      this.router.navigateByUrl(updateUrl);
       //Si se encuentra en la lista de pokemons
-    } else if (location.href.includes(this.url)) {
-      this.service.variable$.next(this.searchTerm);
+    } else if (this.home) {
+      this.service.valorBusqueda.next(this.searchTerm.trim().toLowerCase());
     }
   }
 

@@ -1,10 +1,9 @@
 import { FuncionsService } from './../../services/funciones.service';
 import { PokemonApi } from '../../interfaces/pokemon';
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { PokemonService } from 'src/app/services/poke.service';
 import { TiposColores } from 'src/app/interfaces/colores';
-import { lastValueFrom } from 'rxjs';
-import { trigger, transition, style, animate } from '@angular/animations';
+import { lastValueFrom, Subscription } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
@@ -12,9 +11,9 @@ import { ActivatedRoute, Router } from '@angular/router';
   templateUrl: './pokemon-list.component.html',
   styleUrls: ['./pokemon-list.component.css']
 })
-export class PokemonListComponent implements OnInit {
+export class PokemonListComponent implements OnInit, OnDestroy {
 
-  tiposColores: TiposColores = {
+  colorTypes: TiposColores = {
     bug: '#91C12F',
     grass: '#63BC5A',
     fairy: '#EC8FE6',
@@ -37,9 +36,10 @@ export class PokemonListComponent implements OnInit {
 
   public pokemons: PokemonApi[] = [];
   public filteredPokemons: PokemonApi[] = [];
+  private subscriptions: Subscription[] = [];
 
   searchTerm: string = '';
-  nombre: string = '';
+  name: string = '';
   start: number = 0;
   end: number = 0;
   loading: boolean = true;
@@ -52,33 +52,25 @@ export class PokemonListComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-
-    //Obtiene el valor del input de busqueda
-    this.service.variable$.subscribe((valor => {
-      this.searchTerm = valor;
-      this.searchPokemon();
-    }))
-
-    this.route.params.subscribe(params => {
+    const routeSub = this.route.params.subscribe(params => {
       /** Obtener valores de la url */
-      this.nombre = params['region'];
+      this.name = params['region'];
       this.start = +params['inicio'];
       this.end = +params['fin'];
-      /** Enviar valores a los detalles del pokemon */
-      /* this.service.nombre.next(this.nombre);
-      this.service.start.next(this.start);
-      this.service.end.next(this.end); */
-      this.checkRegionLoad();
-    })
+      this.getRegion(this.start, this.end);
+    });
+    this.subscriptions.push(routeSub);
 
-    /*     this.service.start.subscribe((valorStart => {
-          this.start = valorStart;
-        }))
+    //Obtiene el valor del input de busqueda
+    const searchSub = this.service.valorBusqueda.subscribe((valor) => {
+      this.searchTerm = valor;
+      this.searchPokemon();
+    });
+    this.subscriptions.push(searchSub);
+  }
 
-        this.service.end.subscribe((valorEnd => {
-          this.end = valorEnd;
-        })) */
-
+  ngOnDestroy(): void {
+    this.subscriptions.forEach(sub => sub.unsubscribe());
   }
 
   checkRegionLoad() {
@@ -102,13 +94,17 @@ export class PokemonListComponent implements OnInit {
       }
     }
     try {
-      const results = await Promise.all(promises);
-      const validResults = results.filter(pokemon => pokemon !== undefined) as PokemonApi[];
+      const results = await Promise.allSettled(promises);
+      const validResults = results
+        .filter(result => result.status === 'fulfilled')
+        .map(result => (result as PromiseFulfilledResult<PokemonApi>).value)
+        .filter(pokemon => pokemon !== undefined) as PokemonApi[];
       /** Ordena los pokemon por id */
       this.pokemons = validResults.sort((a, b) => a.id - b.id);
       //filteredPokemons siempre debe ser una copia de pokemons
-      this.filteredPokemons = this.pokemons;
+      this.filteredPokemons = this.pokemons.slice();
       this.loading = false;
+      /* this.searchPokemon(); */
     } catch (error) {
       console.error('Error al obtener los detalles de los Pokémon (por Región):', error);
       this.loading = false;
@@ -116,7 +112,7 @@ export class PokemonListComponent implements OnInit {
   }
 
   goToPokemon(id: string) {
-    this.service.setDetailsData(this.nombre, this.start, this.end);
+    this.service.setDetailsData(this.name, this.start, this.end);
     this.router.navigate(['/pokemon-details', id]);
   }
 
@@ -139,7 +135,8 @@ export class PokemonListComponent implements OnInit {
       }
     } else {
       /* Si no hay contenido en la barra de busqueda regresa la lista actual */
-      this.checkRegionLoad();
+      /* this.checkRegionLoad(); */
+      this.filteredPokemons = this.pokemons.slice();
     }
   }
 

@@ -5,7 +5,7 @@ import { BehaviorSubject } from 'rxjs';
 export class FuncionsService {
   constructor() { }
 
-  public variable$ = new BehaviorSubject<string>('');
+  public valorBusqueda = new BehaviorSubject<string>('');
 
   public nombre = new BehaviorSubject<string>('');
   public start = new BehaviorSubject<number>(0);

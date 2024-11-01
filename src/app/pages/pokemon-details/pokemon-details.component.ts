@@ -114,7 +114,6 @@ export class PokemonDetailsComponent implements OnInit, OnDestroy {
       this.getSprite(this.idPokemon);
       this.getSpecies(this.idPokemon);
       this.getDescripcion(this.idPokemon);
-
       // Obtiene información adicional que no se encontró en el método anterior
       this._pokeService.getPokemonSpecie(pokeId).subscribe(specieData => {
         this.pokeDetails.push(specieData);
@@ -137,16 +136,13 @@ export class PokemonDetailsComponent implements OnInit, OnDestroy {
 
   parseEvolutionChain(chain: any) {
     let names: any[] = [];
-
     const traverseChain = (stage: { species: { name: any; }; evolves_to: any[]; }) => {
       names.push(stage.species.name);
-
       // Recorrer todas las posibles evoluciones
       stage.evolves_to.forEach(nextStage => {
         traverseChain(nextStage);
       });
     };
-
     traverseChain(chain);
     return names;
   }
@@ -154,7 +150,6 @@ export class PokemonDetailsComponent implements OnInit, OnDestroy {
   /** Obtiene los datos de un pokemon para mostrarlos en su cadena de evolución */
   getSpritesChain(cadena: string[]) {
     const promises = cadena.map(name => lastValueFrom(this._pokeService.getPokemonDetails(name)));
-
     Promise.all(promises).then(results => {
       this.evolutionChain = results.map(pokemon => ({
         id: pokemon.id,

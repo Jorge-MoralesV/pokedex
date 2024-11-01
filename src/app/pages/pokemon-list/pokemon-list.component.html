@@ -25,7 +25,7 @@
                 <!-- Sprite con background para dos tipos -->
                 <div class="sprite">
                   <img loading="lazy" [src]="poke.sprites.front_default" [alt]="poke.name"
-                    [style.background]="poke.types.length > 1 ? 'linear-gradient(135deg, ' + tiposColores[poke.types[0].type.name] + ' 0%, ' + tiposColores[poke.types[1].type.name] + ' 100%)' : tiposColores[poke.types[0].type.name]"
+                    [style.background]="poke.types.length > 1 ? 'linear-gradient(135deg, ' + colorTypes[poke.types[0].type.name] + ' 0%, ' + colorTypes[poke.types[1].type.name] + ' 100%)' : colorTypes[poke.types[0].type.name]"
                     class="poke-img default-card" width="50" height="50">
                 </div>
               </div>

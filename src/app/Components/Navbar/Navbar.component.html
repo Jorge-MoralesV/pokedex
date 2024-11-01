@@ -10,9 +10,8 @@
             height="20" alt="logo">
         </div>
 
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-          data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-          aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="left-content">
@@ -24,7 +23,7 @@
 
               <img class="pokeball" src=".\assets\imgs\pokeball.webp" alt="pokeball">
               <input [(ngModel)]="searchTerm" class="me-2" type="text" placeholder="Buscar... ID o Nombre"
-                aria-label="Search" #txtInput (input)="home && searchPokemon()">
+                aria-label="Search" (input)="home && searchPokemon()">
               <button [className]="home ? 'd-none' : 'btn'" (click)="searchPokemon()">🔍</button>
 
             </div>
@@ -47,7 +46,6 @@
 
           </div>
         </div>
-
 
       </div>
     </nav>
