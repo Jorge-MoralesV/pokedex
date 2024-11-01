@@ -9,18 +9,7 @@ import { trigger, transition, style, animate } from '@angular/animations';
 @Component({
   selector: 'app-pokemon-list',
   templateUrl: './pokemon-list.component.html',
-  styleUrls: ['./pokemon-list.component.css'],
-  animations: [
-    trigger('fadeInOut', [
-      transition(':enter', [
-        style({ opacity: 0 }),
-        animate('500ms ease-in', style({ opacity: 1 }))
-      ]),
-      transition(':leave', [
-        animate('500ms ease-out', style({ opacity: 0 }))
-      ])
-    ])
-  ]
+  styleUrls: ['./pokemon-list.component.css']
 })
 export class PokemonListComponent implements OnInit {
 
@@ -47,24 +36,17 @@ export class PokemonListComponent implements OnInit {
 
   public pokemons: PokemonApi[] = [];
   public filteredPokemons: PokemonApi[] = [];
-  tiposArray: string[] = [];
 
   searchId: number | undefined;
 
   start: number = 0;
   end: number = 0;
   searchTerm: string = '';
+  loading: boolean = true;
 
-  cargando: boolean = true;
-
-  constructor(private _pokeServ: PokemonService, private service: FuncionsService, private cdr: ChangeDetectorRef) { }
+  constructor(private _pokeServ: PokemonService, private service: FuncionsService) { }
 
   ngOnInit(): void {
-
-    //Gif de carga
-    this.service.cargando.subscribe((valorCarga => {
-      this.cargando = valorCarga;
-    }))
 
     //Obtiene el valor del input de busqueda
     this.service.variable$.subscribe((valor => {
@@ -82,7 +64,7 @@ export class PokemonListComponent implements OnInit {
 
     this.service.end.subscribe(() => {
       //Verificar si start y end tiene valor
-      if (this.start !== undefined && this.end !== undefined) {
+      if (this.start !== undefined && this.start !== 0 && this.end !== undefined) {
         this.getRegion(this.start, this.end);
       }
     })
@@ -91,30 +73,22 @@ export class PokemonListComponent implements OnInit {
 
   /** Listas segun region */
   async getRegion(a: number, b: number) {
-
     this.pokemons = []; // Reinicia el arreglo de pokemons
     const promises = [];
-
     for (let index = a; index <= b; index++) {
-      if (index !== 0) {
-        promises.push(lastValueFrom(this._pokeServ.getPokemonDetails(index + '')));
-      }
+      /* if (index !== 0) { */
+      promises.push(lastValueFrom(this._pokeServ.getPokemonDetails(index + '')));
+      /* } */
     }
-
     try {
       const results = await Promise.all(promises);
       const validResults = results.filter(pokemon => pokemon !== undefined) as PokemonApi[];
       this.pokemons = validResults.sort((a, b) => a.id - b.id);
-      this.filteredPokemons = this.pokemons; // Si filteredPokemons siempre debe ser una copia de pokemons
-      /* this.cdr.detectChanges(); */ // Forzar la detección de cambios si es necesario
-      // Añadir una demora artificial
-      setTimeout(() => {
-        this.cargando = false;
-        console.log(this.cargando);
-      }, 500); // Demora de 500ms
+      this.filteredPokemons = this.pokemons; //filteredPokemons siempre debe ser una copia de pokemons
+      this.loading = false;
     } catch (error) {
       console.error('Error al obtener los detalles de los Pokémon (por Región):', error);
-      this.cargando = false;
+      this.loading = false;
     }
   }
 
@@ -122,7 +96,6 @@ export class PokemonListComponent implements OnInit {
   searchPokemon() {
     const soloLetras = /^[a-zA-Z]+$/;
     const searchTerm = this.searchTerm.trim().toLowerCase();
-
     if (soloLetras.test(searchTerm)) {
       this.filteredPokemons = this.pokemons.filter(pokemon =>
         pokemon.name.toLowerCase().includes(searchTerm)
@@ -136,6 +109,7 @@ export class PokemonListComponent implements OnInit {
       }
     } else {
       this.getRegion(1, 151);
+      /* this.filteredPokemons = this.pokemons; */
     }
   }
 
