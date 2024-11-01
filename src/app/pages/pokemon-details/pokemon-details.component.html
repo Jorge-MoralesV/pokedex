@@ -101,7 +101,7 @@
               <div class="contenedor-sprite" *ngFor="let evolucion of evolutionChain">
                 <a (click)="nextPokemon(evolucion.id)">
                   <p>Id: {{evolucion.id}}</p>
-                  <img
+                  <img loading="lazy"
                     [style.background]="evolucion.types.length > 1 ? 'linear-gradient(135deg, ' + tiposColores[evolucion.types[0].type.name] + ' 0%, ' + tiposColores[evolucion.types[1].type.name] + ' 100%)' : tiposColores[evolucion.types[0].type.name]"
                     class="sprite-evolucion" [src]="evolucion.sprite" [alt]="evolucion.name" width="100" height="100">
                   <p>{{evolucion.name | titlecase}}</p>
