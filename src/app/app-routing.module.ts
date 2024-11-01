@@ -4,9 +4,10 @@ import { PokemonListComponent } from './pages/pokemon-list/pokemon-list.componen
 import { PokemonDetailsComponent } from './pages/pokemon-details/pokemon-details.component';
 
 const routes: Routes = [
+  { path: '', redirectTo: 'Kanto/1/151', pathMatch: 'full' },
   { path: ':region/:inicio/:fin', component: PokemonListComponent },
   { path: 'pokemon-details/:id', component: PokemonDetailsComponent },
-  { path: '**', redirectTo: '', pathMatch: 'full' }
+  { path: '**', redirectTo: 'Kanto/1/151', pathMatch: 'full' }
 ];
 
 @NgModule({

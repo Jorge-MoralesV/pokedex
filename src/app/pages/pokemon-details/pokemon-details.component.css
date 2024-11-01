@@ -247,11 +247,12 @@ td {
   width: 20%;
   border: transparent 1px;
   transition: all .5s ease-in-out;
+  background: linear-gradient(238deg, #D9D9D9 0%, rgba(135, 135, 135, 0.445) 100%);
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
 }
 
 .contenedor-sprite:hover {
-  background: linear-gradient(238deg, #D9D9D9 0%, rgba(135, 135, 135, 0.445) 100%);
-  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  cursor: pointer;
 }
 
 .contenedor-sprite a {
