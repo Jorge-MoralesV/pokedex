@@ -45,7 +45,7 @@ export class PokemonDetailsComponent implements OnInit, OnDestroy {
   evolutionNames: string[] = [];
 
   idPokemon: string;
-  descripcion: string;
+  description: string;
   species: string;
   abilities: string;
   beforeSprite: string;
@@ -173,7 +173,7 @@ export class PokemonDetailsComponent implements OnInit, OnDestroy {
         return entrada ? entrada.flavor_text.replace(/\\n/g, ' ') : ' ';
       })
     ).subscribe(description => {
-      this.descripcion = description;
+      this.description = description;
     })
   }
 
@@ -209,16 +209,13 @@ export class PokemonDetailsComponent implements OnInit, OnDestroy {
     })
   }
 
+  /** Regresa a la lista */
   backList() {
     this.router.navigate([this.nombre, this.start, this.end]);
   }
 
-  prevPokemon(id: number) {
-    console.log('id:', id)
-    this.router.navigate(['/pokemon-details', id]);
-  }
+  /** Navega entre los pokemon */
   nextPokemon(id: number) {
-    console.log('id:', id)
     this.router.navigate(['/pokemon-details', id]);
   }
 
