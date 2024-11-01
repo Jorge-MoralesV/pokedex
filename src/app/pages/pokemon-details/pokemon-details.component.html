@@ -8,7 +8,7 @@
       <!-- Fondo -->
     </div>
 
-    <ng-container *ngIf="cargando; else showPokemon">
+    <ng-container *ngIf="loading; else showPokemon">
       <app-loading></app-loading>
     </ng-container>
 
@@ -22,7 +22,8 @@
               <h2 class="id">Pokedex Id: {{poke.id}}</h2>
               <h2 class="name">Nombre: {{poke.name | titlecase}}, {{species}}</h2>
             </div>
-            <button type="button" class="btn btn-danger btn-close" routerLink="/"></button>
+            <button type="button" class="btn btn-danger btn-close" (click)="backList()"></button>
+            <!-- <button type="button" class="btn btn-danger btn-close" [routerLink]="['/'+nombre, start, end]"></button> -->
 
           </div>
 
@@ -147,7 +148,7 @@
             <h4>Evoluciones</h4>
             <div class="cadena-evoluciones" *ngIf="evolutionChain.length > 0">
               <div class="contenedor-sprite" *ngFor="let evolucion of evolutionChain">
-                <a [routerLink]="['/pokemon-details', evolucion.id]" target="_parent">
+                <a (click)="nextPokemon(evolucion.id)">
                   <p>Id: {{evolucion.id}}</p>
                   <img
                     [style.background]="evolucion.types.length > 1 ? 'linear-gradient(135deg, ' + tiposColores[evolucion.types[0].type.name] + ' 0%, ' + tiposColores[evolucion.types[1].type.name] + ' 100%)' : tiposColores[evolucion.types[0].type.name]"
@@ -159,14 +160,13 @@
           </div>
 
           <div class="avance">
-            <a target="_parent" [routerLink]="['/pokemon-details', poke.id-1]" type="button"
+            <a (click)="prevPokemon(poke.id-1)" type="button"
               [className]="fisrtBtn ? 'btn btn-dark fisrtBtn' : 'd-none'">
               <i class="fa fa-angle-double-left" aria-hidden="true"></i>
               <img loading="lazy" src={{beforeSprite}} alt="anterior" srcset="" class="spriteBack">
               <p>Pokémon Anterior</p>
             </a>
-            <a target="_parent" [routerLink]="['/pokemon-details', poke.id+1]" type="button"
-              [className]="lastBtn ? 'btn btn-dark lastBtn' : 'd-none'">
+            <a (click)="nextPokemon(poke.id+1)" type="button" [className]="lastBtn ? 'btn btn-dark lastBtn' : 'd-none'">
               <p>Siguiente Pokémon</p>
               <img loading="lazy" src={{afterSprite}} alt="siguiente" srcset="" class="spriteBack">
               <i class="fa fa-angle-double-right" aria-hidden="true"></i>

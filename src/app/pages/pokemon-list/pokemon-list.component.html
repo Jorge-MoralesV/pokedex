@@ -39,7 +39,10 @@
                       [class]="type.type.name + '-type-card'" width="10" height="10">
                   </div>
                 </div>
-                <button [routerLink]="['/pokemon-details', poke.id]" type="button" class="btn btn-dark">
+                <!-- <button [routerLink]="['/pokemon-details', poke.id]" type="button" class="btn btn-dark">
+                  Detalles
+                </button> -->
+                <button (click)="goToPokemon(poke.id+'')" type="button" class="btn btn-dark">
                   Detalles
                 </button>
               </div>

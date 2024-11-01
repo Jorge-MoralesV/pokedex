@@ -3,12 +3,17 @@ import { BehaviorSubject } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class FuncionsService {
-    constructor() { }
+  constructor() { }
 
-    public variable$ = new BehaviorSubject<string>('');
+  public variable$ = new BehaviorSubject<string>('');
 
-    public start = new BehaviorSubject<number>(0);
-    public end = new BehaviorSubject<number>(0);
+  public nombre = new BehaviorSubject<string>('');
+  public start = new BehaviorSubject<number>(0);
+  public end = new BehaviorSubject<number>(0);
 
-    public cargando = new BehaviorSubject<boolean>(true);
+  setDetailsData(nombre: string, start: number, end: number) {
+    this.nombre.next(nombre);
+    this.start.next(start);
+    this.end.next(end);
+  }
 }

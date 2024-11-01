@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { FuncionsService } from 'src/app/services/funciones.service';
 
 @Component({
@@ -9,7 +10,6 @@ import { FuncionsService } from 'src/app/services/funciones.service';
 
 export class NavbarComponent implements OnInit {
 
-  url = location.href;
 
   regionesInfo = [
     { nombre: 'Kanto', inicio: 1, fin: 151 },
@@ -23,13 +23,19 @@ export class NavbarComponent implements OnInit {
     { nombre: 'Paldea', inicio: 906, fin: 1025 },
   ];
 
+  url = location.href;
   searchTerm: string = '';
   home: boolean = true;
 
-  constructor(private service: FuncionsService) { }
+  constructor(private service: FuncionsService, private router: Router) { }
 
   ngOnInit(): void {
     this.homeOrDetails();
+  }
+
+  navigateToRegion(region: any) {
+    /* this.router.navigate(['/region', region.inicio, region.fin]); */
+    this.router.navigate([region.nombre, region.inicio, region.fin]);
   }
 
   homeOrDetails() {
@@ -40,10 +46,10 @@ export class NavbarComponent implements OnInit {
     }
   }
 
-  getPokemonRegion(arg0: number, arg1: number) {
-    this.service.start.next(arg0);
-    this.service.end.next(arg1);
-  }
+  /*   getPokemonRegion(arg0: number, arg1: number) {
+      this.service.start.next(arg0);
+      this.service.end.next(arg1);
+    } */
 
   searchPokemon() {
     //Si se encuntra en los detalles del pokemon

@@ -1,12 +1,13 @@
 import { EvolutionChain } from './../../interfaces/pokemonSpecies';
-import { ActivatedRoute } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { PokemonService } from 'src/app/services/poke.service';
 import { PokemonApi } from 'src/app/interfaces/pokemon';
 import { PokemonSpecies } from 'src/app/interfaces/pokemonSpecies';
 import { TiposColores } from 'src/app/interfaces/colores';
-import { lastValueFrom, map } from 'rxjs';
+import { filter, lastValueFrom, map, Subscription } from 'rxjs';
 import { Location } from '@angular/common';
+import { FuncionsService } from 'src/app/services/funciones.service';
 
 @Component({
   selector: 'app-pokemon-details',
@@ -14,7 +15,7 @@ import { Location } from '@angular/common';
   styleUrls: ['./pokemon-details.component.css']
 })
 
-export class PokemonDetailsComponent implements OnInit {
+export class PokemonDetailsComponent implements OnInit, OnDestroy {
 
   tiposColores: TiposColores = {
     bug: '#91C12F',
@@ -52,22 +53,61 @@ export class PokemonDetailsComponent implements OnInit {
 
   fisrtBtn = true;
   lastBtn = true;
-  cargando = true;
+  loading = true;
+
+  nombre: string = '';
+  start: number = 0;
+  end: number = 0;
 
   //Id de la Url
-  id: string | null;
+  id: string = '';
 
-  constructor(private aRouter: ActivatedRoute, private _pokeService: PokemonService, private location: Location) {
-    this.id = this.aRouter.snapshot.paramMap.get('id');
-  }
+  private routeSub: Subscription;
+
+  constructor(
+    private aRouter: ActivatedRoute,
+    private _pokeService: PokemonService,
+    private service: FuncionsService,
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
-    this.getPokemonInfoAndDetails(this.id + '');
+    /** Trae los valores de la lista de la url */
+    this.service.nombre.subscribe((valorNombre => {
+      this.nombre = valorNombre;
+    }));
+    this.service.start.subscribe((valorStart => {
+      this.start = valorStart;
+    }));
+    this.service.end.subscribe((valorEnd => {
+      this.end = valorEnd;
+    }));
+
+    this.aRouter.params.subscribe(params => {
+      this.id = params['id'];
+      this.clearData();
+      this.getPokemonInfoAndDetails(this.id);
+    })
+
     this.btnFirstLastPkm();
   }
 
+  ngOnDestroy(): void {
+    if (this.routeSub) {
+      this.routeSub.unsubscribe();
+    }
+  }
+
+  clearData() {
+    this.pokemon = [];
+    this.pokeDetails = [];
+    this.filteredPokemons = [];
+    this.evolutionChain = [];
+    this.evolutionNames = [];
+  }
+
+  // Obtiene la información del Pokémon
   async getPokemonInfoAndDetails(pokeId: string) {
-    // Obtiene la información del Pokémon
     this._pokeService.getPokemonDetails(pokeId).subscribe(detailData => {
       this.pokemon.push(detailData);
       this.idPokemon = detailData.id.toString();
@@ -81,7 +121,7 @@ export class PokemonDetailsComponent implements OnInit {
         //Obtengo la url del JSON de las evoluciones y la mando
         const urlChain = specieData.evolution_chain.url;
         this.getEvolutions(urlChain);
-        this.cargando = false;
+        this.loading = false;
       });
     });
   }
@@ -111,6 +151,7 @@ export class PokemonDetailsComponent implements OnInit {
     return names;
   }
 
+  /** Obtiene los datos de un pokemon para mostrarlos en su cadena de evolución */
   getSpritesChain(cadena: string[]) {
     const promises = cadena.map(name => lastValueFrom(this._pokeService.getPokemonDetails(name)));
 
@@ -124,7 +165,7 @@ export class PokemonDetailsComponent implements OnInit {
     }).catch(error => console.error('Error al obtener los sprites: ', error));
   }
 
-  //Obtiene la descripcion del pokemon en español
+  //Obtiene la descripción del pokemon en español
   getDescripcion(pokeId: string) {
     this._pokeService.getPokemonSpecie(pokeId).pipe(
       map(data => {
@@ -136,6 +177,7 @@ export class PokemonDetailsComponent implements OnInit {
     })
   }
 
+  /** Obtiene el tipo de pokemon, ej: Pikachu, Pokemon ratón */
   getSpecies(pokeId: string) {
     this._pokeService.getPokemonSpecie(pokeId).pipe(
       map(data => {
@@ -147,6 +189,7 @@ export class PokemonDetailsComponent implements OnInit {
     })
   }
 
+  /** Mostrar los botones de anterior y siguiente */
   btnFirstLastPkm() {
     if (Number(this.id) === 1) this.fisrtBtn = false;
     else if (Number(this.id) === 1025) this.lastBtn = false;
@@ -156,12 +199,27 @@ export class PokemonDetailsComponent implements OnInit {
   getSprite(pokeId: string) {
     const idBefore = (parseInt(pokeId) - 1).toString();
     const idAfter = (parseInt(pokeId) + 1).toString();
+    /** Sprite del pokemon anterior */
     this._pokeService.getPokemonDetails(idBefore).subscribe(sprite => {
       this.beforeSprite = sprite.sprites.front_default;
     })
+    /** Sprite del siguiente pokemon */
     this._pokeService.getPokemonDetails(idAfter).subscribe(sprite => {
       this.afterSprite = sprite.sprites.front_default;
     })
+  }
+
+  backList() {
+    this.router.navigate([this.nombre, this.start, this.end]);
+  }
+
+  prevPokemon(id: number) {
+    console.log('id:', id)
+    this.router.navigate(['/pokemon-details', id]);
+  }
+  nextPokemon(id: number) {
+    console.log('id:', id)
+    this.router.navigate(['/pokemon-details', id]);
   }
 
 }
