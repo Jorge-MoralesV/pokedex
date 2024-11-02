@@ -64,7 +64,6 @@
             <div class="info">
               <h3>Altura: {{poke.height/10}} m.</h3>
               <h3>Peso: {{poke.weight/10}} kg.</h3>
-
               <h3>Experiencia base: {{poke.base_experience}}</h3>
 
               <table class="table table-light">
@@ -87,17 +86,27 @@
                 </ng-container>
                 <ng-template #noitem>
                   <tr>
-                    <td>Este Pokémon no porta ningún ítem.</td>
+                    <td>Este Pokémon no porta ítems en estado salvaje.</td>
                   </tr>
                 </ng-template>
               </table>
             </div>
           </div>
 
+          <!-- Puntos habilidades -->
+          <div class="puntos">
+            <h2>Puntos Base:</h2>
+            <div class="progress bg-dark" *ngFor="let item of poke.stats">
+              <div class="progress-bar bg-info" [style.width.%]="item.base_stat" role="progressbar"
+                [attr.aria-valuenow]="item.base_stat" aria-valuemin="0" aria-valuemax="200">
+                {{item.stat.name.replace('-',' ') | titlecase}}: {{item.base_stat}}</div>
+            </div>
+          </div>
+
           <!-- Evoluciones -->
-          <div class="evoluciones">
+          <div class="evoluciones" *ngIf="evolutionChain.length > 0">
             <h2>Evoluciones</h2>
-            <div class="cadena-evoluciones" *ngIf="evolutionChain.length > 0">
+            <div class="cadena-evoluciones">
               <div class="contenedor-sprite" *ngFor="let evolucion of evolutionChain">
                 <a (click)="nextPokemon(evolucion.id)">
                   <p>Id: {{evolucion.id}}</p>
@@ -158,8 +167,6 @@
               <p>No hay diferencias entre generos</p>
             </div>
           </ng-template>
-
-
 
           <div class="avance">
             <a (click)="nextPokemon(poke.id-1)" type="button"

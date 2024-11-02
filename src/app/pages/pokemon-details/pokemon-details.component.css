@@ -314,6 +314,24 @@ td {
   display: none;
 }
 
+.puntos {
+  width: 70%;
+  margin: auto;
+}
+
+.puntos h2 {
+  text-align: center;
+}
+
+.puntos .progress {
+  height: 30px;
+  margin-bottom: 10px;
+}
+
+.progress-bar{
+  font-size: large;
+}
+
 /* MediaQueries*/
 @media screen and (max-width: 1200px) {
 
@@ -439,6 +457,14 @@ td {
 
   .avance a i {
     display: contents;
+  }
+
+  .puntos{
+    width: 90%;
+  }
+
+  .progress-bar{
+    font-size: smaller;
   }
 }
 

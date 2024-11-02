@@ -118,8 +118,8 @@ export class PokemonDetailsComponent implements OnInit, OnDestroy {
       this._pokeService.getPokemonSpecie(pokeId).subscribe(specieData => {
         this.pokeDetails.push(specieData);
         //Obtengo la url del JSON de las evoluciones y la mando
-        const urlChain = specieData.evolution_chain.url;
-        this.getEvolutions(urlChain);
+        const urlEvo = specieData.evolution_chain.url;
+        this.getEvolutions(urlEvo);
         this.loading = false;
       });
     });
