@@ -86,10 +86,10 @@ export class PokemonDetailsComponent implements OnInit, OnDestroy {
     this.aRouter.params.subscribe(params => {
       this.id = params['id'];
       this.clearData();
+      this.btnFirstLastPkm();
       this.getPokemonInfoAndDetails(this.id);
     })
 
-    this.btnFirstLastPkm();
   }
 
   ngOnDestroy(): void {
@@ -186,8 +186,17 @@ export class PokemonDetailsComponent implements OnInit, OnDestroy {
 
   /** Mostrar los botones de anterior y siguiente */
   btnFirstLastPkm() {
-    if (Number(this.id) === 1) this.fisrtBtn = false;
-    else if (Number(this.id) === 1025) this.lastBtn = false;
+    if (Number(this.id) === 1) {
+      console.log(this.id);
+      this.fisrtBtn = false;
+    } else if (Number(this.id) > 1 && Number(this.id) < 1025) {
+      console.log(this.id);
+      this.fisrtBtn = true;
+      this.lastBtn = true;
+    } else if (Number(this.id) === 1025) {
+      console.log(this.id);
+      this.lastBtn = false;
+    }
   }
 
   //Obtiene los sprites de los pokemon en los botones de avance
